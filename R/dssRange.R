@@ -1,6 +1,6 @@
 #' @title Get the combined range of a (number of) vector(s) or dataframes
 #' @description If one of the parameters is a dataframe, the ranges of all the numeric columns are returned (no need to subset for them)
-#' @param ... characters vetcor or dataframe names (must be present on all the nodes specified)
+#' @param ... characters vector or dataframe names (must be present on all the nodes specified)
 #' @param  datasources a list of opal objects obtained after logging into the opal servers (see datashield.login)
 #' @return  combined range over the specified datasources
 #' @export

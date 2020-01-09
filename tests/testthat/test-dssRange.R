@@ -1,13 +1,22 @@
 test_that("dssRange split works", {
   rem <- dssRange('iris', type = 'split', datasources = opals)
   r1 <- sapply(part_iris_1[,1:4], range, simplify = FALSE, USE.NAMES = TRUE)
-  pr2 <- princomp(part_iris_2[,1:4])
-  expect_true(any(abs(rem$local1$loadings) - abs(pr1$loadings) < 1e-5))
-  expect_true(any(abs(rem$local2$loadings) - abs(pr2$loadings) < 1e-5))
+  r2 <- sapply(part_iris_2[,1:4], range, simplify = FALSE, USE.NAMES = TRUE)
+  # are the differences within 5%?
+  first_term1 <- Map(abs, rem$local1$iris)
+  first_term2 <- Map(abs, rem$local2$iris)
+  second_term1 <- Map(abs, r1)
+  second_term2 <- Map(abs, r2)
+  small_error1 <- Map('/', Map('-', first_term1, second_term1), second_term1)
+  small_error2 <- Map('/', Map('-', first_term2, second_term2), second_term2)
+  expect_true(all(unlist(Map('<',small_error1, 0.05))))
+  expect_true(all(unlist(Map('<',small_error2, 0.05))))
 })
-
 test_that("dssRange combined works", {
   rem <- dssRange('iris', type = 'combine', datasources = opals)
-  pr <- princomp(iris[,1:4])
-  expect_true(any(abs(rem$global$loadings) - abs(pr$loadings) < 1e-5))
+  r <- sapply(iris[,1:4], range, simplify = FALSE, USE.NAMES = TRUE)
+  first_term <- Map(abs, rem$global)
+  second_term <- Map(abs, r)
+  small_error <- Map('/', Map('-', first_term, second_term), second_term)
+  expect_true(all(unlist(Map('<',small_error, 0.05))))
 })

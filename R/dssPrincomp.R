@@ -30,7 +30,7 @@ dssPrincomp <- function(df, type = 'combine', center = TRUE, scale = FALSE, scor
     datasources <- dsBaseClient:::findLoginObjects()
   }
 
-  covlist <- ds2.cov(df, type = type, async = async, wait = wait, datasources = datasources)
+  covlist <- dssCov(df, type = type, async = async, wait = wait, datasources = datasources)
 
   pca.builder <- function(x){
     pca <- princomp(covmat = x$vcov)
