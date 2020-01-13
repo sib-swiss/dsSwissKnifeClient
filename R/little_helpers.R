@@ -16,6 +16,20 @@
 
 }
 
+.bw.args <- function(x, datasources=NULL){
+  #global bandwidth calculation for ds2.smooth2d
+  if(is.null(datasources)){
+    datasources <- dsBaseClient:::findLoginObjects()
+  }
+  r <- unlist(dssRange(x, type= 'combine', datasources = datasources))
+  dif <- r[2] - r[1]
+  r <- c(r[1] + dif/3, r[2] - dif/3)
+  varlist <- dssVar(x,  type='combine', datasources)[[1]]
+  v <- varlist$var
+  l <- varlist$len
+  list(quarts = r, var = v, len = l)
+}
+
 
 
 
