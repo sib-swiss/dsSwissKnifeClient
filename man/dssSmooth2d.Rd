@@ -24,7 +24,7 @@ dssSmooth2d(
 }
 \arguments{
 \item{x}{y characters, names of the  x and y coordinates for the plot.
-If x and y are dataframe columns they must be specifiedn with the dollar sign notation ('DF$col')}
+If x and y are dataframe columns they must be specified with the dollar sign notation ('DF$col')}
 
 \item{npoints}{number of equally spaced grid points in both directions (same as nbin in smoothScatter)}
 
@@ -56,5 +56,5 @@ there are more levels, the colours will be recycled.}
 a list with the format (lims = <calculated or specified limits>, img = bitmap of the image to be drawn, legend = the colours used for each category)
 }
 \description{
-Like smoothScatter, it creates scatterplots with smoothed densities color representation
+Like smoothScatter, it creates scatterplots with smoothed densities colour representation
 }

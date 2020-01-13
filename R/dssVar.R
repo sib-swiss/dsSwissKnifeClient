@@ -24,13 +24,19 @@ dssVar <- function(what, type = 'combine', datasources = NULL){
   }
   cally <- paste0('partSsd(', what, ',', xpoint, ')')
   res <- datashield.aggregate(datasources, as.symbol(cally), async = TRUE, wait = TRUE)
+  lens <- dssSwapKeys(res)[['len']]
+  ret <- list()
   if (type == 'split'){
-    res <- sapply(res, function(x){
+   vars <- sapply(res, function(x){
       x$ssd/(x$len - 1)
     }, simplify = FALSE)
+
+
+   ret <- dssSwapKeys(list(var = vars, len = lens))
   } else if (type == 'combine'){
-    out <- sapply(dssSwapKeys(res), function(x) Reduce('+', x), simplify = FALSE)
-    res <- list(global =  out$ssd/(out$len -1))
+    glob_ssd <- sum(unlist(dssSwapKeys(res)[['ssd']]))
+    tot_len <- sum(unlist(lens))
+    ret <- list(global = list(var = glob_ssd/(tot_len -1), len = tot_len))
   }
-  res
+  ret
 }

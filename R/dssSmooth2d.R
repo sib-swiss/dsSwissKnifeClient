@@ -1,7 +1,7 @@
 #' @title Create a combined smooth scatterplot
-#' @description  Like smoothScatter, it creates scatterplots with smoothed densities color representation
+#' @description  Like smoothScatter, it creates scatterplots with smoothed densities colour representation
 #' @param x y characters, names of the  x and y coordinates for the plot.
-#' If x and y are dataframe columns they must be specifiedn with the dollar sign notation ('DF$col')
+#' If x and y are dataframe columns they must be specified with the dollar sign notation ('DF$col')
 #' @param npoints number of equally spaced grid points in both directions (same as nbin in smoothScatter)
 #' @param shades number of shades per plot (default 8)
 #' @param draw.image boolean specifying if a plot should be drawn. In either case a bitmap is returned
