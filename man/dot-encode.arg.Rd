@@ -2,7 +2,7 @@
 % Please edit documentation in R/little_helpers.R
 \name{.encode.arg}
 \alias{.encode.arg}
-\title{Serialize function arguments for before sending them to the server}
+\title{Encode function  arguments}
 \usage{
 .encode.arg(some.object)
 }
@@ -13,6 +13,8 @@
 encoded text with offending characters replaced by strings
 }
 \description{
-Serialize to JSON, then encode base64 function arguments,
- then replace '+', '/' and '=' in the result in order to play nicely with the opal sentry
+Serialize to JSON, then encode base64,
+ then replace '+', '/' and '=' in the result in order to play nicely with the opal sentry.
+ Used to encode non-scalar function arguments prior to sending to the opal server.
+ There's a corresponding function in the server package calle .decode_args
 }
