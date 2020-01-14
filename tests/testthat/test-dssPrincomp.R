@@ -11,3 +11,9 @@ test_that("dssPrinComp combined works", {
   pr <- princomp(iris[,1:4])
   expect_true(any(abs(rem$global$loadings) - abs(pr$loadings) < 1e-5))
 })
+
+test_that("biplot combined works", {
+  rem <- dssPrincomp('iris', type = 'combine', datasources = opals)
+  pr <- princomp(iris[,1:4])
+  expect_null(biplot(rem$global, levels = 'iris_scores$Species', datasources = opals))
+})

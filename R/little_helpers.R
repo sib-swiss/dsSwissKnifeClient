@@ -1,6 +1,9 @@
-#' @title Serialize function arguments for before sending them to the server
-#' @description Serialize to JSON, then encode base64 function arguments,
-#'  then replace '+', '/' and '=' in the result in order to play nicely with the opal sentry
+
+#' @title Encode function  arguments
+#' @description Serialize to JSON, then encode base64,
+#'  then replace '+', '/' and '=' in the result in order to play nicely with the opal sentry.
+#'  Used to encode non-scalar function arguments prior to sending to the opal server.
+#'  There's a corresponding function in the server package calle .decode_args
 #' @param some.object the object to be encoded
 #' @return encoded text with offending characters replaced by strings
 #'
@@ -15,6 +18,7 @@
   return(paste0(encoded[1],'base64'))
 
 }
+
 
 .bw.args <- function(x, datasources=NULL){
   #global bandwidth calculation for ds2.smooth2d

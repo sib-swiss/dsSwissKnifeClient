@@ -78,3 +78,71 @@ dssPrincomp <- function(df, type = 'combine', center = TRUE, scale = FALSE, scor
   Map(scores.builder, mappee)
   pcalist
 }
+
+
+#' @title Biplot a dssPrincomp object
+#' @description Biplot implementation for PCA on distributed datasets
+#' @param x an object of class dssPrincomp.
+#' @param choices length 2 vector specifying the components to plot (same as for biplot.princomp)
+#' @param type a character which represents the type of analysis to carry out.
+#' If type is set to 'combine',  global column means are calculated if type is set to 'split', the column means are
+#' calculated separately for each node.
+#' @param levels a character the name of a factor. If provided, the plot will be colour coded by the levels of this factor
+#' @param draw.arrows a logical, should I draw arrows representing the underlying variables? Default TRUE.
+#' @param ... further arguments to be passed to dssSmooth2d (see doc)
+#' @param  datasources a list of opal objects obtained after logging into the opal servers (see datashield.login)
+#' @export
+#'
+
+
+
+biplot.dssPrincomp <- function (x, choices = 1L:2L, type = 'combine', levels = NULL, draw.arrows = TRUE, ..., datasources = NULL){
+  if(!(type %in% c('combine', 'split'))){
+    stop('Function argument "type" has to be either "combine" or "split"')
+  }
+
+  if(is.null(datasources)){
+    datasources <- dsBaseClient:::findLoginObjects()
+  }
+
+  if (length(choices) != 2L){
+    stop("length of choices must be 2")
+  }
+  y <- t(t(x$loadings[,choices])* x$lam[choices])
+  v1 <- paste0(x$scores, '$Comp.', choices[1])
+  v2 <- paste0(x$scores, '$Comp.', choices[2])
+  ylabs <- dimnames(y)[[1L]]
+  if(!is.null(levels)){
+    if(length(levels) >1){
+      warn("Only one column allowed in 'levels'. Will use the first one.")
+      levels <- levels[1]
+    }
+
+    pl <- dssSmooth2d(v1, v2,  categories = levels, draw.image = TRUE, ...,  datasources = datasources)
+
+  } else {
+
+    pl <- dssSmooth2d(v1, v2, draw.image = TRUE, ..., datasources = datasources)
+  }
+
+  if(draw.arrows){
+    rangx1 <- dssRange(v1, datasources = datasources )
+    rangx2 <- dssRange(v2, datasources = datasources)
+    rangy1 <- range(y[, 1L])
+    rangy2 <- range(y[, 2L])
+
+    xlim <- ylim <- rangx1 <- rangx2 <- range(rangx1, rangx2)
+
+    ratio <- max(rangy1/rangx1, rangy2/rangx2)
+
+
+    par(new = TRUE)
+    plot(y, axes = FALSE, type = "n", xlim = xlim * ratio, ylim = ylim * ratio,
+         xlab = "", ylab = "", col = 'red')
+    axis(3, col = 'red')
+    axis(4, col = 'red')
+    text(y, labels = ylabs, cex = 1, col = 'red')
+    arrows(0,0,y[,1] *0.8  , y[,2] *0.8, col = 'red', length = 0.1)
+  }
+  invisible()
+}
