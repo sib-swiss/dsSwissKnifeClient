@@ -33,7 +33,7 @@ dssPivot <- function(symbol, what, value.var, cols = NULL, formula = NULL, by.co
   fun.aggregate <- .encode.arg(fun.aggregate)
   expr <- paste0(expr, ', "', fun.aggregate, '"')
   expr <- paste0(expr, ')')
-  opal::datashield.assign(datasources, symbol, as.symbol(expr), async = async, wait=wait)
+  datashield.assign(datasources, symbol, as.symbol(expr), async = async, wait=wait)
   #invisible(sapply(datasources, .check.messages))
 
 }
