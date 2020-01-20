@@ -1,0 +1,19 @@
+test_that("dssCoxph works", {
+  datashield.aggregate(opals[1], as.symbol('partialData("lung", NULL, NULL, "survival")'))
+  new.df <- 'sex = c(1, 2), age = rep(mean(lung$age, na.rm = TRUE), 2), ph.ecog = c(1, 1)'
+  cox.res <- dssCoxph(formula = survival::Surv(time, status) ~ age + sex + ph.ecog, data = 'lung', new.dataframe = new.df, async = FALSE, datasources = opals[1])
+  x <-  unclass(summary(cox.res$local1$model))
+  expect_true(all(abs(x$loglik - c(-744.4805, -729.2301)) < 1e-03))
+  try(file.remove('survfit_now.png'))
+  png('survfit_now.png')
+
+  plot(cox.res$local1$fit, conf.int = TRUE, col = c('blue', 'red'))
+  dev.off()
+  this_file <- file('survfit_now.png', 'rb')
+  mod <- file('survfit_model.png', 'rb')
+  this_one <- readBin(this_file, 'raw', n = 1000)
+  correct_one <- readBin(mod, 'raw', n = 1000)
+  close(this_file)
+  close(mod)
+  expect_identical(this_one, correct_one)
+})
