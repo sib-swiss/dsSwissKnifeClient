@@ -25,23 +25,18 @@ A list containing the stripped down coxph model (without the call and the residu
 Executes coxph \{survival\} and survfit \{survival\} on the remote nodes
 }
 \examples{
-# we work on dcs only
-# create a time to insulin dataframe:
-ds2.time.to.insulin('tti', 'cm', 'lb', 'mh', trt.date.col = 'CMSTDTC', async = FALSE, datasources = opals['dcs'])
-#prepare the other dataframes;
-ds2.subset('dm2', 'dm', row.filter = "VISIT == 'VISIT 1'", col.filter = "c('SUBJID', 'SEX', 'AGE')", datasources = opals['dcs'])
-ds2.subset('vs2', 'vs', row.filter = 'VISIT == "VISIT 1" & VSTESTCD \%in\% c("BMI", "HEIGHT", "WEIGHT")', col.filter = 'c("SUBJID", "VSTESTCD",  "VSORRES")', datasources = opals['dcs'])
-ds2.pivot('vs2', 'vs2', value.var = 'VSORRES', formula = 'SUBJID ~ VSTESTCD', completeCases = TRUE,   async = FALSE, datasources = opals['dcs'])
-#join everything:
-ds2.join(c('tti', 'vs2', 'dm2'), 'coxph_input', join.type = 'inner', async = FALSE, datasources = opals['dcs'])
-#create the new.dataframe argument (note the reference to coxph_input created in the previous step)
-new.df <- 'SEX = c("M", "F"), AGE = rep(mean(coxph_input$AGE),2), VSTESTCD.HEIGHT_vs2 = rep(mean(coxph_input$VSTESTCD.HEIGHT_vs2),2),
-VSTESTCD.WEIGHT_vs2 = rep(mean(coxph_input$VSTESTCD.WEIGHT_vs2),2)'
+# open a local pseudo connection:
+x <- dssCreateFakeServers('test', servers = 1, tie_first_to_GlobalEnv = 1)
+opals <- datashield.login(x)
+# load the lung dataset
+datashield.aggregate(opals[1], as.symbol('partialData("lung", NULL, NULL, "survival")'))
+#create the new.dataframe argument (note the reference to the  'lung' data frame)
+new.df <- 'sex = c(1, 2), age = rep(mean(lung$age, na.rm = TRUE), 2), ph.ecog = c(1, 1)'
 
 # execute the function:
-cox.res <- ds2.coxph(formula = survival::Surv(DAYS_TO_INSULIN) ~ SEX + AGE  +  VSTESTCD.HEIGHT_vs2 + VSTESTCD.WEIGHT_vs2, data = 'coxph_input', new.dataframe = new.df, async = FALSE, datasources = opals['dcs'])
-
-plot the fit:
-sapply(names(cox.res), function(x) print(ggsurvplot(cox.res[[x]]$fit, conf.int = TRUE, legend.labs=c("Sex=M", "Sex=F"), theme = theme_classic())))
+cox.res <- dssCoxph(formula = survival::Surv(time, status) ~ age + sex + ph.ecog, data = 'lung', new.dataframe = new.df, async = FALSE, datasources = opals[1])
+summary(cox.res$local1$model)
+# plot the fit:
+plot(cox.res$local1$fit, conf.int = TRUE, col = c('blue', 'red'))
 
 }

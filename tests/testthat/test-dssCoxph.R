@@ -16,4 +16,5 @@ test_that("dssCoxph works", {
   close(this_file)
   close(mod)
   expect_identical(this_one, correct_one)
+  try(file.remove('survfit_now.png'))
 })
