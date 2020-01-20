@@ -4,7 +4,7 @@ test_that("dssCoxph works", {
   cox.res <- dssCoxph(formula = survival::Surv(time, status) ~ age + sex + ph.ecog, data = 'lung', new.dataframe = new.df, async = FALSE, datasources = opals[1])
   x <-  unclass(summary(cox.res$local1$model))
   expect_true(all(abs(x$loglik - c(-744.4805, -729.2301)) < 1e-03))
-  try(file.remove('survfit_now.png'))
+  #try(file.remove('survfit_now.png'))
   png('survfit_now.png')
 
   plot(cox.res$local1$fit, conf.int = TRUE, col = c('blue', 'red'))
