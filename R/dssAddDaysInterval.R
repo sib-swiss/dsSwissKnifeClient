@@ -8,18 +8,7 @@
 #' @param wait same as in datashield.assign
 #' @param datasources same as in datashield.assign
 #'
-#' @examples
-#' # login:
-#' opals <- datashield.login(logindata)
-#' # load DM in colaus:
-#' datashield.assign(opals['colaus'], 'dm', 'rhapsody.DM')
-#' # add an interval column as the difference in days between RFSDTC and BRTHDTC:
-#' ds2.add.days.interval('dm2', 'dm', list(DM_ELAPSED = list(end_date = 'RFSTDTC', start_date = 'BRTHDTC')), datasources = opals['colaus'])
-#' # check the newly created column:
-#'ds.summary('dm2$DM_ELAPSED', datasources = opals['colaus'])
-#'
-#'
-#'
+
 dssAddDaysInterval <- function(newobj, df, description.list, async = TRUE, wait = TRUE, datasources = NULL){
   if(is.null(datasources)){
     datasources <- dsBaseClient:::findLoginObjects()

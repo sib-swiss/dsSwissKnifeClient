@@ -30,16 +30,3 @@ The format is list(<new column name> = list(start_date = '<existing date column>
 \description{
 Add a column containing the difference between 2 date columns. The date columns must be in the same dataframe
 }
-\examples{
-# login:
-opals <- datashield.login(logindata)
-# load DM in colaus:
-datashield.assign(opals['colaus'], 'dm', 'rhapsody.DM')
-# add an interval column as the difference in days between RFSDTC and BRTHDTC:
-ds2.add.days.interval('dm2', 'dm', list(DM_ELAPSED = list(end_date = 'RFSTDTC', start_date = 'BRTHDTC')), datasources = opals['colaus'])
-# check the newly created column:
-ds.summary('dm2$DM_ELAPSED', datasources = opals['colaus'])
-
-
-
-}
