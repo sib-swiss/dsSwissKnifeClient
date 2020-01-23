@@ -2,8 +2,6 @@ test_that("dssKmeans works", {
   my_kmeans <- dssKmeans('iris', centers = 3, iter.max =30, nstart = 30, type = 'combine', datasources = opals)
   data("iris", envir = environment())
   local.kmeans <- kmeans(iris[,1:4], centers = 3, iter.max = 30, nstart = 30, algorithm = 'Forgy')
-  my_kmeans$global$centers
-   local.kmeans$centers
 # the order of the 2 matrices might be different so we need to contort like so:
   mins <- apply(my_kmeans$global$centers,1, function(z){
     out <- apply(local.kmeans$centers,1, function(y){
@@ -22,5 +20,5 @@ test_that("dssKmeans works", {
 
   out[,ret]
   })
-  expect_true(all(mins < 1e-10))
+  expect_true(all(mins < 1e-05))
 })
