@@ -19,10 +19,9 @@
 #' @param datasources same as in datashield.assign
 #' @return A list containing one (in the case of 'combined') or more ('split') stripped down kmeans objects.
 #' @examples
-#' library(datashield)
-#' library(datashieldclient)
-#' #local pseudo connection with 2 'nodes':
-#' opals <- datashield.login(c(local = 2))
+#' # open a local pseudo connection:
+#' x <- dssCreateFakeServers('test', servers = 2, tie_first_to_GlobalEnv = 1)
+#' opals <- datashield.login(x)
 #' #load 2 chunks of iris, one on each node:
 #' datashield.aggregate(opals[1], as.symbol('partial.data("iris", 1, 70)'))
 #' datashield.aggregate(opals[2], as.symbol('partial.data("iris", 71, 150)'))

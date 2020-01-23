@@ -4,17 +4,23 @@ test_that("dssKmeans works", {
   local.kmeans <- kmeans(iris[,1:4], centers = 3, iter.max = 30, nstart = 30, algorithm = 'Forgy')
   my_kmeans$global$centers
    local.kmeans$centers
-
-  x <- apply(my_kmeans$global$centers,1, function(z){
-   print(z)
-    out <- apply(local.kmeans$centers,1, function(y) abs(y-z))
-    print(Reduce(function(a,b){
-      if (all(a >= b)){
+# the order of the 2 matrices might be different so we need to contort like so:
+  mins <- apply(my_kmeans$global$centers,1, function(z){
+    out <- apply(local.kmeans$centers,1, function(y){
+      abs(y-z)
+    })
+    ret <- Reduce(function(a,b){
+      u <- out[,a]
+      v <- out[,b]
+      if(all(u <= v)){
+        return(a)
+      } else {
         return(b)
       }
-      return(a)
-    },as.list(out)))
+      stop('Funky things happening, check the 2 center matrices.')
+    },1:dim(out)[2])
+
+  out[,ret]
   })
-  local.kmeans$centers[1,] - my_kmeans$global$centers[1,]
-  expect_e(orig[[1]])
+  expect_true(all(mins < 1e-10))
 })
