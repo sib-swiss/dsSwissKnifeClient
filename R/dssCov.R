@@ -16,9 +16,9 @@
 
 dssCov <- function(x,  collist = NULL, type = 'combine',  async = TRUE, wait = TRUE, datasources = NULL){
   if(is.null(datasources)){
-    datasources <- dsBaseClient:::findLoginObjects()
+    datasources <- dsBaseClient_findLoginObjects()
   }
-  mlist <- ds2.colMeans(x,  FALSE, collist, type, async = async, wait = wait, datasources)
+  mlist <- dssColMeans(x,  FALSE, collist, type, async = async, wait = wait, datasources)
 
   if (type == 'combine'){
     # if we didn't specify any columns grab now the numeric ones:

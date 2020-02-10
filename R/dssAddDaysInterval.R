@@ -11,7 +11,7 @@
 
 dssAddDaysInterval <- function(newobj, df, description.list, async = TRUE, wait = TRUE, datasources = NULL){
   if(is.null(datasources)){
-    datasources <- dsBaseClient:::findLoginObjects()
+    datasources <- dsBaseClient_findLoginObjects()
   }
   # example description.list:
   # list(LB_ELAPSED= list(end_date = 'LBDTC_lb2', start_date = 'MHDTC'))

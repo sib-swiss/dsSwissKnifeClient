@@ -28,7 +28,7 @@
 
 dssCoxph <- function(..., async = TRUE, wait = TRUE, datasources = NULL){
   if(is.null(datasources)){
-    datasources <- dsBaseClient:::findLoginObjects()
+    datasources <- dsBaseClient_findLoginObjects()
   }
   arglist <- list(...) # pass the args list almost as is to coxph on the local nodes
   if(typeof(arglist$formula) ==  'language'){

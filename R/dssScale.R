@@ -12,7 +12,7 @@
 
 dssScale <- function(symbol, what, center = TRUE, scale = TRUE, async = TRUE, wait = TRUE, datasources = NULL){
   if(is.null(datasources)){
-    datasources <- dsBaseClient:::findLoginObjects()
+    datasources <- dsBaseClient_findLoginObjects()
   }
   center <- .encode.arg(center)
   scale <- .encode.arg(scale)

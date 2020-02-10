@@ -20,7 +20,7 @@
 #'
 dssCut <- function(x, new.name = 'newObj', df = NULL, in.place = FALSE, breaks =  NULL, labels = NULL, ...,  async = TRUE, wait = TRUE, datasources = NULL){
   if(is.null(datasources)){
-    datasources <- dsBaseClient:::findLoginObjects()
+    datasources <- dsBaseClient_findLoginObjects()
   }
 
 
@@ -43,6 +43,6 @@ dssCut <- function(x, new.name = 'newObj', df = NULL, in.place = FALSE, breaks =
   pf <- parent.frame()
   arglist <- sapply(arglist, function(x)eval(x, envir=pf), USE.NAMES = TRUE, simplify = FALSE)
   arglist <- .encode.arg(arglist)
-  cally <- paste0('cutDS2("', arglist, '")')
+  cally <- paste0('cutDS("', arglist, '")')
   opal::datashield.aggregate(datasources, as.symbol(cally), async = async, wait = wait)
 }

@@ -20,7 +20,7 @@ dssColMeans <- function(x=NULL, na.rm = TRUE, collist = NULL, type='combine', as
   #adapted from ds.mean
 
   if(is.null(datasources)){
-    datasources <- dsBaseClient:::findLoginObjects()
+    datasources <- dsBaseClient_findLoginObjects()
   }
 
   if(is.null(x)){

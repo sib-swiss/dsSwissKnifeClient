@@ -23,7 +23,7 @@
 .bw.args <- function(x, datasources=NULL){
   #global bandwidth calculation for ds2.smooth2d
   if(is.null(datasources)){
-    datasources <- dsBaseClient:::findLoginObjects()
+    datasources <- dsBaseClient_findLoginObjects()
   }
   r <- unlist(dssRange(x, type= 'combine', datasources = datasources))
   dif <- r[2] - r[1]
@@ -34,6 +34,82 @@
   list(quarts = r, var = v, len = l)
 }
 
+
+dsBaseClient_findLoginObjects <-function () {
+  # copied as is from dsBaseClient
+
+  findLogin <- getOpals()
+  if (findLogin$flag == 1) {
+    datasources <- findLogin$opals
+    return(datasources)
+  }
+  else {
+    if (findLogin$flag == 0) {
+      stop(" Are you logged in to any server? Please provide a valid opal login object! ",
+           call. = FALSE)
+    }
+    else {
+      message(paste0("More than one list of opal login object were found: '",
+                     paste(findLogin$opals, collapse = "', '"), "'!"))
+      userInput <- readline("Please enter the name of the login object you want to use: ")
+      datasources <- eval(parse(text = userInput))
+      if (class(datasources[[1]]) == "opal") {
+        return(datasources)
+      }
+      else {
+        stop("End of process: you failed to enter a valid login object",
+             call. = FALSE)
+      }
+    }
+  }
+}
+
+
+
+
+
+dsBaseClient_getOpals <- function () {
+  # yanked from dsBaseClient
+  objs <- ls(name = .GlobalEnv)
+  if (length(objs) > 0) {
+    opalist <- vector("list")
+    cnt <- 0
+    flag <- 0
+    for (i in 1:length(objs)) {
+      cl1 <- class(eval(parse(text = objs[i])))
+      if (cl1 == "list") {
+        list2check <- eval(parse(text = objs[i]))
+        if (length(list2check) > 0) {
+          cl2 <- class(list2check[[1]])
+          for (s in 1:length(cl2)) {
+            if (cl2[s] == "opal") {
+              cnt <- cnt + 1
+              opalist[[cnt]] <- objs[i]
+              flag <- 1
+            }
+          }
+        }
+      }
+    }
+    if (flag == 1) {
+      if (length(opalist) > 1) {
+        flag <- 2
+        return(list(flag = flag, opals = unlist(opalist)))
+      }
+      else {
+        pp <- opalist[[1]]
+        opals <- eval(parse(text = pp))
+        return(list(flag = flag, opals = opals))
+      }
+    }
+    else {
+      return(list(flag = flag, opals = NULL))
+    }
+  }
+  else {
+    return(list(flag = flag, opals = NULL))
+  }
+}
 
 
 

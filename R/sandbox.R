@@ -89,7 +89,8 @@ dssCreateFakeServers <- function(opal_name, servers = 1, tie_first_to_GlobalEnv 
     attr(out, 'connection_object') <- opal_name
     out
   }
-  assign('datashield.login', mylogin, envir = .GlobalEnv)
+  assignInMyNamespace('datashield.login', mylogin)
+  #assign('datashield.login', mylogin, envir = .GlobalEnv)
 
 }
 

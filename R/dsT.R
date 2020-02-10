@@ -14,7 +14,7 @@
 dssT <- function(symbol, newobj = paste0(symbol, '_tr'), async = TRUE, wait = TRUE, datasources = NULL){
 
   if(is.null(datasources)){
-    datasources <- dsBaseClient:::findLoginObjects()
+    datasources <- dsBaseClient_findLoginObjects()
   }
 
   expr <- paste0('t(', symbol, ')')

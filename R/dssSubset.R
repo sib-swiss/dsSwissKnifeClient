@@ -24,7 +24,7 @@
 
 dssSubset <- function(symbol, what, row.filter = TRUE, col.filter = TRUE, async = TRUE, wait = TRUE, datasources = NULL){
   if(is.null(datasources)){
-    datasources <- dsBaseClient:::findLoginObjects()
+    datasources <- dsBaseClient_findLoginObjects()
   }
   cally <- paste0('safeSubset(', what)
   row.filter <- .encode.arg(row.filter)

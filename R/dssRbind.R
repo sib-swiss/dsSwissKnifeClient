@@ -9,7 +9,7 @@
 
 dssRbind <- function(newobj, x, y, new.colnames = NULL, async = TRUE, wait = TRUE, datasources = NULL){
   if(is.null(datasources)){
-    datasources <- dsBaseClient:::findLoginObjects()
+    datasources <- dsBaseClient_findLoginObjects()
   }
 
   new.colnames <- .encode.arg(new.colnames)

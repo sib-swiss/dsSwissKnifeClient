@@ -40,7 +40,7 @@ dssKmeans <- function(what, centers, iter.max = 10, nstart = 1, type = 'combine'
                        async = TRUE, wait = TRUE, datasources = NULL){
 
   if(is.null(datasources)){
-    datasources <- dsBaseClient:::findLoginObjects()
+    datasources <- dsBaseClient_findLoginObjects()
   }
   if(iter.max == 0 ){
     if(!is.matrix(centers)){
@@ -120,7 +120,7 @@ dssKmeans <- function(what, centers, iter.max = 10, nstart = 1, type = 'combine'
 .init_centers <- function(what,centers, datasources, algo, firstnode = NULL){
   # find the node with the most lines
   if(is.null(firstnode)){
-    dims <- ds.dim(what, datasources = datasources)
+    dims <- dssDim(what, datasources = datasources)
     firstnode <- names(which.max(sapply(dims, function(x) x[1], simplify = FALSE)))
   }
   expr <- paste0('partialKmeans("', what, '","',.encode.arg(centers) ,'",NULL, FALSE, TRUE,', 1, ',', 1, ',"', .encode.arg(algo) ,'")')

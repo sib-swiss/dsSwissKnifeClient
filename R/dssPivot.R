@@ -15,7 +15,7 @@
 dssPivot <- function(symbol, what, value.var, cols = NULL, formula = NULL, by.col = NULL, completeCases = FALSE, fun.aggregate = NULL, datasources = NULL, async = FALSE, wait = TRUE){
   # transform long to wide format (function 'wide' on the server uses reshape2::dcast)
   if(is.null(datasources)){
-    datasources <- dsBaseClient:::findLoginObjects()
+    datasources <- dsBaseClient_findLoginObjects()
   }
 
   expr <- paste0('widen(', what, ',"' , value.var, '"' )
@@ -53,7 +53,7 @@ dssPivot <- function(symbol, what, value.var, cols = NULL, formula = NULL, by.co
 
 dssSuggestPivot <- function(what, cols = NULL, by.col = NULL,  async = TRUE, wait = TRUE, datasources = NULL){
   if(is.null(datasources)){
-    datasources <- dsBaseClient:::findLoginObjects()
+    datasources <- dsBaseClient_findLoginObjects()
   }#' @param colour.pool vector of colours that will be picked sequentially.
 
   expr <- paste0('suggestPivotFormula(', what)

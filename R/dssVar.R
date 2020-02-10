@@ -12,7 +12,7 @@
 #'
 dssVar <- function(what, type = 'combine', datasources = NULL){
   if(is.null(datasources)){
-    datasources <- dsBaseClient:::findLoginObjects()
+    datasources <- dsBaseClient_findLoginObjects()
   }
   xpoint <- NULL
   if(type == 'split'){

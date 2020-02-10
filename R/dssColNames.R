@@ -23,7 +23,7 @@
 
 dssColNames<- function(df, value =  NULL, to.replace = NULL, async = TRUE, wait = TRUE, datasources = NULL){
   if(is.null(datasources)){
-    datasources <- dsBaseClient:::findLoginObjects()
+    datasources <- dsBaseClient_findLoginObjects()
   }
   if(!is.null(to.replace) && !is.null(value)){
     if(length(to.replace)%%length(value) != 0){

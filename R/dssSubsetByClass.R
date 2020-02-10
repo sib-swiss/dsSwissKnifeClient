@@ -34,7 +34,7 @@ dssSubsetByClass <- function (x , subsets = "subClasses", variables = NULL, keep
                                datasources = NULL)
 {
   if (is.null(datasources)) {
-    datasources <- dsBaseClient:::findLoginObjects()
+    datasources <- dsBaseClient_findLoginObjects()
   }
 
   x <- .encode.arg(x)
