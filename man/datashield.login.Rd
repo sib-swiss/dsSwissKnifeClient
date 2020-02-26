@@ -10,7 +10,7 @@ datashield.login(which_connections = names(local_conns), ...)
 \item{which_connections}{optional, a vector containing the names of the local "sessions" to "connect" to. Normally the output
 of dssCreateFakeServers (or a subset of it)}
 
-\item{...}{optional, the parameters for opal::datashield.login (logins dataframe, etc) in case we want to connect to any remote, real opal servers}
+\item{...}{optional, the parameters for opal::datashield.login (logins dataframe, etc). See the documentation for that function for details.}
 }
 \value{
 a vector containing the names of all the establised connections (real and fake)

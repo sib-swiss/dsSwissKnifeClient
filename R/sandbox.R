@@ -90,7 +90,7 @@ dssCreateFakeServers <- function(opal_name, servers = 1, tie_first_to_GlobalEnv 
     out
   }
   assignInMyNamespace('datashield.login', mylogin)
-  #assign('datashield.login', mylogin, envir = .GlobalEnv)
+  assign('datashield.login', mylogin, envir = .GlobalEnv)
 
 }
 
@@ -207,7 +207,7 @@ dssCreateFakeServers <- function(opal_name, servers = 1, tie_first_to_GlobalEnv 
 #' local pseudo-sessions as well as in remote real sessions
 #' @param which_connections optional, a vector containing the names of the local "sessions" to "connect" to. Normally the output
 #' of dssCreateFakeServers (or a subset of it)
-#' @param ... optional, the parameters for opal::datashield.login (logins dataframe, etc) in case we want to connect to any remote, real opal servers
+#' @param ... optional, the parameters for opal::datashield.login (logins dataframe, etc). See the documentation for that function for details.
 #' @details This function creates the final connection object and assigns it in the global environment. Moreover:
 #' * If necessary establishes connections to remote, real servers
 #' * Creates variants of the generics datashield.assign , datashield.aggregate and datashield.symbols that work on the local pseudo sessions.
@@ -261,8 +261,8 @@ dssCreateFakeServers <- function(opal_name, servers = 1, tie_first_to_GlobalEnv 
 #' @export
 
 datashield.login <- function(which_connections = names(local_conns), ...){
-
-  # Here just for the documentation. The real function is created on the fly by dssCreateFakeServers
+  # passtrough to opal, here for the doc
+  do.call('datashield.login', inputs, envir = asNamespace('opal'))
 }
 
 
