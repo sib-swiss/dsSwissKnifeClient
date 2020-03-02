@@ -4,13 +4,15 @@
 #' @param type a character which represents the type of analysis to carry out.
 #' If type is set to 'combine', a global variance is calculated.
 #' If type is set to 'split', the variance is calculated separately for each study.
+#' @param async same as in datashield.assign
+#' @param wait same as in datashield.assign
 #' @param  datasources a list of opal objects obtained after logging into the opal servers (see datashield.login)
 #' @return A list containing:
 #' In the case of 'combine', a list with a 'global' element (the global variance).
 #' In the case of 'split', a list with as many elements as the 'datasources' argument (the respective variances).
 #' @export
 #'
-dssVar <- function(what, type = 'combine', datasources = NULL){
+dssVar <- function(what, type = 'combine', async = TRUE, wait = TRUE, datasources = NULL){
   if(is.null(datasources)){
     datasources <- dsBaseClient_findLoginObjects()
   }
@@ -18,7 +20,7 @@ dssVar <- function(what, type = 'combine', datasources = NULL){
   if(type == 'split'){
     xpoint <- NULL
   } else if(type == 'combine'){
-    xpoint <- dssMean(what, datasources = datasources)$global
+    xpoint <- dssMean(what, datasources = datasources)$global$mean
   } else {
     stop('Type must be one of "split" or "combine".')
   }
