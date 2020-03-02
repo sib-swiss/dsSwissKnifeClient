@@ -22,7 +22,7 @@ dssVar <- function(what, type = 'combine', datasources = NULL){
   } else {
     stop('Type must be one of "split" or "combine".')
   }
-  cally <- paste0('partSsd(', what, ',', xpoint, ')')
+  cally <- paste0('partSsd(', what, ',', .encode.arg(xpoint), ')')
   res <- datashield.aggregate(datasources, as.symbol(cally), async = TRUE, wait = TRUE)
   lens <- dssSwapKeys(res)[['len']]
   ret <- list()
