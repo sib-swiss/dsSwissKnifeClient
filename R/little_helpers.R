@@ -38,7 +38,7 @@
 dsBaseClient_findLoginObjects <-function () {
   # copied as is from dsBaseClient
 
-  findLogin <- getOpals()
+  findLogin <- dsBaseClient_getOpals()
   if (findLogin$flag == 1) {
     datasources <- findLogin$opals
     return(datasources)

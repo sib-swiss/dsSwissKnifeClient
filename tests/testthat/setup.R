@@ -1,5 +1,6 @@
 pkgload::load_all('/home/iulian/datashield/dsSwissKnife')
 x <- dssCreateFakeServers('test', servers = 2)
+
 opals <- datashield.login(x)
 
 datashield.aggregate(opals['local1'], as.symbol('partialData("iris", 1, 40)'))
@@ -14,3 +15,10 @@ part_iris_2 <- test$locals$local2$envir$iris
 #datashield.aggregate(opals['local1'], as.symbol('partialData("iris", 1, 40)'))
 #datashield.aggregate(opals['local2'], as.symbol('partialData("iris", 41, 150)'))
 
+x <- dssCreatePseudoServers(1)
+logindata <- read.delim('/home/iulian/datashield/logindata_test.txt')
+logindata  <- logindata[logindata$server == 'local2', ,drop = FALSE]
+logindata$server <- 'remote2'
+y <- datashield.login(logindata)
+opals <- c(x,y)
+datashield.aggregate(opals, as.symbol('partialData("iris", 1, 40)'), async = FALSE)
