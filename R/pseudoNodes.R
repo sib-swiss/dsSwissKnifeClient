@@ -1,16 +1,15 @@
 #' @title Fake opal servers in R
 #' @description Create pseudo opal/datashield servers in the local session for fun and profit.
-#' @param opal_name required, a character. The name of a new list (created by the function as a side effect)
-#' containing the pseudo servers.
 #' @param servers either the number of servers or a vector containing their names
 #' @param tie_first_to_GlobalEnv a logical, should the first server session be the same as .GlobalEnv? See details.
-#' @details The function creates a list object containing the local pseudo servers as elements. The names of the servers
+#' @details The function creates and returns a list object containing the local pseudo servers as elements. The names of the servers
 #' are either provided in the "servers" parameter or created as 'local1', 'local2' etc. Each "server" is an environment.
 #' If tie_first_to_GlobalEnv is set to TRUE, the first server in the list will be a reference to the global environment.
 #' This means that all the objects in .GlobalEnv will become available to datashield... methods.
-#' Lastly, the function overrides datashield.login from the package opal.
 #' @seealso \code{\link{datashield.login}}
-#' @return a vector containing the server names. This vector (or a subset) will be used by datashield.login as first parameter.
+#' @return a list containing the local "server" environments. This list can be used straight away as the "datasources" argument
+#' for various dsSwissKnife or datashield or opal functions. One caveat: the "datasources" becomes mandatory, the said functions
+#' will not be able to find it automatically in the enviroment.
 #' @export
 dssCreatePseudoServers <- function(servers = 1, tie_res_to_GlobalEnv = FALSE){
 
@@ -41,25 +40,19 @@ dssCreatePseudoServers <- function(servers = 1, tie_res_to_GlobalEnv = FALSE){
     }
 
   }
-  class(res) <- 'pseudo'
+  class(res) <- c('pseudo', 'list')
   res
 }
 
 
 
 #' @title Extends datashield.login from package opal
-#' @description Creates the necessary software infrastructure for the usual opal and datashield functions to be able to run in
-#' local pseudo-sessions as well as in remote real sessions
-#' @param which_connections optional, a vector containing the names of the local "sessions" to "connect" to. Normally the output
-#' of dssCreateFakeServers (or a subset of it)
+#' @description Allows mixing and matching of local pseudo-connections and normal opal remote connections in the same object
+#' @param pseudo.conn optional, a list containing  the local "servers" to "connect" to. Normally the output
+#' of dssCreatePseudoServers (or a subset of it)
 #' @param ... optional, the parameters for opal::datashield.login (logins dataframe, etc). See the documentation for that function for details.
-#' @details This function creates the final connection object and assigns it in the global environment. Moreover:
-#' * If necessary establishes connections to remote, real servers
-#' * Creates variants of the generics datashield.assign , datashield.aggregate and datashield.symbols that work on the local pseudo sessions.
-#' * Returns a vector that can be used in various dsBaseClient (and other) functions. Attention: these functions will work only if
-#' called with an explicit datasources parameter (ex: ds.var('some_vector', **datasources = myopals**) and not: ds.var('some_vector'))
-#' @seealso \link{dssCreateFakeServers}
-#' @return a vector containing the names of all the establised connections (real and fake)
+#' @seealso \link{dssCreatePseudoServers}
+#' @return an opal object containing 0 or more local pseudo-connections and 0 or more real opal connections
 #' @examples
 #' # Mixed opal connections, local(fake, in my session) + remote(real)
 #' # Read a real connection dataframe from a file
@@ -71,22 +64,25 @@ dssCreatePseudoServers <- function(servers = 1, tie_res_to_GlobalEnv = FALSE){
 #' # create 2 local connections:
 #' locals <- dssCreatePseudoServers(c('fake1', 'fake2'))
 #' #login the the remote node:
-#' remote <- datashield.login(logindata)
-#' put everything together in an opal object:
-#' opals <- fuseOpals(locals, remote)
+#' opals <- datashield.login(locals, logindata)
 #' # opals contains 3 connections, 2 locals, one remote. You can examine them:
 #' opals
-#' all_conns
 #' #' # we can use it to load 3 chunks of the 'iris' dataset, each on a different node
 #' datashield.aggregate(opals['fake1'], as.symbol('partialData("iris", 1, 40)'))
 #' datashield.aggregate(opals['fake2'], as.symbol('partialData("iris", 41, 100)'))
 #' datashield.aggregate(opals['real1'], as.symbol('partialData("iris", 101, 150)'))
-#' # run some ds... commands:
+#' # load dsBaseClient and run some ds... commands:
+#' library(dsBaseClient)
 #' ds.summary('iris', datasources = opals)
-#' ds.mean('iris', datasources = opals) # always specify the datasources explicitly
+#' ds.levels('iris$Species', datasources = opals)
+#' # and some dss... ones:
+#' dssShowFactors('iris')
+#' dssCov('iris')
 #' # where's my local data?
-#' ls(envir = all_conns$locals$fake1$envir)
-#' ls(envir = all_conns$locals$fake2$envir)
+#' ls(envir = opals$fake1$envir)
+#' ls(envir = opals$fake2$envir)
+#' # or
+#' opals[c('fake1', 'fake2')]
 #'
 #' datashield.logout(opals)
 #' @export
@@ -95,8 +91,13 @@ datashield.login <- function(x, ...){
   UseMethod('datashield.login')
 }
 
-datashield.login.pseudo <- function(x, ...){
-  x
+datashield.login.pseudo <- function(pseudo.conn = NULL, ...){
+  fake <- pseudo.conn
+  real <- NULL
+  if (length(list(...)) >0 ){
+    real <- datashield.login(...)
+  }
+  c(real, fake)
 }
 
 datashield.login.data.frame <- function(x,...){

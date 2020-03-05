@@ -1,5 +1,5 @@
 test_that("dssSubsetByClass works", {
-  play_env <- test$locals$local2$envir
+  play_env <- opals$local2$envir
   assign('a', play_env$iris$Petal.Length, envir = play_env)
   assign('b', factor(c(rep('category1',10), rep('category2',100))), envir = play_env)
   dssSubsetByClass('iris', variables = 'iris$Species',  datasources = opals['local2'])

@@ -82,6 +82,7 @@ dssKmeans <- function(what, centers, iter.max = 10, nstart = 1, type = 'combine'
     rownames(centers) <- paste0('c', 1:k)
 
     global.means <- dssColMeans(what, type = 'combine', datasources = datasources)
+    global.means <- global.means$global$means
     this.km <- .do_kmeans(what, centers, iter.max, global.means, ranges, async, wait, datasources)
     #bad.km <- list()
     if(nstart >= 2){
@@ -186,7 +187,7 @@ dssKmeans <- function(what, centers, iter.max = 10, nstart = 1, type = 'combine'
 
   #build expr as a list to be sent as.call
 
-  expr <- list(as.symbol('partialKmeans'), what, .encode.arg(as.data.frame(new.centers)), .encode.arg(mns$global$means))
+  expr <- list(as.symbol('partialKmeans'), what, .encode.arg(as.data.frame(new.centers)), .encode.arg(mns))
   sss <- datashield.aggregate(datasources, as.call(expr), async = async, wait = wait)
 
   new.km[names(sss[[1]])] <- Reduce(function(x,y) {

@@ -1,10 +1,8 @@
-test_that("CreatePartition works", {
+test_that("dssGRridge works", {
   dssGRridge('CreatePartition', 'CpGannFarkas', newobj = 'firstPart', datasources = opals[1])
+  s <- dsBaseClient::ds.length('firstPart', datasources = opals[1])
+  expect_equal(s[[1]] ,6)
 
-})
-
-
-test_that("CreatePartition works", {
   x <- dssGRridge('grridge', 'datcenFarkas', 'respFarkas','firstPart' , datasources = opals[1])
-
+  expect_equal(levels(x$local1$true), c("Normal", "Precursor"))
 })

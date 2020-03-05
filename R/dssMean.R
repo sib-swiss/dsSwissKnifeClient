@@ -14,9 +14,13 @@ dssMean <- function (what, na.rm = TRUE, datasources = NULL) {
   expr <- paste0('partMean(', what, ', ',na.rm, ')')
   mns <- datashield.aggregate(datasources, as.symbol(expr))
   out <- Reduce(function(a,b){
+
       (a$mean * a$len + b$mean * b$len)/(a$len + b$len)
     }, mns)
   mns <- dssSwapKeys(mns)$mean
+  if(is.list(out)){
+    out <- out$mean
+  }
   mns$global <-  out
 
   mns

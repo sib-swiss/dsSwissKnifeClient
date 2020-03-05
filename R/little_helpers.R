@@ -53,13 +53,14 @@ dsBaseClient_findLoginObjects <-function () {
                      paste(findLogin$opals, collapse = "', '"), "'!"))
       userInput <- readline("Please enter the name of the login object you want to use: ")
       datasources <- eval(parse(text = userInput))
-      if (class(datasources[[1]]) == "opal") {
-        return(datasources)
-      }
-      else {
-        stop("End of process: you failed to enter a valid login object",
-             call. = FALSE)
-      }
+# iulian, no more class check:
+      #if (class(datasources[[1]]) == "opal") {
+      #  return(datasources)
+      #}
+    #  else {
+    #    stop("End of process: you failed to enter a valid login object",
+    #         call. = FALSE)
+    #  }
     }
   }
 }
@@ -77,15 +78,21 @@ dsBaseClient_getOpals <- function () {
     flag <- 0
     for (i in 1:length(objs)) {
       cl1 <- class(eval(parse(text = objs[i])))
-      if (cl1 == "list") {
+      if('pseudo' %in% cl1){ # iulian, added pseudo
+        cnt <- cnt + 1
+        opalist[[cnt]] <- objs[i]
+        flag <- 1
+
+      } else if ("list" %in% cl1) {
         list2check <- eval(parse(text = objs[i]))
         if (length(list2check) > 0) {
           cl2 <- class(list2check[[1]])
           for (s in 1:length(cl2)) {
-            if (cl2[s] == "opal") {
+            if (cl2[s] == "opal" ) {
               cnt <- cnt + 1
               opalist[[cnt]] <- objs[i]
               flag <- 1
+              next
             }
           }
         }

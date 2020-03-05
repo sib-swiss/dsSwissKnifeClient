@@ -20,7 +20,7 @@ dssVar <- function(what, type = 'combine', async = TRUE, wait = TRUE, datasource
   if(type == 'split'){
     xpoint <- NULL
   } else if(type == 'combine'){
-    xpoint <- dssMean(what, datasources = datasources)$global$mean
+    xpoint <- dssMean(what, datasources = datasources)$global
   } else {
     stop('Type must be one of "split" or "combine".')
   }
