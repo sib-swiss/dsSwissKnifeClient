@@ -27,6 +27,6 @@ dssClogit <- function(..., async = TRUE, wait = TRUE, datasources = NULL){
     arglist$formula <- Reduce(paste, deparse(arglist$formula)) # Reduce for formulas longer than 60 chars - deparse splits them into a vector
   }
   arglist <- .encode.arg(arglist)
-  cally <- paste0('clogitDS("', arglist, '")')
+  cally <- paste0('clogitDSS("', arglist, '")')
   opal::datashield.aggregate(datasources, as.symbol(cally), async = async, wait = wait)
 }

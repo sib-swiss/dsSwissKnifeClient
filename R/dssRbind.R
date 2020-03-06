@@ -13,6 +13,6 @@ dssRbind <- function(newobj, x, y, new.colnames = NULL, async = TRUE, wait = TRU
   }
 
   new.colnames <- .encode.arg(new.colnames)
-  cally <- paste0('rbindDS(', x, ',', y, ',"', new.colnames, '")')
+  cally <- paste0('rbindDSS(', x, ',', y, ',"', new.colnames, '")')
   opal::datashield.assign(datasources, newobj, as.symbol(cally), async = async, wait = wait)
 }

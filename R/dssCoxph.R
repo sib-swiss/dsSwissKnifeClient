@@ -34,6 +34,6 @@ dssCoxph <- function(..., async = TRUE, wait = TRUE, datasources = NULL){
     arglist$formula <- Reduce(paste, deparse(arglist$formula)) # Reduce for formulas longer than 60 chars - deparse splits them into a vector
   }
   arglist <- .encode.arg(arglist)
-  cally <- paste0('coxphDS("', arglist, '")')
+  cally <- paste0('coxphDSS("', arglist, '")')
   opal::datashield.aggregate(datasources, as.symbol(cally), async = async, wait = wait)
 }

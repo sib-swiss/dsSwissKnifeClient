@@ -19,7 +19,7 @@ dssDim <- function(x=NULL, async = TRUE, wait = TRUE,  datasources=NULL){
     stop("Please provide the name of the input dataframe!", call.=FALSE)
   }
 
-  expr <- list(as.symbol('dimDS'), as.symbol(x))
+  expr <- list(as.symbol('dimDSS'), as.symbol(x))
   opal::datashield.aggregate(datasources, as.call(expr), async = async, wait = wait)
 
 }

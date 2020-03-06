@@ -16,7 +16,7 @@ dssNlme_groupedData <- function(newobj, ..., async = TRUE, wait = TRUE, datasour
     arglist$formula <- Reduce(paste, deparse(arglist$formula)) # Reduce for formulas longer than 60 chars - deparse splits them into a vector
   }
   arglist <- .encode.arg(arglist)
-  cally <- paste0('groupedDataDS("', arglist, '")')
+  cally <- paste0('groupedDataDSS("', arglist, '")')
   opal::datashield.assign(datasources, symbol = newobj, value = as.symbol(cally), async = async, wait = wait)
 
 }
@@ -55,6 +55,6 @@ dssNlme_lme <- function(..., async = TRUE, wait = TRUE, datasources = NULL){
   arglist <- sapply(arglist, function(x) paste(x, collapse = ''), simplify = FALSE)
 
   arglist <- .encode.arg(arglist)
-  cally <- paste0('nlme_lmeDS("', arglist, '")')
+  cally <- paste0('nlme_lmeDSS("', arglist, '")')
   opal::datashield.aggregate(datasources, as.symbol(cally), async = async, wait = wait)
 }

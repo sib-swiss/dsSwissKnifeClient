@@ -29,6 +29,6 @@ dssColNames<- function(df, value =  NULL, to.replace = NULL, async = TRUE, wait 
       stop('Number of items to replace is not a multiple of replacement length')
     }
   }
-  expr <- paste0('colnamesDS(', df,',"', .encode.arg(to.replace), '", "', .encode.arg(value),'")')
+  expr <- paste0('colnamesDSS(', df,',"', .encode.arg(to.replace), '", "', .encode.arg(value),'")')
   opal::datashield.aggregate(datasources, as.symbol(expr), async = async, wait = wait)
 }

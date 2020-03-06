@@ -6,7 +6,7 @@ dssGRridge <- function(func, ...,  newobj = NULL, async = TRUE, wait = TRUE, dat
   arglist <- .encode.arg(list(...)) # pass the args list almost as is to the original function on the local nodes
   func <- .encode.arg(func)
   newobj <- .encode.arg(newobj)
-  cally <- paste0('GRridgeDS2("', func, '","', arglist, '","', newobj, '")')
+  cally <- paste0('GRridgeDSS("', func, '","', arglist, '","', newobj, '")')
   opal::datashield.aggregate(datasources, as.symbol(cally), async = async, wait = wait)
 
 }

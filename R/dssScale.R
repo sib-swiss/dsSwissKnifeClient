@@ -16,7 +16,7 @@ dssScale <- function(symbol, what, center = TRUE, scale = TRUE, async = TRUE, wa
   }
   center <- .encode.arg(center)
   scale <- .encode.arg(scale)
-  expr <- paste0('scaleDS(', what, ', "', center, '", "', scale, '")')
+  expr <- paste0('scaleDSS(', what, ', "', center, '", "', scale, '")')
   datashield.assign(datasources, symbol, as.symbol(expr), async = async, wait = wait)
 
 }

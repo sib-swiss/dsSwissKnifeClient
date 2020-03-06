@@ -15,7 +15,7 @@ dssSetOption <- function(option_list,  async = TRUE, wait = TRUE, datasources = 
     datasources <- dsBaseClient_findLoginObjects()
   }
 
-  expr <- list(as.symbol('setOptionDS'), .encode.arg(option_list))
+  expr <- list(as.symbol('setOptionDSS'), .encode.arg(option_list))
 
   opal::datashield.aggregate(datasources,as.call(expr), async=async, wait = wait)
 
