@@ -9,17 +9,16 @@
 #' @return the column names of the dataframe
 #' @examples
 #' # open a local pseudo connection:
-#' x <- dssCreateFakeServers('test', servers = 1, tie_first_to_GlobalEnv = 1)
-#' opals <- datashield.login(x)
-#' # load the lung dataset
-#' datashield.aggregate(opals[1], as.symbol('partial.data("iris", 1, 70)'))
-#' datashield.aggregate(opals[2], as.symbol('partial.data("iris", 71, 150)'))
+#' opals <- dssCreatePseudoServers(servers = 2, tie_first_to_GlobalEnv = 1)
+#' # load the iris dataset
+#' datashield.aggregate(opals[1], as.symbol('partialData("iris", 1, 70)'))
+#' datashield.aggregate(opals[2], as.symbol('partialData("iris", 71, 150)'))
 #  # check the colnames:
 #' dssColNames('iris')
 #' # set them to something else:
-#' dssColnames('iris', value =  c('sl', 'sw', 'pl', 'pw', 'sp'))
+#' dssColNames('iris', value =  c('sl', 'sw', 'pl', 'pw', 'sp'))
 #' #check again:
-#' dssColnames('iris')
+#' dssColNames('iris')
 
 dssColNames<- function(df, value =  NULL, to.replace = NULL, async = TRUE, wait = TRUE, datasources = NULL){
   if(is.null(datasources)){

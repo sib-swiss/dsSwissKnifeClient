@@ -10,13 +10,14 @@
 #' @return It doesn't return anything, the dataframe in the server session will now contain the new column.
 #' @examples
 #' # open a local pseudo connection:
-#' x <- dssCreateFakeServers('test', servers = 1, tie_first_to_GlobalEnv = 1)
-#' opals <- datashield.login(x)
+#'opals <- dssCreatePseudoServers(servers = 1, tie_first_to_GlobalEnv = TRUE)
+#' data('iris')
 #' #now play around:
 #' dssDeriveColumn('iris', 'new_col', 'Sepal.Length/round(2.2)', datasources = opals)
 #' str(iris)
-#' dssDeriveColumn('iris', 'new_col2', 'iris2$Sepal.Length/abs(-2)', datasources = opals)
+#' dssDeriveColumn('iris', 'new_col2', 'iris$Sepal.Length/abs(-2)', datasources = opals)
 #' str(iris)
+#' a <- iris$Petal.Length
 #' dssDeriveColumn('iris', 'new_col3', 'a/abs(-2)', datasources = opals)
 #' str(iris)
 #' # this will fail:

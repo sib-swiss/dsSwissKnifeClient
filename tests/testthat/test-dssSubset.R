@@ -1,4 +1,4 @@
-opals_that("dssSubset works", {
+test_that("dssSubset works", {
   dssSubset('iris_filtered', 'iris', row.filter = 'Sepal.Length < 6 & Species == "setosa"', col.filter = '!(colnames(iris) == "Petal.Width")', datasources = opals[2])
   iris_filtered2 <- part_iris_2[part_iris_2$Sepal.Length < 6 & part_iris_2$Species == "setosa", !(colnames(part_iris_2) == "Petal.Width")]
   iris_filtered2$Species <- droplevels(iris_filtered2$Species)
@@ -6,3 +6,4 @@ opals_that("dssSubset works", {
   expect_equal(opals$local2$envir$iris_filtered, iris_filtered2)
 
 })
+

@@ -38,8 +38,7 @@ Alternative to the datashield function ds.subset
 }
 \examples{
 # open a local pseudo connection:
-x <- dssCreateFakeServers('test', servers = 1, tie_first_to_GlobalEnv = 1)
-opals <- datashield.login(x)
+opals <- dssCreatePseudoServers(servers = 1, tie_first_to_GlobalEnv = TRUE)
 # load iris
 data('iris')
 # now play around:

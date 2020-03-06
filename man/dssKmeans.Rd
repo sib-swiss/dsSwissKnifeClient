@@ -53,13 +53,12 @@ If iter.max is 0 and centers is a matrix the function simply creates the cluster
 }
 \examples{
 # open a local pseudo connection:
-x <- dssCreateFakeServers('test', servers = 2, tie_first_to_GlobalEnv = 1)
-opals <- datashield.login(x)
+opals <-  dssCreatePseudoServers( servers = 2, tie_first_to_GlobalEnv = TRUE)
 #load 2 chunks of iris, one on each node:
-datashield.aggregate(opals[1], as.symbol('partial.data("iris", 1, 70)'))
-datashield.aggregate(opals[2], as.symbol('partial.data("iris", 71, 150)'))
+datashield.aggregate(opals[1], as.symbol('partialData("iris", 1, 70)'))
+datashield.aggregate(opals[2], as.symbol('partialData("iris", 71, 150)'))
 #combined kmeans:
-my.kmeans <- ds2.kmeans('iris', centers = 3, iter.max =30, nstart = 30, type = 'combine', datasources = opals)
+my.kmeans <- dssKmeans('iris', centers = 3, iter.max =30, nstart = 30, type = 'combine', datasources = opals)
 #compare it with simple kmeans on iris:
 data("iris")
 #kmeans allows only numeric data, so no 'Species', hence iris[,1:4]

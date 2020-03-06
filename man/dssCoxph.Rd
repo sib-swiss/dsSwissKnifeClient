@@ -26,8 +26,7 @@ Executes coxph \{survival\} and survfit \{survival\} on the remote nodes
 }
 \examples{
 # open a local pseudo connection:
-x <- dssCreateFakeServers('test', servers = 1, tie_first_to_GlobalEnv = 1)
-opals <- datashield.login(x)
+opals <- dssCreatePseudoServers(servers = 1, tie_first_to_GlobalEnv = 1)
 # load the lung dataset
 datashield.aggregate(opals[1], as.symbol('partialData("lung", NULL, NULL, "survival")'))
 #create the new.dataframe argument (note the reference to the  'lung' data frame)

@@ -9,12 +9,11 @@
 #'
 #' @examples
 #' # open a local pseudo connection:
-#' x <- dssCreateFakeServers('test', servers = 1, tie_first_to_GlobalEnv = 1)
-#' opals <- datashield.login(x)
+#' opals <- dssCreatePseudoServers(servers = 1, tie_first_to_GlobalEnv = 1)
 #' # load the infert dataset
 #' datashield.aggregate(opals[1], as.symbol('partialData("infert")'))
 #' clogit.model <- dssClogit(formula = case ~ spontaneous + induced + stratum, data='infert', datasources = opals[1])
-#' summary(clogit.model$local1$model)
+#' summary(clogit.model$local1)
 #'
 #' @export
 #'

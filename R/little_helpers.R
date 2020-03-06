@@ -28,7 +28,7 @@
   r <- unlist(dssRange(x, type= 'combine', datasources = datasources))
   dif <- r[2] - r[1]
   r <- c(r[1] + dif/3, r[2] - dif/3)
-  varlist <- dssVar(x,  type='combine', datasources)[[1]]
+  varlist <- dssVar(x,  type='combine', datasources = datasources)[[1]]
   v <- varlist$var
   l <- varlist$len
   list(quarts = r, var = v, len = l)

@@ -39,8 +39,7 @@ Applies dplyr::xxx_join on the local nodes where xxx can be any of ('inner', 'fu
 }
 \examples{
 # open a local pseudo connection:
-x <- dssCreateFakeServers('test', servers = 1, tie_first_to_GlobalEnv = 1)
-opals <- datashield.login(x)
+opals <- dssCreatePseudoServers(servers = 1, tie_first_to_GlobalEnv = 1)
 # load iris
 data('iris')
 # join iris with itself just for fun:

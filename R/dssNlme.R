@@ -32,8 +32,7 @@ dssNlme_groupedData <- function(newobj, ..., async = TRUE, wait = TRUE, datasour
 #' @return a stripped down lmeObject (without the 'data' and 'call' elements). See the documentation for lme and lmeObject in package lme.
 #' @examples
 #' # open a local pseudo connection:
-#' x <- dssCreateFakeServers('test', servers = 1, tie_first_to_GlobalEnv = 1)
-#' opals <- datashield.login(x)
+#' opals <- dssCreatePseudoServers(servers = 1, tie_first_to_GlobalEnv = TRUE)
 #' # load the Orthodont dataset
 #'  datashield.aggregate(opals[1], as.symbol('partialData("Orthodont", NULL, NULL, "nlme")'))
 #'   dssNlme_groupedData(newobj = 'grouped', formula =  distance ~ age | Subject, data ='Orthodont', async = FALSE, datasources = opals[1] )

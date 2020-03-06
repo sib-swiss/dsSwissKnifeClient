@@ -11,7 +11,7 @@
 #' for various dsSwissKnife or datashield or opal functions. One caveat: the "datasources" becomes mandatory, the said functions
 #' will not be able to find it automatically in the enviroment.
 #' @export
-dssCreatePseudoServers <- function(servers = 1, tie_res_to_GlobalEnv = FALSE){
+dssCreatePseudoServers <- function(servers = 1, tie_first_to_GlobalEnv = FALSE){
 
   res <- list()
   if(is.numeric(servers) && length(servers) ==1){
@@ -20,7 +20,7 @@ dssCreatePseudoServers <- function(servers = 1, tie_res_to_GlobalEnv = FALSE){
       res[[l]] <- new.env(parent = .GlobalEnv)
       class(res[[l]]) <- c('local')
       res[[l]]$name <- l
-      if(tie_res_to_GlobalEnv && i == 1){ # optionally the res envir is globalenv
+      if(tie_first_to_GlobalEnv && i == 1){ # optionally the res envir is globalenv
         res[[l]]$envir <- .GlobalEnv
       } else {
         res[[l]]$envir <- new.env(parent = .GlobalEnv)
@@ -35,7 +35,7 @@ dssCreatePseudoServers <- function(servers = 1, tie_res_to_GlobalEnv = FALSE){
       ret$envir <- new.env(parent = .GlobalEnv)
       ret
     }, servers)
-    if(tie_res_to_GlobalEnv){
+    if(tie_first_to_GlobalEnv){
       res[[1]]$envir <- .GlobalEnv
     }
 
@@ -226,15 +226,4 @@ print.local <- function (x){
 }
 
 
-
-fuseOpals <- function(x,y){
-  out <- c(x,y)
-  myenv <- parent.frame()
-  sapply(c(deparse(substitute(x)), deparse(substitute(y))), function(a){
-    if(exists(a, envir = myenv)){
-      rm(list = a, envir = myenv)
-    }
-  })
-  out[order(sapply(out, class), decreasing = TRUE)] # I want class opal before class local in order for findloginobjects to work
-}
 

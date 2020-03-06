@@ -4,7 +4,7 @@
 \alias{dssCreatePseudoServers}
 \title{Fake opal servers in R}
 \usage{
-dssCreatePseudoServers(servers = 1, tie_res_to_GlobalEnv = FALSE)
+dssCreatePseudoServers(servers = 1, tie_first_to_GlobalEnv = FALSE)
 }
 \arguments{
 \item{servers}{either the number of servers or a vector containing their names}

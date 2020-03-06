@@ -37,10 +37,10 @@ Alternative to the datashield function ds.SubsetByClass
 }
 \examples{
 # open a local pseudo connection:
-x <- dssCreateFakeServers('test', servers = 1)
-opals <- datashield.login(x)
+opals <-  dssCreatePseudoServers('test', servers = 1)
 # load iris and create a vector and a factor:
-play_env <- test$locals$local1$envir
+datashield.aggregate(opals['local1'], as.symbol('partialData("iris", 41, 150)'))
+play_env <- opals$local1$envir
 assign('a', play_env$iris$Petal.Length, envir = play_env)
 assign('b', factor(c(rep('category1',10), rep('category2',100))), envir = play_env)
 #now play around:

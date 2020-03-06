@@ -11,8 +11,7 @@
 #' @return It doesn't return anything,  it creates a filtered dataframe on the remote node
 #' @examples
 #' # open a local pseudo connection:
-#' x <- dssCreateFakeServers('test', servers = 1, tie_first_to_GlobalEnv = 1)
-#' opals <- datashield.login(x)
+#' opals <- dssCreatePseudoServers(servers = 1, tie_first_to_GlobalEnv = TRUE)
 #' # load iris
 #' data('iris')
 #' # now play around:

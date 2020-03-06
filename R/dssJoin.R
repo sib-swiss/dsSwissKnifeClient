@@ -12,8 +12,7 @@
 #' @return It doesn't return anything,  it creates a dataframe, the result of the join
 #' @examples
 #' # open a local pseudo connection:
-#' x <- dssCreateFakeServers('test', servers = 1, tie_first_to_GlobalEnv = 1)
-#' opals <- datashield.login(x)
+#' opals <- dssCreatePseudoServers(servers = 1, tie_first_to_GlobalEnv = 1)
 #' # load iris
 #' data('iris')
 #' # join iris with itself just for fun:
