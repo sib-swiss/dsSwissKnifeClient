@@ -14,6 +14,10 @@ dssWaitForAsyncs <- function(datasources, sleep = 0.5){
   r <- list()
   while(length(work) >0 ){
     r <-c(r,sapply(work, function(x){
+     if('local' %in% class(datasources[[x]])){
+       work <<- setdiff(work, x)
+       return(NULL)
+     }
       if(nrow(y <- as.data.frame(datashield.commands(datasources[[x]]))) > 0){
         apply(y,1, function(z){
           # print(z)
