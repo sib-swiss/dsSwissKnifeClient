@@ -6,6 +6,9 @@
 #' are either provided in the "servers" parameter or created as 'local1', 'local2' etc. Each "server" is an environment.
 #' If tie_first_to_GlobalEnv is set to TRUE, the first server in the list will be a reference to the global environment.
 #' This means that all the objects in .GlobalEnv will become available to datashield... methods.
+#' This object can be then passed as a surrogate "datasources" argument to any opal, dsBaseClient or dsSwissKnifeClient function.
+#' One caveat: when using dsBaseClient functions with a purely fake opals object the object *must* be passed in the "datasources" argument, otherwise the call will fail.
+#' Furthermore, we can obtain a mixed (real connections + pseudo connections) opal object by passing this object as first argument to datashield.login.
 #' @seealso \code{\link{datashield.login}}
 #' @return a list containing the local "server" environments. This list can be used straight away as the "datasources" argument
 #' for various dsSwissKnife or datashield or opal functions. One caveat: the "datasources" becomes mandatory, the said functions
