@@ -134,7 +134,7 @@ datashield.assign.list  <- function(opals, symbol, value, variables=NULL, missin
       }
     })
     real_opals <- real_opals[!sapply(real_opals, is.null)]
-    if(length(real_opals > 0 )){
+    if(length(real_opals) > 0 ){
       real_res <- res[names(real_opals)]
       opal::datashield.command(real_opals, real_res, wait = TRUE)
       opal::datashield.command_rm(real_opals, real_res)
