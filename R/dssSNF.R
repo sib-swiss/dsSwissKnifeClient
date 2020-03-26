@@ -22,7 +22,7 @@ dssSNF <- function(func, symbols,..., action = c('keep', 'return'), keep.name = 
   action <- .encode.arg(action)
   arglist <- .encode.arg(list(...)) # pass the args list almost as is to  the local nodes
 
-  expr <- paste0('snf("', func, '","', symbols, '","', arglist, '","', action, '"')
+  expr <- paste0('snfDSS("', func, '","', symbols, '","', arglist, '","', action, '"')
   if(!is.null(keep.name)){
     expr <- paste0(expr,  ',"',keep.name, '"')
   }

@@ -18,7 +18,7 @@ dssPivot <- function(symbol, what, value.var, cols = NULL, formula = NULL, by.co
     datasources <- dsBaseClient_findLoginObjects()
   }
 
-  expr <- paste0('widen(', what, ',"' , value.var, '"' )
+  expr <- paste0('widenDSS(', what, ',"' , value.var, '"' )
   cols.arg <- .encode.arg(cols)
   expr <- paste0(expr, ', "', cols.arg, '"')
   formula.arg <- .encode.arg(formula)

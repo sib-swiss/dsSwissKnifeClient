@@ -17,7 +17,7 @@ dssT <- function(symbol, newobj = paste0(symbol, '_tr'), async = TRUE, wait = TR
     datasources <- dsBaseClient_findLoginObjects()
   }
 
-  expr <- paste0('t(', symbol, ')')
+  expr <- paste0('tDSS(', symbol, ')')
   opal::datashield.assign(datasources, newobj, as.symbol(expr), async, wait)
 
 

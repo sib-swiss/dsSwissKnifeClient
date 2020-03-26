@@ -121,11 +121,11 @@ datashield.symbols <- function(opal){
 }
 
 datashield.assign.list  <- function(opals, symbol, value, variables=NULL, missings=FALSE,
-                                    identifiers=NULL, async=TRUE, wait=TRUE, tibble = FALSE) {
+                                    identifiers=NULL, async=TRUE, wait=TRUE, ...) {
 
   res <- lapply(opals, FUN = datashield.assign, symbol,
                 value, variables = variables, missings = missings, identifiers = identifiers,
-                async = async, wait = FALSE, tibble = tibble)
+                async = async, wait = FALSE, ...)
   real_res <- NULL
   if (async && wait) {
     real_opals <- lapply(opals, function(x){

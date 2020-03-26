@@ -42,7 +42,7 @@ dssJoin <- function(what=NULL, symbol=NULL, by = NULL, join.type = 'full', async
   #what.arg <- .encode.arg(paste0('c(', paste(x, collapse = ','), ')'))
   what.arg <- .encode.arg(what)
   # call the server side function
-  cally <-  paste0("join('", what.arg, "', '", join.type, "'")
+  cally <-  paste0("joinDSS('", what.arg, "', '", join.type, "'")
   if(!is.null(by)){
     by <- .encode.arg(by)
     cally <- paste0(cally, ",'", by,"'" )
