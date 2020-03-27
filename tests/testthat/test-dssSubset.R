@@ -1,5 +1,5 @@
 test_that("dssSubset works", {
-  dssSubset('iris_filtered', 'iris', row.filter = 'Sepal.Length < 6 & Species == "setosa"', col.filter = '!(colnames(iris) == "Petal.Width")', datasources = opals[2])
+  dssSubset('iris_filtered', 'iris', row.filter = 'Sepal.Length < 6 & Species == "setosa"', col.filter = '!(colnames(iris) == "Petal.Width")', datasources = opals["local2"])
   iris_filtered2 <- part_iris_2[part_iris_2$Sepal.Length < 6 & part_iris_2$Species == "setosa", !(colnames(part_iris_2) == "Petal.Width")]
   iris_filtered2$Species <- droplevels(iris_filtered2$Species)
   row.names(iris_filtered2) <- 1:10

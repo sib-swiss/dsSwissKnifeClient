@@ -18,15 +18,15 @@ test_that("Classification works (discrete y).", {
 
   # Assign a fraction to the iris data to the "subiris" variable name on each node
   datashield.aggregate(opals, as.symbol('fullData("iris")'))
-  dssSubset("subiris", "iris", row.filter = "idx1", datasources = opals[1])
-  dssSubset("subiris", "iris", row.filter = "idx2", datasources = opals[2])
+  dssSubset("subiris", "iris", row.filter = "idx1", datasources = opals["local1"])
+  dssSubset("subiris", "iris", row.filter = "idx2", datasources = opals["local2"], async = FALSE)
 
   # Run `forest` - in sync mode for debugging
   dep_var = "Species"
   expl_vars = c("Sepal.Length","Sepal.Width","Petal.Length","Petal.Width")
   # reset iris for the other tests:
-  datashield.aggregate(opals[1], as.symbol('partialData("iris", 1, 40)'))
-  datashield.aggregate(opals[2], as.symbol('partialData("iris", 41, 150)'))
+  datashield.aggregate(opals["local1"], as.symbol('partialData("iris", 1, 40)'))
+  datashield.aggregate(opals["local2"], as.symbol('partialData("iris", 41, 150)'), async=FALSE)
   result = dssRandomForest('subiris', dep_var, expl_vars, testData, async = FALSE, wait = TRUE, datasources = opals)
 
   p = result$prediction
@@ -57,16 +57,16 @@ test_that("Regression works (continuous y).", {
 
   # Assign a fraction to the iris data to the "subiris" variable name on each node
   datashield.aggregate(opals, as.symbol('fullData("iris")'))
-  dssSubset("subiris", "iris", row.filter = "idx1", datasources = opals[1])
-  dssSubset("subiris", "iris", row.filter = "idx2", datasources = opals[2])
+  dssSubset("subiris", "iris", row.filter = "idx1", datasources = opals["local1"])
+  dssSubset("subiris", "iris", row.filter = "idx2", datasources = opals["local2"])
 
   # Run `forest` - in sync mode for debugging
   dep_var = "Sepal.Length"
   expl_vars = c("Sepal.Width","Petal.Length","Petal.Width")
   result = dssRandomForest('subiris', dep_var, expl_vars, testData, async = FALSE, wait = TRUE, datasources = opals)
   # reset iris for the other tests:
-  datashield.aggregate(opals[1], as.symbol('partialData("iris", 1, 40)'))
-  datashield.aggregate(opals[2], as.symbol('partialData("iris", 41, 150)'))
+  datashield.aggregate(opals["local1"], as.symbol('partialData("iris", 1, 40)'))
+  datashield.aggregate(opals["local2"], as.symbol('partialData("iris", 41, 150)'))
   p = result$prediction
   expect_lte(p[1], 5.0)
   expect_lte(p[2], 5.0)
