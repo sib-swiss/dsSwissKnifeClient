@@ -4,13 +4,12 @@
 \alias{dssSynthpop}
 \title{Generate synthetic data using the synthpop package}
 \usage{
-dssSynthpop(func, ..., async = TRUE, wait = TRUE, datasources = NULL)
+dssSynthpop(data, ..., async = TRUE, wait = TRUE, datasources = NULL)
 }
 \arguments{
-\item{func}{a character, the name of the function to call (all functions are available).}
+\item{data}{a character, name of the data frame to use as base for the synthetic data}
 
-\item{...}{further arguments to be passed to the function (see the documentation of the Synthpop package).
-Object names should be passed as character strings.}
+\item{...}{further arguments to be passed to the function (see the documentation of the synthpop package).}
 
 \item{async}{a logical, see datashield.aggregate}
 
@@ -19,5 +18,5 @@ Object names should be passed as character strings.}
 \item{datasources}{a list of opal objects obtained after logging into the opal servers (see datashield.login)}
 }
 \description{
-Generate synthetic data using the synthpop package
+The only function available is synthpop::syn
 }
