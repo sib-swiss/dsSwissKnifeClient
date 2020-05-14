@@ -32,6 +32,8 @@ It doesn't return anything, the dataframe in the server session will now contain
 \description{
 The new column is calculated from a formula that can contain arithmetic operators and a (very) limited number of R functions.
 At the moment the permitted functions are: abs, round, ceiling, floor, trunc, signif, length, as.Date, as.character, as.numeric.
+The administators of remote nodes can make more functions available with a procedure described
+in the help of the function .init in the package dsSwissKnife (?dsSwissKnife:::.init)
 }
 \examples{
 # open a local pseudo connection:
