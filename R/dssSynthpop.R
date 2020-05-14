@@ -17,7 +17,6 @@ dssSynthpop <- function(data,..., async = TRUE, wait = TRUE, datasources = NULL)
   data <- .encode.arg(data)
   arglist <- .encode.arg(list(...)) # pass the args list almost as is to the original function on the local nodes
   cally <- paste0('synthpopDSS("', data, '","',  arglist, '")')
-  print(cally)
   opal::datashield.aggregate(datasources, as.symbol(cally), async = async, wait = wait)
 
 }
