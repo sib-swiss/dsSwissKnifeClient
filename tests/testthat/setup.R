@@ -1,5 +1,7 @@
-datashield.aggregate(opals['local1'], as.symbol('partialData("iris", 1, 40)'))
+
 pkgload::load_all('/home/iulian/datashield/DSOpal')
+library(DSI)
+library(dsBaseClient)
 
 
 options(verbose=FALSE)
@@ -17,4 +19,7 @@ builder$append(server="sim1", url=getOption("opal.url"), table="datashield.CNSIM
 logindata <- builder$build()
 
 
-opals <- DSOpal::datashield.login(logins = logindata, assign = TRUE)
+opals <- DSI::datashield.login(logins = logindata, assign = TRUE)
+DSI::datashield.aggregate(opals, as.symbol('fullData("iris")') )
+DSI::datashield.symbols(opals)
+ds.summary('iris')
