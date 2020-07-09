@@ -14,7 +14,7 @@ dssRange <- function(..., type= 'combine', datasources = NULL){
 
   cally1 <- paste0("partRange('", args ,"')")
 
-  #ranges <- unique(unlist(opal::datashield.aggregate(datasources, as.symbol(cally1))))
+  #ranges <- unique(unlist(datashield.aggregate(datasources, as.symbol(cally1))))
   ranges <- datashield.aggregate(datasources, as.symbol(cally1))
 
   #ranges <- ranges[is.finite(ranges)]

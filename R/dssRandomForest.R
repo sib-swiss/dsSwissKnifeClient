@@ -15,7 +15,7 @@
 #'   and `$prediction`, the average prediction of `testData` (if given) by all nodes together.
 #'
 dssRandomForest <- function(what, dep_var, expl_vars = NULL, testData = NULL,
-                       async = TRUE, wait = TRUE, datasources = NULL) {
+                       async = TRUE, datasources = NULL) {
   if (is.null(datasources)) {
     datasources <- dsBaseClient:::findLoginObjects()
   }
@@ -25,7 +25,7 @@ dssRandomForest <- function(what, dep_var, expl_vars = NULL, testData = NULL,
   expl_vars.arg <- .encode.arg(expl_vars)
   expr <- paste0(expr, ', "', expl_vars.arg , '"', ')')
   # Get a list of randomForests from the nodes
-  reslist <- opal::datashield.aggregate(datasources, as.symbol(expr), async, wait)
+
 
   result <- list(forests = reslist)
   if (!is.null(testData)) {

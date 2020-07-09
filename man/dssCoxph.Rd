@@ -4,7 +4,7 @@
 \alias{dssCoxph}
 \title{Remote coxph + (optional) survfit.coxph}
 \usage{
-dssCoxph(..., async = TRUE, wait = TRUE, datasources = NULL)
+dssCoxph(..., async = TRUE, datasources = NULL)
 }
 \arguments{
 \item{...}{arguments to be sent to the 2 functions.
@@ -13,8 +13,6 @@ If a newdata dataframe is present in the arguments, survfit will be called on th
 The newdata dataframe argument must be sent as text describing the arguments to a call to data.frame() (see example).}
 
 \item{async}{same as in datashield.assign}
-
-\item{wait}{same as in datashield.assign}
 
 \item{datasources}{same as in datashield.assign}
 }

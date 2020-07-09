@@ -3,7 +3,7 @@
 #' @param ... arguments to be sent to clogit.
 #' Note, the data argument must be a character, the name of the input dataframe.
 #' @param async same as in datashield.assign
-#' @param wait same as in datashield.assign
+
 #' @param datasources same as in datashield.assign
 #' @return  A stripped down clogit model (without the call and the residuals)
 #'
@@ -18,7 +18,7 @@
 #' @export
 #'
 
-dssClogit <- function(..., async = TRUE, wait = TRUE, datasources = NULL){
+dssClogit <- function(..., async = TRUE, datasources = NULL){
   if(is.null(datasources)){
     datasources <- dsBaseClient_findLoginObjects()
   }
@@ -28,5 +28,5 @@ dssClogit <- function(..., async = TRUE, wait = TRUE, datasources = NULL){
   }
   arglist <- .encode.arg(arglist)
   cally <- paste0('clogitDSS("', arglist, '")')
-  opal::datashield.aggregate(datasources, as.symbol(cally), async = async, wait = wait)
+  datashield.aggregate(datasources, as.symbol(cally), async = async)
 }

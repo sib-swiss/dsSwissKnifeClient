@@ -4,13 +4,7 @@
 \alias{dssT}
 \title{Transpose a  matrix on the remote nodes.}
 \usage{
-dssT(
-  symbol,
-  newobj = paste0(symbol, "_tr"),
-  async = TRUE,
-  wait = TRUE,
-  datasources = NULL
-)
+dssT(symbol, newobj = paste0(symbol, "_tr"), async = TRUE, datasources = NULL)
 }
 \arguments{
 \item{symbol}{a character, name of the object to transpose}
@@ -18,8 +12,6 @@ dssT(
 \item{newobj}{a character, name of the new, transposed object}
 
 \item{async}{a logical, see datashield.aggregate}
-
-\item{wait}{a logical, see datashield.aggregate}
 
 \item{datasources}{a list of opal objects obtained after logging into the opal servers (see datashield.login)}
 }

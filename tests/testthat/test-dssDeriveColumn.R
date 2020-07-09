@@ -6,8 +6,14 @@ test_that("dssDeriveColumn works", {
   x <- dssMean('iris_der$new_col', datasources = opals)
   y <- mean(iris$new_col)
   expect_equal(x$global, y)
-  expect_error(dssDeriveColumn('iris_der', 'new_col', 'Sepal.Length[1]', async = FALSE, datasources = opals), regexp = 'individual elements')
+  expect_match({
+        try(dssDeriveColumn('iris_der', 'new_col', 'Sepal.Length[1]',  datasources = opals), silent = TRUE)
+        datashield.errors()[[1]]
+        }, regexp = 'individual elements')
 
-  expect_error(dssDeriveColumn('iris_der', 'new_col', 'rnorm(length(iris$Sepal.Length), mean = mean(iris$Sepal.Length),1)', async = FALSE, datasources = opals), regexp = 'rnorm, mean not allowed here')
+  expect_match({
+    try(dssDeriveColumn('iris_der', 'new_col', 'rnorm(length(iris$Sepal.Length), mean = mean(iris$Sepal.Length),1)', datasources = opals), silent = TRUE)
+     datashield.errors()[[1]]
+     }, regexp = 'rnorm, mean not allowed here')
 
 })

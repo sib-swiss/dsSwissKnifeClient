@@ -8,14 +8,14 @@
 #' If type is set to 'combine',  global column means are calculated if type is set to 'split', the column means are
 #' calculated separately for each node.
 #' @param async a logical, see datashield.aggregate
-#' @param wait a logical, see datashield.aggregate
+
 #' @param  datasources a list of opal objects obtained after logging into the opal servers (see datashield.login)
 #' @return a list with one element for each node (and one $global element if type='combine'). Each element contains, for each
 #' numeric column, the respective mean, number of rows and number of NAs
 #' @export
 #'
 
-dssColMeans <- function(x=NULL, na.rm = TRUE, collist = NULL, type='combine', async = TRUE, wait = TRUE,  datasources=NULL){
+dssColMeans <- function(x=NULL, na.rm = TRUE, collist = NULL, type='combine', async = TRUE,  datasources=NULL){
 
   #adapted from ds.mean
 
@@ -36,8 +36,8 @@ dssColMeans <- function(x=NULL, na.rm = TRUE, collist = NULL, type='combine', as
     expr <- c(expr, .encode.arg(collist))
   }
   # cally <- paste0(cally,")")
-  #  measures <- opal::datashield.aggregate(datasources, as.symbol(cally), async = async, wait = wait)
-  measures <- opal::datashield.aggregate(datasources, as.call(expr), async = async, wait = wait)
+  #  measures <- datashield.aggregate(datasources, as.symbol(cally), async = async)
+  measures <- datashield.aggregate(datasources, as.call(expr), async = async)
   measures <- sapply(measures, function(x){
     if(length(x) <= 1 && is.na(x)){
       return(NULL)

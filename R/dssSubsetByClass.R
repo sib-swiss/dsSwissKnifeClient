@@ -5,14 +5,14 @@
 #' @param variables a vector containing one or more names of dataframe columns or standalone factors by which to subset
 #' @param keep.cols a vector containing the names of the columns or vectors to keep in the result (by default all are kept)
 #' @param async same as in datashield.assign
-#' @param wait same as in datashield.assign
+
 #' @param datasources same as in datashield.assign
 #' @return It doesn't return anything of value, it creates a list containing dataframes (as many as the combinations of categories of "variables") on each node
 #' @examples
 #' # open a local pseudo connection:
 #' opals <-  dssCreatePseudoServers('test', servers = 1)
 #' # load iris and create a vector and a factor:
-#' datashield.aggregate(opals['local1'], as.symbol('partialData("iris", 41, 150)'))
+#' datashield.aggregate(opals[1], as.symbol('partialData("iris", 41, 150)'))
 #' play_env <- opals$local1$envir
 #' assign('a', play_env$iris$Petal.Length, envir = play_env)
 #' assign('b', factor(c(rep('category1',10), rep('category2',100))), envir = play_env)
@@ -29,7 +29,7 @@
 #' @export
 #'
 
-dssSubsetByClass <- function (x , subsets = "subClasses", variables = NULL, keep.cols = NULL, async = TRUE, wait = TRUE,
+dssSubsetByClass <- function (x , subsets = "subClasses", variables = NULL, keep.cols = NULL, async = TRUE,
                                datasources = NULL)
 {
   if (is.null(datasources)) {
@@ -44,6 +44,6 @@ dssSubsetByClass <- function (x , subsets = "subClasses", variables = NULL, keep
   }
   cally <- paste0(cally, ")")
 
-  datashield.assign(datasources, subsets, as.symbol(cally), async = async, wait = wait)
+  datashield.assign(datasources, subsets, as.symbol(cally), async = async)
   #finalcheck <- dsBaseClient:::isAssigned(datasources, subsets)
 }

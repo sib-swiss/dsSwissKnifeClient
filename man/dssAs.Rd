@@ -4,14 +4,7 @@
 \alias{dssAs}
 \title{Coerce to new type (like R as... functions)}
 \usage{
-dssAs(
-  newtype,
-  object,
-  newobject = NULL,
-  async = TRUE,
-  wait = TRUE,
-  datasources = NULL
-)
+dssAs(newtype, object, newobject = NULL, async = TRUE, datasources = NULL)
 }
 \arguments{
 \item{newtype}{a character, what type to convert to to (ex: "character" or "data.frame")}
@@ -21,8 +14,6 @@ dssAs(
 \item{newobject}{a character, optional, name of the newly created object. If missing the old object will be overwritten.}
 
 \item{async}{a logical, see datashield.aggregate}
-
-\item{wait}{a logical, see datashield.aggregate}
 
 \item{datasources}{a list of opal objects obtained after logging into the opal servers (see datashield.login)}
 }

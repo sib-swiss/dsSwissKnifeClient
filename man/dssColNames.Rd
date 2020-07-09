@@ -9,7 +9,6 @@ dssColNames(
   value = NULL,
   to.replace = NULL,
   async = TRUE,
-  wait = TRUE,
   datasources = NULL
 )
 }
@@ -21,8 +20,6 @@ dssColNames(
 \item{to.replace}{a vector containing the names of the columns to replace. It must have the same length as the value vector. If null, all column names will be replaced.}
 
 \item{async}{same as in datashield.assign}
-
-\item{wait}{same as in datashield.assign}
 
 \item{datasources}{same as in datashield.assign}
 }

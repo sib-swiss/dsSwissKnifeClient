@@ -4,7 +4,7 @@
 \alias{dssVar}
 \title{Compute the variance of a given vector}
 \usage{
-dssVar(what, type = "combine", async = TRUE, wait = TRUE, datasources = NULL)
+dssVar(what, type = "combine", async = TRUE, datasources = NULL)
 }
 \arguments{
 \item{what}{a character, the name of a numerical vector.}
@@ -14,8 +14,6 @@ If type is set to 'combine', a global variance is calculated.
 If type is set to 'split', the variance is calculated separately for each study.}
 
 \item{async}{same as in datashield.assign}
-
-\item{wait}{same as in datashield.assign}
 
 \item{datasources}{a list of opal objects obtained after logging into the opal servers (see datashield.login)}
 }

@@ -4,14 +4,7 @@
 \alias{dssHmisc}
 \title{Call selected functions from the package Hmisc}
 \usage{
-dssHmisc(
-  func,
-  ...,
-  newobj = NULL,
-  async = TRUE,
-  wait = TRUE,
-  datasources = NULL
-)
+dssHmisc(func, ..., newobj = NULL, async = TRUE, datasources = NULL)
 }
 \arguments{
 \item{func}{a character, the name of the function to call}
@@ -21,8 +14,6 @@ dssHmisc(
 \item{newobj}{a character name of the new object to be created on the nodes if this is an assign function, ignored otherwise.}
 
 \item{async}{a logical, see datashield.aggregate}
-
-\item{wait}{a logical, see datashield.aggregate}
 
 \item{datasources}{a list of opal objects obtained after logging into the opal servers (see datashield.login)}
 }

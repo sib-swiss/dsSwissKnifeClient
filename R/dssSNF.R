@@ -7,13 +7,13 @@
 #' @param action a character vector, what to do with the result. 'return' doesn't work for standardNormalization as it would disclose individual data.
 #' @param keep.name a character, if action is 'keep', the name of the  output object on the remote nodes. If NULL, a name will be generated.
 #' @param async a logical, see datashield.aggregate
-#' @param wait a logical, see datashield.aggregate
+
 #' @param  datasources a list of opal objects obtained after logging into the opal servers (see datashield.login)
 
 #' @export
 #'
 
-dssSNF <- function(func, symbols,..., action = c('keep', 'return'), keep.name = NULL, async = TRUE, wait = TRUE, datasources = NULL){
+dssSNF <- function(func, symbols,..., action = c('keep', 'return'), keep.name = NULL, async = TRUE, datasources = NULL){
 
   if(is.null(datasources)){
     datasources <- dsBaseClient_findLoginObjects()
@@ -27,7 +27,7 @@ dssSNF <- function(func, symbols,..., action = c('keep', 'return'), keep.name = 
     expr <- paste0(expr,  ',"',keep.name, '"')
   }
   expr <- paste0(expr, ')')
-  opal::datashield.aggregate(datasources, as.symbol(expr), async, wait)
+
 
 
 }

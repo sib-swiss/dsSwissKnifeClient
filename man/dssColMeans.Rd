@@ -10,7 +10,6 @@ dssColMeans(
   collist = NULL,
   type = "combine",
   async = TRUE,
-  wait = TRUE,
   datasources = NULL
 )
 }
@@ -27,8 +26,6 @@ If type is set to 'combine',  global column means are calculated if type is set 
 calculated separately for each node.}
 
 \item{async}{a logical, see datashield.aggregate}
-
-\item{wait}{a logical, see datashield.aggregate}
 
 \item{datasources}{a list of opal objects obtained after logging into the opal servers (see datashield.login)}
 }

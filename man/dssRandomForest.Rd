@@ -10,7 +10,6 @@ dssRandomForest(
   expl_vars = NULL,
   testData = NULL,
   async = TRUE,
-  wait = TRUE,
   datasources = NULL
 )
 }

@@ -14,8 +14,7 @@ dssPivot(
   completeCases = FALSE,
   fun.aggregate = NULL,
   datasources = NULL,
-  async = FALSE,
-  wait = TRUE
+  async = FALSE
 )
 }
 \arguments{

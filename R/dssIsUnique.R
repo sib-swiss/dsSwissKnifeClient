@@ -8,6 +8,6 @@ dssIsUnique <- function(what, datasources = NULL){
     datasources <- dsBaseClient_findLoginObjects()
   }
   expr <- paste0('isUnique(', what,')')
- datashield.aggregate(datasources, as.symbol(expr), async = TRUE, wait = TRUE)
+ datashield.aggregate(datasources, as.symbol(expr), async = TRUE)
 
 }

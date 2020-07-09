@@ -14,7 +14,7 @@
 #' @param emphasize_level a number, which level should be emphasized (stronger colour, more opaque, layered on top)
 #' @param type a character, "combine" (the default) or "split"
 #' @param async a logical, see datashield.aggregate
-#' @param wait a logical, see datashield.aggregate
+
 #' @param  datasources a list of opal objects obtained after logging into the opal servers (see datashield.login)
 #' @return  a list with the format (lims = <calculated or specified limits>, img = bitmap of the image to be drawn, legend = the colours used for each category)
 #' @export
@@ -22,7 +22,7 @@
 
 dssSmooth2d <-  function (x, y, npoints = 128, shades = 8, draw.image = FALSE, labels = TRUE, axes = TRUE,
                            categories = NULL, colour.pool = c('#377eb8','#e41a1c','#4daf4a','#984ea3','#ff7f00','#a65628','#f781bf','#999999'),
-                           emphasize_level = 0, type = "combine", async = FALSE, wait = TRUE, datasources = NULL)
+                           emphasize_level = 0, type = "combine", async = FALSE, datasources = NULL)
 {
   if (is.null(datasources)) {
     datasources <- dsBaseClient_findLoginObjects()
@@ -35,7 +35,7 @@ dssSmooth2d <-  function (x, y, npoints = 128, shades = 8, draw.image = FALSE, l
     keep.cols <- NULL
     holder <- "tempSmooth"
     dssSubsetByClass(c(x, y), subsets = holder, variables = categories,
-                      keep.cols = keep.cols, async = async, wait = wait,
+                      keep.cols = keep.cols, async = async,
                       datasources = datasources)
   }
   bandwidth.arg <- .encode.arg(bandwidth)
@@ -45,7 +45,7 @@ dssSmooth2d <-  function (x, y, npoints = 128, shades = 8, draw.image = FALSE, l
                  y, "','", bandwidth.arg, "','", lims.arg, "',", npoints,
                  ")")
   res <- datashield.aggregate(datasources, as.symbol(expr),
-                                    async = FALSE, wait = wait)
+                                    async = FALSE)
   res <- res[!sapply(res, is.null)]
   if (length(res) == 0) {
     return(NULL)

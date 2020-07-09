@@ -11,7 +11,6 @@ dssPrincomp(
   scale = FALSE,
   scores.suffix = "_scores",
   async = TRUE,
-  wait = TRUE,
   datasources = NULL
 )
 }
@@ -29,8 +28,6 @@ calculated separately for each node.}
 \item{scores.suffix}{a character. The  name of the scores dataframe will be the concatenation between df and scores.suffix.}
 
 \item{async}{a logical, see datashield.aggregate}
-
-\item{wait}{a logical, see datashield.aggregate}
 
 \item{datasources}{a list of opal objects obtained after logging into the opal servers (see datashield.login)}
 }

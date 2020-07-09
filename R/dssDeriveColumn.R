@@ -7,7 +7,7 @@
 #' @param new.col a character, the name of the new column
 #' @param formula a character, the formula used to calculate the new column. It can reference columns from the dataframe, or other objects in the session
 #' @param async same as in datashield.assign
-#' @param wait same as in datashield.assign
+
 #' @param datasources same as in datashield.assign
 #' @return It doesn't return anything, the dataframe in the server session will now contain the new column.
 #' @examples
@@ -28,13 +28,13 @@
 #' dssDeriveColumn('iris', 'new_col', 'rnorm(length(iris$Sepal.Length), mean = mean(iris$Sepal.Length),1)', datasources = opals)
 #'
 
-dssDeriveColumn <- function(df, col.name, formula, datasources = NULL, async = TRUE, wait = TRUE){
+dssDeriveColumn <- function(df, col.name, formula, datasources = NULL, async = TRUE){
   if(is.null(datasources)){
     datasources <- dsBaseClient_findLoginObjects()
   }
   formula <- .encode.arg(formula)
   cally <- paste0('deriveColumn(', df,',"', col.name, '", "', formula, '")')
-  datashield.assign(datasources, df, as.symbol(cally), async = async, wait = wait)
+  datashield.assign(datasources, df, as.symbol(cally), async = async)
 
 }
 

@@ -4,13 +4,7 @@
 \alias{dssShowFactors}
 \title{Describe factors in a dataframe}
 \usage{
-dssShowFactors(
-  what,
-  show.all = FALSE,
-  async = TRUE,
-  wait = TRUE,
-  datasources = NULL
-)
+dssShowFactors(what, show.all = FALSE, async = TRUE, datasources = NULL)
 }
 \arguments{
 \item{what}{a character name of the dataframe}
@@ -18,8 +12,6 @@ dssShowFactors(
 \item{show.all}{a logical, default FALSE. If FALSE it limits to the first 50 levels, otherwise it returns all of them.}
 
 \item{async}{a logical, see datashield.aggregate}
-
-\item{wait}{a logical, see datashield.aggregate}
 
 \item{datasources}{a list of opal objects obtained after logging into the opal servers (see datashield.login)}
 }

@@ -4,14 +4,7 @@
 \alias{dssCov}
 \title{The covariance matrix of a data frame or matrix}
 \usage{
-dssCov(
-  x,
-  collist = NULL,
-  type = "combine",
-  async = TRUE,
-  wait = TRUE,
-  datasources = NULL
-)
+dssCov(x, collist = NULL, type = "combine", async = TRUE, datasources = NULL)
 }
 \arguments{
 \item{x}{a character name of the data frame}
@@ -24,8 +17,6 @@ If type is set to 'combine',  global column means are calculated if type is set 
 calculated separately for each node.}
 
 \item{async}{a logical, see datashield.aggregate}
-
-\item{wait}{a logical, see datashield.aggregate}
 
 \item{datasources}{a list of opal objects obtained after logging into the opal servers (see datashield.login)}
 }

@@ -9,7 +9,6 @@ dssAddDaysInterval(
   df,
   description.list,
   async = TRUE,
-  wait = TRUE,
   datasources = NULL
 )
 }
@@ -22,8 +21,6 @@ dssAddDaysInterval(
 The format is list(<new column name> = list(start_date = '<existing date column>', end_date = '<existing date column>')) - see example.}
 
 \item{async}{same as in datashield.assign}
-
-\item{wait}{same as in datashield.assign}
 
 \item{datasources}{same as in datashield.assign}
 }

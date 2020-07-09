@@ -12,7 +12,7 @@
 #' @export
 #'
 
-dssPivot <- function(symbol, what, value.var, cols = NULL, formula = NULL, by.col = NULL, completeCases = FALSE, fun.aggregate = NULL, datasources = NULL, async = FALSE, wait = TRUE){
+dssPivot <- function(symbol, what, value.var, cols = NULL, formula = NULL, by.col = NULL, completeCases = FALSE, fun.aggregate = NULL, datasources = NULL, async = FALSE){
   # transform long to wide format (function 'wide' on the server uses reshape2::dcast)
   if(is.null(datasources)){
     datasources <- dsBaseClient_findLoginObjects()
@@ -33,7 +33,7 @@ dssPivot <- function(symbol, what, value.var, cols = NULL, formula = NULL, by.co
   fun.aggregate <- .encode.arg(fun.aggregate)
   expr <- paste0(expr, ', "', fun.aggregate, '"')
   expr <- paste0(expr, ')')
-  datashield.assign(datasources, symbol, as.symbol(expr), async = async, wait=wait)
+
   #invisible(sapply(datasources, .check.messages))
 
 }
@@ -46,12 +46,12 @@ dssPivot <- function(symbol, what, value.var, cols = NULL, formula = NULL, by.co
 #' @param cols a vector of columns used in the formula. They must exist in 'what'. If null, all the columns from 'what' will be used.
 #' @param by.col typically the patient id, the column that will end up as key of the resulting 'wide' data.frame.
 #' @param async a logical, see datashield.aggregate
-#' @param wait a logical, see datashield.aggregate
+
 #' @param  datasources a list of opal objects obtained after logging into the opal servers (see datashield.login)
 #' @export
 #'
 
-dssSuggestPivot <- function(what, cols = NULL, by.col = NULL,  async = TRUE, wait = TRUE, datasources = NULL){
+dssSuggestPivot <- function(what, cols = NULL, by.col = NULL,  async = TRUE, datasources = NULL){
   if(is.null(datasources)){
     datasources <- dsBaseClient_findLoginObjects()
   }#' @param colour.pool vector of colours that will be picked sequentially.
@@ -61,7 +61,7 @@ dssSuggestPivot <- function(what, cols = NULL, by.col = NULL,  async = TRUE, wai
   expr <- paste0(expr, ',"', cols.arg, '"')
   by.col.arg <- .encode.arg(by.col)
   expr <- paste0(expr, ', "', by.col.arg , '"', ')')
-  opal::datashield.aggregate(datasources, as.symbol(expr), async, wait)
+
 
 }
 
