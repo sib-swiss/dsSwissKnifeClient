@@ -9,8 +9,7 @@ test_that("Classification works (discrete y).", {
 
   # On each server node, choose 100 flowers among 150 to be the training data
   set.seed(1234)
-  idx1 = sample(150, 100)
-  idx2 = sample(150, 100)
+
 
   #datashield.assign(opals, '_', quote(set.seed(1234)))
 #  datashield.assign(opals, 'idx1', quote(sample(150, 100)))
@@ -47,9 +46,7 @@ test_that("Regression works (continuous y).", {
   )
 
   # On each server node, choose 100 flowers among 150 to be the training data
-  set.seed(1234)
-  idx1 = sample(150, 100)
-  idx2 = sample(150, 100)
+
 
   ##datashield.assign(opals, '_', quote(set.seed(1234)))
   #datashield.assign(opals, 'idx1', quote(sample(150, 100)))

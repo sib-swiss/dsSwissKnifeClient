@@ -1,9 +1,9 @@
-pkgload::load_all('/home/iulian/datashield/DSI')
-pkgload::load_all('/home/iulian/datashield/DSOpal')
+#pkgload::load_all('/home/iulian/datashield/DSI')
+#pkgload::load_all('/home/iulian/datashield/DSOpal')
 pkgload::load_all('/home/iulian/datashield/DSLite')
 pkgload::load_all('/home/iulian/datashield/dsSwissKnife')
-dslite.server1 <- newDSLiteServer(config = defaultDSConfiguration(include=c('dsSwissKnife')))
-dslite.server2 <- newDSLiteServer(config = defaultDSConfiguration(include=c('dsSwissKnife')))
+dslite.server1 <<- newDSLiteServer(config = defaultDSConfiguration(include=c('dsSwissKnife')))
+dslite.server2 <<- newDSLiteServer(config = defaultDSConfiguration(include=c('dsSwissKnife')))
 
 #library(DSI)
 #library(dsBaseClient)
@@ -24,7 +24,9 @@ datashield.aggregate(opals['server1'], as.symbol('partialData("iris", 1, 40)'))
 datashield.aggregate(opals['server2'], as.symbol('partialData("iris", 41, 150)'))
 datashield.aggregate(opals['server1'], as.symbol('fullData("dataFarkas", "GRridge")') )
 data("iris")
-
+idx1 <<- sample(150, 100) # for randomforests
+idx2 <<- sample(150, 100)
+set.seed(1234)
 
 
 
