@@ -15,7 +15,6 @@
 #' from the dataframe name: <dataframe name>_km_clust<number of clusters>.
 #' If iter.max is 0 and centers is a matrix the function simply creates the cluster membership factor (as above) using the given centers.
 #' @param async same as in datashield.assign
-
 #' @param datasources same as in datashield.assign
 #' @return A list containing one (in the case of 'combined') or more ('split') stripped down kmeans objects.
 #' @examples
@@ -36,7 +35,7 @@
 
 
 dssKmeans <- function(what, centers, iter.max = 10, nstart = 1, type = 'combine', algorithm = "Forgy",
-                       async = TRUE, datasources = NULL){
+                      async = TRUE, datasources = NULL){
 
   if(is.null(datasources)){
     datasources <- dsBaseClient_findLoginObjects()
@@ -46,7 +45,7 @@ dssKmeans <- function(what, centers, iter.max = 10, nstart = 1, type = 'combine'
       stop('For simple cluster allocation (no iterations) "centers" must be a matrix.')
     }
     expr <- list(as.symbol('partialKmeans'), what, .encode.arg(as.data.frame(centers)), NULL, TRUE)
-    # kms <- datashield.aggregate(datasources, as.symbol(expr), async = async)
+    # kms <- datashield.aggregate(datasources, as.symbol(expr), async = async, wait = wait)
     return(datashield.aggregate(datasources, as.call(expr), async = async))
   }
   if(type == 'split'){ # execute on each node and get out
@@ -82,7 +81,7 @@ dssKmeans <- function(what, centers, iter.max = 10, nstart = 1, type = 'combine'
 
     global.means <- dssColMeans(what, type = 'combine', datasources = datasources)
     global.means <- global.means$global$means
-
+    this.km <- .do_kmeans(what, centers, iter.max, global.means, ranges, async, datasources)
     #bad.km <- list()
     if(nstart >= 2){
 
@@ -92,7 +91,7 @@ dssKmeans <- function(what, centers, iter.max = 10, nstart = 1, type = 'combine'
         driving.node <- names(first.km)
         centers <- first.km[[1]]$centers
         rownames(centers) <- paste0('c', 1:k)
-
+        new.km <- .do_kmeans(what, centers, iter.max, global.means, ranges, async, datasources)
         # keep the one with the lowest withinss
         if(new.km$tot.withinss < this.km$tot.withinss){
           message(paste0('Keeping start ', i))
@@ -104,7 +103,7 @@ dssKmeans <- function(what, centers, iter.max = 10, nstart = 1, type = 'combine'
       }
     }
     #expr <- paste0('partialKmeans("', what, '","', .encode.arg(as.data.frame(this.km$centers)), '", NULL, TRUE)' )
-    #datashield.aggregate(datasources, as.symbol(expr), async = async)
+    #datashield.aggregate(datasources, as.symbol(expr), async = async, wait = wait)
     #build expr as a list to be sent as.call
 
     expr <- list(as.symbol('partialKmeans'), what, .encode.arg(as.data.frame(this.km$centers)), NULL, TRUE)
@@ -130,7 +129,7 @@ dssKmeans <- function(what, centers, iter.max = 10, nstart = 1, type = 'combine'
 }
 
 
-.do_kmeans <- function(what, centers, iter.max = 10, mns, ranges, async = TRUE, datasources = NULL ){
+.do_kmeans <- function(what, centers, iter.max = 10, mns, ranges, async = TRUE,  datasources = NULL ){
 
   #initialization
   old.centers <- centers
@@ -160,7 +159,7 @@ dssKmeans <- function(what, centers, iter.max = 10, nstart = 1, type = 'combine'
     #build expr as a list to be sent as.call
 
     expr <- list(as.symbol('partialKmeans'), what, .encode.arg(as.data.frame(new.centers)))
-    # kms <- datashield.aggregate(datasources, as.symbol(expr), async = async)
+    # kms <- datashield.aggregate(datasources, as.symbol(expr), async = async, wait = wait)
     kms <- datashield.aggregate(datasources, as.call(expr), async = async)
     new.km <- Reduce(reducer, kms)
     #new.km$clusters <- sapply(names(kms), function(x){

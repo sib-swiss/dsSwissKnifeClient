@@ -1,6 +1,6 @@
 test_that("dssHmisc works", {
 
- with(opals$local1$envir,
+ with(session1,
       {
       set.seed(123)
       src <- data.frame(age = rnorm(400, 50, 10))
@@ -12,6 +12,6 @@ test_that("dssHmisc works", {
       src$d.time <- pmin(src$d.time, src$cens)
       })
 
-    r<- dssHmisc('rcorrcens', 'survival::Surv(d.time, death) ~ age + bp', data = 'src', async = FALSE, datasources = opals["local1"])
-    expect_lte(r$local1[1,1] - 0.4753143, 1e-05)
+    r<- dssHmisc('rcorrcens', 'survival::Surv(d.time, death) ~ age + bp', data = 'src', async = FALSE, datasources = opals["server1"])
+    expect_lte(r$server1[1,1] - 0.4753143, 1e-05)
 })

@@ -1,8 +1,8 @@
 test_that("dssIsUnique works", {
   rem <- dssIsUnique('iris$Petal.Length', datasources = opals)
 
-  expect_equal(rem, list(local1=FALSE, local2=FALSE))
-  opals$local1$envir$u <- c(1,2,3)
-  rem <- dssIsUnique('u', datasources = opals["local1"])
-  expect_true(rem$local1)
+  expect_equal(rem, list(server1=FALSE, server2=FALSE))
+  session1$u <- c(1,2,3)
+  rem <- dssIsUnique('u', datasources = opals["server1"])
+  expect_true(rem$server1)
 })

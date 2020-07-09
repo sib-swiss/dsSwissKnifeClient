@@ -1,10 +1,10 @@
 test_that("dssRange split works", {
   rem <- dssRange('iris', type = 'split', datasources = opals)
-  r1 <- sapply(part_iris_1[,1:4], range, simplify = FALSE, USE.NAMES = TRUE)
-  r2 <- sapply(part_iris_2[,1:4], range, simplify = FALSE, USE.NAMES = TRUE)
+  r1 <- sapply(session1$iris[,1:4], range, simplify = FALSE, USE.NAMES = TRUE)
+  r2 <- sapply(session2$iris[,1:4], range, simplify = FALSE, USE.NAMES = TRUE)
   # are the differences within 5%?
-  first_term1 <- Map(abs, rem$local1$iris)
-  first_term2 <- Map(abs, rem$local2$iris)
+  first_term1 <- Map(abs, rem$server1$iris)
+  first_term2 <- Map(abs, rem$server2$iris)
   second_term1 <- Map(abs, r1)
   second_term2 <- Map(abs, r2)
   small_error1 <- Map('/', Map('-', first_term1, second_term1), second_term1)

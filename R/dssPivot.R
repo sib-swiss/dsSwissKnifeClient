@@ -33,7 +33,7 @@ dssPivot <- function(symbol, what, value.var, cols = NULL, formula = NULL, by.co
   fun.aggregate <- .encode.arg(fun.aggregate)
   expr <- paste0(expr, ', "', fun.aggregate, '"')
   expr <- paste0(expr, ')')
-
+  datashield.assign(datasources, symbol, as.symbol(expr), async = async)
   #invisible(sapply(datasources, .check.messages))
 
 }
@@ -61,7 +61,7 @@ dssSuggestPivot <- function(what, cols = NULL, by.col = NULL,  async = TRUE, dat
   expr <- paste0(expr, ',"', cols.arg, '"')
   by.col.arg <- .encode.arg(by.col)
   expr <- paste0(expr, ', "', by.col.arg , '"', ')')
-
+  datashield.aggregate(datasources, as.symbol(expr), async = async)
 
 }
 
