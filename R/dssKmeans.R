@@ -38,7 +38,7 @@ dssKmeans <- function(what, centers, iter.max = 10, nstart = 1, type = 'combine'
                       async = TRUE, datasources = NULL){
 
   if(is.null(datasources)){
-    datasources <- dsBaseClient_findLoginObjects()
+    datasources <- datashield.connections_find()
   }
   if(iter.max == 0 ){
     if(!is.matrix(centers)){

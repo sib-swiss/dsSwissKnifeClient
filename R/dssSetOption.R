@@ -12,7 +12,7 @@
 
 dssSetOption <- function(option_list,  async = TRUE, datasources = NULL){
   if(is.null(datasources)){
-    datasources <- dsBaseClient_findLoginObjects()
+    datasources <- datashield.connections_find()
   }
 
   expr <- list(as.symbol('setOptionDSS'), .encode.arg(option_list))
@@ -34,7 +34,7 @@ dssSetOption <- function(option_list,  async = TRUE, datasources = NULL){
 
 dssGetOption <- function(opt = NULL,  async = TRUE, datasources = NULL){
   if(is.null(datasources)){
-    datasources <- dsBaseClient_findLoginObjects()
+    datasources <- datashield.connections_find()
   }
 
   expr <- list(as.symbol('getOptionDSS'), .encode.arg(opt))

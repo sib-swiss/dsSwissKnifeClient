@@ -8,7 +8,7 @@
 
 dssRange <- function(..., type= 'combine', datasources = NULL){
   if(is.null(datasources)){
-    datasources <- dsBaseClient_findLoginObjects()
+    datasources <- datashield.connections_find()
   }
   args <- paste(..., sep = "', '")
 

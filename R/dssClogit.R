@@ -20,7 +20,7 @@
 
 dssClogit <- function(..., async = TRUE, datasources = NULL){
   if(is.null(datasources)){
-    datasources <- dsBaseClient_findLoginObjects()
+    datasources <- datashield.connections_find()
   }
   arglist <- list(...) # pass the args list almost as is to clogit on the local nodes
   if(typeof(arglist$formula) ==  'language'){

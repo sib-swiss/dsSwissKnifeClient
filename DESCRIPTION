@@ -14,7 +14,7 @@ License:
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 7.1.0
-Depends: DSI, 
-  DSOpal
+Depends: R (>= 3.5.0),
+    DSI
 Suggests: VIM,
     testthat (>= 2.1.0)

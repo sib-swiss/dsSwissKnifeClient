@@ -14,7 +14,7 @@
 
 dssAs<- function(newtype, object, newobject = NULL,  async = TRUE, datasources = NULL){
   if(is.null(datasources)){
-    datasources <- dsBaseClient_findLoginObjects()
+    datasources <- datashield.connections_find()
   }
   if(is.null(newobject)){
     if(grepl(object, '$', fixed = TRUE)){

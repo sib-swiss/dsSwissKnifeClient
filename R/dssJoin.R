@@ -27,7 +27,7 @@ dssJoin <- function(what=NULL, symbol=NULL, by = NULL, join.type = 'full', async
 
   # if no opal login details are provided look for 'opal' objects in the environment
   if(is.null(datasources)){
-    datasources <- dsBaseClient_findLoginObjects()
+    datasources <- datashield.connections_find()
   }
 
   # if not more than one input objects stop

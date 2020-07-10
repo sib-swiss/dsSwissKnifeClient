@@ -14,7 +14,7 @@
 #'
 dssVar <- function(what, type = 'combine', async = TRUE, datasources = NULL){
   if(is.null(datasources)){
-    datasources <- dsBaseClient_findLoginObjects()
+    datasources <- datashield.connections_find()
   }
   xpoint <- NULL
   if(type == 'split'){

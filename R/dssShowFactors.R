@@ -10,7 +10,7 @@
 
 dssShowFactors <- function(what, show.all = FALSE,async = TRUE, datasources = NULL){
   if(is.null(datasources)){
-    datasources <- dsBaseClient_findLoginObjects()
+    datasources <- datashield.connections_find()
   }
   limit.levels <- as.character(!show.all)
   expr <- paste0('showInfo(', what, ',"', limit.levels, '")')

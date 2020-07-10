@@ -27,7 +27,7 @@ dssPrincomp <- function(df, type = 'combine', center = TRUE, scale = FALSE, scor
   }
 
   if(is.null(datasources)){
-    datasources <- dsBaseClient_findLoginObjects()
+    datasources <- datashield.connections_find()
   }
 
   covlist <- dssCov(df, type = type, async = async, datasources = datasources)
@@ -102,7 +102,7 @@ biplot.dssPrincomp <- function (x, choices = 1L:2L, type = 'combine', levels = N
   }
 
   if(is.null(datasources)){
-    datasources <- dsBaseClient_findLoginObjects()
+    datasources <- datashield.connections_find()
   }
 
   if (length(choices) != 2L){

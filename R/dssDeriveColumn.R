@@ -30,7 +30,7 @@
 
 dssDeriveColumn <- function(df, col.name, formula, datasources = NULL, async = TRUE){
   if(is.null(datasources)){
-    datasources <- dsBaseClient_findLoginObjects()
+    datasources <- datashield.connections_find()
   }
   formula <- .encode.arg(formula)
   cally <- paste0('deriveColumn(', df,',"', col.name, '", "', formula, '")')

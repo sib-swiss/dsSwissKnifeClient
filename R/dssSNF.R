@@ -16,7 +16,7 @@
 dssSNF <- function(func, symbols,..., action = c('keep', 'return'), keep.name = NULL, async = TRUE, datasources = NULL){
 
   if(is.null(datasources)){
-    datasources <- dsBaseClient_findLoginObjects()
+    datasources <- datashield.connections_find()
   }
   symbols <- .encode.arg(symbols)
   action <- .encode.arg(action)

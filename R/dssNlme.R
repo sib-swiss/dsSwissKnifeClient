@@ -9,7 +9,7 @@
 
 dssNlme_groupedData <- function(newobj, ..., async = TRUE, datasources = NULL){
   if(is.null(datasources)){
-    datasources <- dsBaseClient_findLoginObjects()
+    datasources <- datashield.connections_find()
   }
   arglist <- list(...) # pass the args list almost as is to  the local nodes
   if(typeof(arglist$formula) ==  'language'){
@@ -41,7 +41,7 @@ dssNlme_groupedData <- function(newobj, ..., async = TRUE, datasources = NULL){
 #'
 dssNlme_lme <- function(..., async = TRUE, datasources = NULL){
   if(is.null(datasources)){
-    datasources <- dsBaseClient_findLoginObjects()
+    datasources <- datashield.connections_find()
   }
   arglist <- list(...) # pass the args list almost as is to  the local nodes
   arglist <- sapply(arglist, function(x){

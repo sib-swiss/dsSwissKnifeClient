@@ -9,7 +9,7 @@
 
 dssRbind <- function(newobj, x, y, new.colnames = NULL, async = TRUE, datasources = NULL){
   if(is.null(datasources)){
-    datasources <- dsBaseClient_findLoginObjects()
+    datasources <- datashield.connections_find()
   }
 
   new.colnames <- .encode.arg(new.colnames)

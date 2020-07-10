@@ -25,7 +25,7 @@ dssSmooth2d <-  function (x, y, npoints = 128, shades = 8, draw.image = FALSE, l
                            emphasize_level = 0, type = "combine", async = FALSE, datasources = NULL)
 {
   if (is.null(datasources)) {
-    datasources <- dsBaseClient_findLoginObjects()
+    datasources <- datashield.connections_find()
   }
   bandwidth <- list(x = .bw.args(x, datasources), y = .bw.args(y,
                                                                datasources))

@@ -9,7 +9,7 @@
 dssMean <- function (what, na.rm = TRUE, datasources = NULL) {
   # no more split/combined, return both
   if (is.null(datasources)) {
-    datasources <- dsBaseClient_findLoginObjects()
+    datasources <- datashield.connections_find()
   }
   expr <- paste0('partMean(', what, ', ',na.rm, ')')
   mns <- datashield.aggregate(datasources, as.symbol(expr))

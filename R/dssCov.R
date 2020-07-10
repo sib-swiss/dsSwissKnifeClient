@@ -16,7 +16,7 @@
 
 dssCov <- function(x,  collist = NULL, type = 'combine',  async = TRUE, datasources = NULL){
   if(is.null(datasources)){
-    datasources <- dsBaseClient_findLoginObjects()
+    datasources <- datashield.connections_find()
   }
   mlist <- dssColMeans(x,  FALSE, collist, type, async = async, datasources)
 

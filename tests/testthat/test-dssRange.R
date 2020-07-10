@@ -1,5 +1,5 @@
 test_that("dssRange split works", {
-  rem <- dssRange('iris', type = 'split', datasources = opals)
+  rem <- dssRange('iris', type = 'split')
   r1 <- sapply(session1$iris[,1:4], range, simplify = FALSE, USE.NAMES = TRUE)
   r2 <- sapply(session2$iris[,1:4], range, simplify = FALSE, USE.NAMES = TRUE)
   # are the differences within 5%?

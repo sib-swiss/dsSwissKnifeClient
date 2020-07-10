@@ -12,7 +12,7 @@ dssDim <- function(x=NULL, async = TRUE,  datasources=NULL){
   #adapted from ds.mean
 
   if(is.null(datasources)){
-    datasources <- dsBaseClient_findLoginObjects()
+    datasources <- datashield.connections_find()
   }
 
   if(is.null(x)){

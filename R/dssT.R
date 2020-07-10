@@ -14,7 +14,7 @@
 dssT <- function(symbol, newobj = paste0(symbol, '_tr'), async = TRUE, datasources = NULL){
 
   if(is.null(datasources)){
-    datasources <- dsBaseClient_findLoginObjects()
+    datasources <- datashield.connections_find()
   }
 
   expr <- paste0('tDSS(', symbol, ')')

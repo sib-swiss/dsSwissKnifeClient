@@ -17,7 +17,7 @@ builder$append(server="server2", url='dslite.server2',driver = "DSLiteDriver")
 logindata <- builder$build()
 
 
-opals <- datashield.login(logins = logindata, assign = TRUE)
+opals <<- datashield.login(logins = logindata, assign = TRUE)
 session1 <- dslite.server1$getSession(dslite.server1$getSessionIds())
 session2 <- dslite.server2$getSession(dslite.server2$getSessionIds())
 datashield.aggregate(opals['server1'], as.symbol('partialData("iris", 1, 40)'))
