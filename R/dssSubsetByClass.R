@@ -40,7 +40,9 @@ dssSubsetByClass <- function (x , subsets = "subClasses", variables = NULL, keep
   variables <- .encode.arg(variables)
   cally <- paste0("subsetByClass('", x, "', '", variables, "'")
   if(!is.null(keep.cols)){
-    cally <- paste0(cally, ", c('", paste(keep.cols, collapse = "','"), "')")
+    keep.cols <- .encode.arg(keep.cols)
+    #    cally <- paste0(cally, ", c('", paste(keep.cols, collapse = "','"), "')")
+    cally <- paste0(cally, ", '", keep.cols, "'")
   }
   cally <- paste0(cally, ")")
 
