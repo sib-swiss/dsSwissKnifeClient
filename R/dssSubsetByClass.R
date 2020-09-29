@@ -33,7 +33,7 @@ dssSubsetByClass <- function (x , subsets = "subClasses", variables = NULL, keep
                                datasources = NULL)
 {
   if (is.null(datasources)) {
-    datasources <- datashield.connections_find
+    datasources <- datashield.connections_find()
   }
 
   x <- .encode.arg(x)
