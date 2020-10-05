@@ -25,7 +25,7 @@ dssVIM <- function(func, newobj = NULL, async = TRUE, datasources = NULL, ...){
 }
 
 
-plot.dss.aggr <- function(x){
+plot.dssaggr <- function(x){
   plot.new()
   lim <- par()$usr
   rasterImage(x$x, lim[1], lim[3], lim[2], lim[4])
