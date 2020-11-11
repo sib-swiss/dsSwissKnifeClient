@@ -12,7 +12,6 @@
 #' @export
 #'
 dssVIM <- function(func, newobj = NULL, async = TRUE, datasources = NULL, ...){
-
   if(is.null(datasources)){
     datasources <- dsBaseClient:::findLoginObjects()
   }
@@ -21,7 +20,6 @@ dssVIM <- function(func, newobj = NULL, async = TRUE, datasources = NULL, ...){
   newobj <- .encode.arg(newobj)
   cally <- paste0('VIMDSS("', func, '","', arglist, '","', newobj, '")')
   datashield.aggregate(datasources, as.symbol(cally), async = async)
-
 }
 
 
