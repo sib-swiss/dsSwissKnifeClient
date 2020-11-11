@@ -21,6 +21,7 @@
 dssCut <- function(x, new.name = 'newObj', df = NULL, in.place = FALSE, breaks =  NULL, labels = NULL, ...,  async = TRUE, datasources = NULL){
   if(is.null(datasources)){
     datasources <- datashield.connections_find()
+
   }
 
 
