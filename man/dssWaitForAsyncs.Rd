@@ -15,7 +15,7 @@ dssWaitForAsyncs(datasources, sleep = 0.5)
 a list containing the results of the commands (if they were supposed to return anything) or raw(0)
 }
 \description{
-It polls the current opal commands launched with async = TRUE, wait = FALSE
+It polls the current opal commands launched with async = TRUE
 until all of them complete. Allows the launch of nonblocking datashield commands, useful in
 web applications. The "sleep" argument must not be set too low (0.3 seconds is probably a good minimum)
 otherwise it might look like a DOS attack and be blocked by the remote server.

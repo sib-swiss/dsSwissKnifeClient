@@ -18,7 +18,6 @@ dssSmooth2d(
   emphasize_level = 0,
   type = "combine",
   async = FALSE,
-  wait = TRUE,
   datasources = NULL
 )
 }
@@ -47,8 +46,6 @@ there are more levels, the colours will be recycled.}
 \item{type}{a character, "combine" (the default) or "split"}
 
 \item{async}{a logical, see datashield.aggregate}
-
-\item{wait}{a logical, see datashield.aggregate}
 
 \item{datasources}{a list of opal objects obtained after logging into the opal servers (see datashield.login)}
 }

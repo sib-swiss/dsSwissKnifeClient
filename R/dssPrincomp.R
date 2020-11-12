@@ -9,7 +9,7 @@
 #' @param scale a logical, should the columns be scaled? Default FALSE.
 #' @param scores.suffix a character. The  name of the scores dataframe will be the concatenation between df and scores.suffix.
 #' @param async a logical, see datashield.aggregate
-#' @param wait a logical, see datashield.aggregate
+
 #' @param  datasources a list of opal objects obtained after logging into the opal servers (see datashield.login)
 #' @return a list with one element for each node (or one $global element if type='combine'). Each element contains
 #' a stripped down princomp object (the 'scores' element is replaced with the name of the scores dataframe on the remote nodes)
@@ -20,17 +20,17 @@
 
 
 dssPrincomp <- function(df, type = 'combine', center = TRUE, scale = FALSE, scores.suffix = '_scores',
-                         async = TRUE, wait = TRUE, datasources = NULL){
+                         async = TRUE, datasources = NULL){
 
   if(!(type %in% c('combine', 'split'))){
     stop('Function argument "type" has to be either "combine" or "split"')
   }
 
   if(is.null(datasources)){
-    datasources <- dsBaseClient_findLoginObjects()
+    datasources <- datashield.connections_find()
   }
 
-  covlist <- dssCov(df, type = type, async = async, wait = wait, datasources = datasources)
+  covlist <- dssCov(df, type = type, async = async, datasources = datasources)
 
   pca.builder <- function(x){
     pca <- princomp(covmat = x$vcov)
@@ -63,9 +63,9 @@ dssPrincomp <- function(df, type = 'combine', center = TRUE, scale = FALSE, scor
     } else {
       nodes <- datasources[x]
     }
-    #opal::datashield.assign(nodes, paste0(df, scores.suffix), as.symbol(expr), async = async, wait = wait)
+    #datashield.assign(nodes, paste0(df, scores.suffix), as.symbol(expr), async = async)
     #send expr as.call and not as.symbol (10 thousand char limit):
-    opal::datashield.assign(nodes, paste0(df, scores.suffix), as.call(expr), async = async, wait = wait)
+    datashield.assign(nodes, paste0(df, scores.suffix), as.call(expr), async = async)
 
   }
 
@@ -102,7 +102,7 @@ biplot.dssPrincomp <- function (x, choices = 1L:2L, type = 'combine', levels = N
   }
 
   if(is.null(datasources)){
-    datasources <- dsBaseClient_findLoginObjects()
+    datasources <- datashield.connections_find()
   }
 
   if (length(choices) != 2L){

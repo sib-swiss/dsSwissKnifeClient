@@ -15,7 +15,6 @@
 #' from the dataframe name: <dataframe name>_km_clust<number of clusters>.
 #' If iter.max is 0 and centers is a matrix the function simply creates the cluster membership factor (as above) using the given centers.
 #' @param async same as in datashield.assign
-#' @param wait same as in datashield.assign
 #' @param datasources same as in datashield.assign
 #' @return A list containing one (in the case of 'combined') or more ('split') stripped down kmeans objects.
 #' @examples
@@ -36,10 +35,10 @@
 
 
 dssKmeans <- function(what, centers, iter.max = 10, nstart = 1, type = 'combine', algorithm = "Forgy",
-                       async = TRUE, wait = TRUE, datasources = NULL){
+                      async = TRUE, datasources = NULL){
 
   if(is.null(datasources)){
-    datasources <- dsBaseClient_findLoginObjects()
+    datasources <- datashield.connections_find()
   }
   if(iter.max == 0 ){
     if(!is.matrix(centers)){
@@ -47,11 +46,11 @@ dssKmeans <- function(what, centers, iter.max = 10, nstart = 1, type = 'combine'
     }
     expr <- list(as.symbol('partialKmeans'), what, .encode.arg(as.data.frame(centers)), NULL, TRUE)
     # kms <- datashield.aggregate(datasources, as.symbol(expr), async = async, wait = wait)
-    return(datashield.aggregate(datasources, as.call(expr), async = async, wait = wait))
+    return(datashield.aggregate(datasources, as.call(expr), async = async))
   }
   if(type == 'split'){ # execute on each node and get out
     expr <- paste0('partialKmeans("', what, '","',.encode.arg(centers) ,'",NULL, FALSE, TRUE,', iter.max, ',', nstart, ',"', .encode.arg(algorithm) ,'")')
-    km <- datashield.aggregate(datasources, as.symbol(expr), async = async, wait = wait)
+    km <- datashield.aggregate(datasources, as.symbol(expr), async = async)
     return(km)
   } else if (type == 'combine'){
     # kmeans implementation on partitioned data
@@ -63,7 +62,7 @@ dssKmeans <- function(what, centers, iter.max = 10, nstart = 1, type = 'combine'
     driving.node <- NULL # node that sets the initial centers
     # first calculate the ranges, we'll use them later to sample random new centers in the eventuality of empty clusters
     expr <- paste0('partRange("', what, '")')
-    range_list <- datashield.aggregate(datasources, as.symbol(expr), async = TRUE, wait = TRUE)
+    range_list <- datashield.aggregate(datasources, as.symbol(expr), async = TRUE)
     ranges <- apply(as.data.frame(Reduce(rbind, sapply(range_list, function(x) unlist(x, recursive = FALSE), simplify = FALSE))), 2 , range)
 
     if(length(centers) == 1L) { # it's a number
@@ -82,7 +81,7 @@ dssKmeans <- function(what, centers, iter.max = 10, nstart = 1, type = 'combine'
 
     global.means <- dssColMeans(what, type = 'combine', datasources = datasources)
     global.means <- global.means$global$means
-    this.km <- .do_kmeans(what, centers, iter.max, global.means, ranges, async, wait, datasources)
+    this.km <- .do_kmeans(what, centers, iter.max, global.means, ranges, async, datasources)
     #bad.km <- list()
     if(nstart >= 2){
 
@@ -92,7 +91,7 @@ dssKmeans <- function(what, centers, iter.max = 10, nstart = 1, type = 'combine'
         driving.node <- names(first.km)
         centers <- first.km[[1]]$centers
         rownames(centers) <- paste0('c', 1:k)
-        new.km <- .do_kmeans(what, centers, iter.max, global.means, ranges, async, wait, datasources)
+        new.km <- .do_kmeans(what, centers, iter.max, global.means, ranges, async, datasources)
         # keep the one with the lowest withinss
         if(new.km$tot.withinss < this.km$tot.withinss){
           message(paste0('Keeping start ', i))
@@ -108,8 +107,8 @@ dssKmeans <- function(what, centers, iter.max = 10, nstart = 1, type = 'combine'
     #build expr as a list to be sent as.call
 
     expr <- list(as.symbol('partialKmeans'), what, .encode.arg(as.data.frame(this.km$centers)), NULL, TRUE)
-    # kms <- datashield.aggregate(datasources, as.symbol(expr), async = async, wait = wait)
-    kms <- datashield.aggregate(datasources, as.call(expr), async = async, wait = wait)
+    # kms <- datashield.aggregate(datasources, as.symbol(expr), async = async)
+    kms <- datashield.aggregate(datasources, as.call(expr), async = async)
 
     #return(list(good = this.km, bad = bad.km))
     return(list(global = this.km))
@@ -124,13 +123,13 @@ dssKmeans <- function(what, centers, iter.max = 10, nstart = 1, type = 'combine'
     firstnode <- names(which.max(sapply(dims, function(x) x[1], simplify = FALSE)))
   }
   expr <- paste0('partialKmeans("', what, '","',.encode.arg(centers) ,'",NULL, FALSE, TRUE,', 1, ',', 1, ',"', .encode.arg(algo) ,'")')
-  km <- datashield.aggregate(datasources[firstnode], as.symbol(expr), async = FALSE, wait = TRUE)
+  km <- datashield.aggregate(datasources[firstnode], as.symbol(expr), async = FALSE)
   return(km)
 
 }
 
 
-.do_kmeans <- function(what, centers, iter.max = 10, mns, ranges, async = TRUE, wait = TRUE, datasources = NULL ){
+.do_kmeans <- function(what, centers, iter.max = 10, mns, ranges, async = TRUE,  datasources = NULL ){
 
   #initialization
   old.centers <- centers
@@ -161,7 +160,7 @@ dssKmeans <- function(what, centers, iter.max = 10, nstart = 1, type = 'combine'
 
     expr <- list(as.symbol('partialKmeans'), what, .encode.arg(as.data.frame(new.centers)))
     # kms <- datashield.aggregate(datasources, as.symbol(expr), async = async, wait = wait)
-    kms <- datashield.aggregate(datasources, as.call(expr), async = async, wait = wait)
+    kms <- datashield.aggregate(datasources, as.call(expr), async = async)
     new.km <- Reduce(reducer, kms)
     #new.km$clusters <- sapply(names(kms), function(x){
     #  kms[[x]]$cluster
@@ -187,7 +186,7 @@ dssKmeans <- function(what, centers, iter.max = 10, nstart = 1, type = 'combine'
   #build expr as a list to be sent as.call
 
   expr <- list(as.symbol('partialKmeans'), what, .encode.arg(as.data.frame(new.centers)), .encode.arg(mns))
-  sss <- datashield.aggregate(datasources, as.call(expr), async = async, wait = wait)
+  sss <- datashield.aggregate(datasources, as.call(expr), async = async)
 
   new.km[names(sss[[1]])] <- Reduce(function(x,y) {
     Map(function(z){

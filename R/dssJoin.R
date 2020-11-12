@@ -7,7 +7,7 @@
 #' For example, by = c("a" = "b") will match x.a to y.b.
 #' @param join.type a character, the type of the join, the possible values are above. Default is 'full'
 #' @param async same as in datashield.assign
-#' @param wait same as in datashield.assign
+
 #' @param datasources same as in datashield.assign
 #' @return It doesn't return anything,  it creates a dataframe, the result of the join
 #' @examples
@@ -23,11 +23,11 @@
 #'
 
 
-dssJoin <- function(what=NULL, symbol=NULL, by = NULL, join.type = 'full', async = TRUE, wait = TRUE, datasources=NULL){
+dssJoin <- function(what=NULL, symbol=NULL, by = NULL, join.type = 'full', async = TRUE, datasources=NULL){
 
   # if no opal login details are provided look for 'opal' objects in the environment
   if(is.null(datasources)){
-    datasources <- dsBaseClient_findLoginObjects()
+    datasources <- datashield.connections_find()
   }
 
   # if not more than one input objects stop
@@ -49,7 +49,7 @@ dssJoin <- function(what=NULL, symbol=NULL, by = NULL, join.type = 'full', async
   }
   cally <- paste0(cally, ')')
 
- datashield.assign(datasources, symbol, as.symbol(cally), async = async, wait = wait)
+ datashield.assign(datasources, symbol, as.symbol(cally), async = async)
 
 
 }

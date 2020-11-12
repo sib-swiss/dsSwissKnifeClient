@@ -6,7 +6,7 @@
 #' qualify the column names. Ex: .... row.filter = "LBTESTCD == 'HDL'"
 #' @param col.filter a character containing the column filtering conditions. Ex: "c('LBTESTCD', 'LBORRES')"
 #' @param async same as in datashield.assign
-#' @param wait same as in datashield.assign
+
 #' @param datasources same as in datashield.assign
 #' @return It doesn't return anything,  it creates a filtered dataframe on the remote node
 #' @examples
@@ -21,9 +21,9 @@
 #' @export
 #'
 
-dssSubset <- function(symbol, what, row.filter = TRUE, col.filter = TRUE, async = TRUE, wait = TRUE, datasources = NULL){
+dssSubset <- function(symbol, what, row.filter = TRUE, col.filter = TRUE, async = TRUE, datasources = NULL){
   if(is.null(datasources)){
-    datasources <- dsBaseClient_findLoginObjects()
+    datasources <- datashield.connections_find()
   }
   cally <- paste0('safeSubset(', what)
   row.filter <- .encode.arg(row.filter)
@@ -33,6 +33,6 @@ dssSubset <- function(symbol, what, row.filter = TRUE, col.filter = TRUE, async 
 
   cally <- paste0(cally, ')')
 
-datashield.assign(datasources, symbol = symbol, value = as.symbol(cally), async = async, wait = wait)
+datashield.assign(datasources, symbol = symbol, value = as.symbol(cally), async = async)
 
 }

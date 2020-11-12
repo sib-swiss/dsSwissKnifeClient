@@ -10,7 +10,6 @@ dssScale(
   center = TRUE,
   scale = TRUE,
   async = TRUE,
-  wait = TRUE,
   datasources = NULL
 )
 }
@@ -24,8 +23,6 @@ dssScale(
 \item{scale}{either a logical value or a numeric vector of length equal to the number of columns of "what"}
 
 \item{async}{a logical, see datashield.aggregate}
-
-\item{wait}{a logical, see datashield.aggregate}
 
 \item{datasources}{a list of opal objects obtained after logging into the opal servers (see datashield.login)}
 }

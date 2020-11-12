@@ -1,13 +1,13 @@
 test_that("dssCoxph works", {
-  datashield.aggregate(opals["local1"], as.symbol('partialData("lung", NULL, NULL, "survival")'))
+  datashield.aggregate(opals["server1"], as.symbol('partialData("lung", NULL, NULL, "survival")'))
   new.df <- 'sex = c(1, 2), age = rep(mean(lung$age, na.rm = TRUE), 2), ph.ecog = c(1, 1)'
-  cox.res <- dssCoxph(formula = survival::Surv(time, status) ~ age + sex + ph.ecog, data = 'lung', new.dataframe = new.df, async = FALSE, datasources = opals["local1"])
-  x <-  unclass(summary(cox.res$local1$model))
+  cox.res <- dssCoxph(formula = survival::Surv(time, status) ~ age + sex + ph.ecog, data = 'lung', new.dataframe = new.df, async = FALSE, datasources = opals["server1"])
+  x <-  unclass(summary(cox.res$server1$model))
   expect_true(all(abs(x$loglik - c(-744.4805, -729.2301)) < 1e-03))
   #try(file.remove('survfit_now.png'))
   png('survfit_now.png')
 
-  plot(cox.res$local1$fit, conf.int = TRUE, col = c('blue', 'red'))
+  plot(cox.res$server1$fit, conf.int = TRUE, col = c('blue', 'red'))
   dev.off()
   this_file <- file('survfit_now.png', 'rb')
   mod <- file('survfit_model.png', 'rb')

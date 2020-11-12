@@ -5,7 +5,7 @@
 #' If a newdata dataframe is present in the arguments, survfit will be called on the coxph object.
 #' The newdata dataframe argument must be sent as text describing the arguments to a call to data.frame() (see example).
 #' @param async same as in datashield.assign
-#' @param wait same as in datashield.assign
+
 #' @param datasources same as in datashield.assign
 #' @return  A list containing the stripped down coxph model (without the call and the residuals)
 #' @examples
@@ -25,9 +25,9 @@
 #' @export
 #'
 
-dssCoxph <- function(..., async = TRUE, wait = TRUE, datasources = NULL){
+dssCoxph <- function(..., async = TRUE, datasources = NULL){
   if(is.null(datasources)){
-    datasources <- dsBaseClient_findLoginObjects()
+    datasources <- datashield.connections_find()
   }
   arglist <- list(...) # pass the args list almost as is to coxph on the local nodes
   if(typeof(arglist$formula) ==  'language'){
@@ -35,5 +35,5 @@ dssCoxph <- function(..., async = TRUE, wait = TRUE, datasources = NULL){
   }
   arglist <- .encode.arg(arglist)
   cally <- paste0('coxphDSS("', arglist, '")')
-  opal::datashield.aggregate(datasources, as.symbol(cally), async = async, wait = wait)
+  datashield.aggregate(datasources, as.symbol(cally), async = async)
 }

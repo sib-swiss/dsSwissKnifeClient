@@ -5,16 +5,16 @@
 #' If type is set to 'combine', a global variance is calculated.
 #' If type is set to 'split', the variance is calculated separately for each study.
 #' @param async same as in datashield.assign
-#' @param wait same as in datashield.assign
+
 #' @param  datasources a list of opal objects obtained after logging into the opal servers (see datashield.login)
 #' @return A list containing:
 #' In the case of 'combine', a list with a 'global' element (the global variance).
 #' In the case of 'split', a list with as many elements as the 'datasources' argument (the respective variances).
 #' @export
 #'
-dssVar <- function(what, type = 'combine', async = TRUE, wait = TRUE, datasources = NULL){
+dssVar <- function(what, type = 'combine', async = TRUE, datasources = NULL){
   if(is.null(datasources)){
-    datasources <- dsBaseClient_findLoginObjects()
+    datasources <- datashield.connections_find()
   }
   xpoint <- NULL
   if(type == 'split'){
@@ -25,7 +25,7 @@ dssVar <- function(what, type = 'combine', async = TRUE, wait = TRUE, datasource
     stop('Type must be one of "split" or "combine".')
   }
   cally <- paste0('partSsd(', what, ',"', .encode.arg(xpoint), '")')
-  res <- datashield.aggregate(datasources, as.symbol(cally), async = TRUE, wait = TRUE)
+  res <- datashield.aggregate(datasources, as.symbol(cally), async = TRUE)
   lens <- dssSwapKeys(res)[['len']]
   ret <- list()
   if (type == 'split'){

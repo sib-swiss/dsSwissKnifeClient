@@ -13,7 +13,6 @@ dssCut(
   labels = NULL,
   ...,
   async = TRUE,
-  wait = TRUE,
   datasources = NULL
 )
 }
@@ -38,8 +37,6 @@ calculated as length(labels)}
 \item{...}{further parameters are sent directly to the cut function on each node}
 
 \item{async}{a logical, see datashield.aggregate}
-
-\item{wait}{a logical, see datashield.aggregate}
 
 \item{datasources}{a list of opal objects obtained after logging into the opal servers (see datashield.login)}
 }

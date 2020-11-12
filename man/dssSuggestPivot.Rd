@@ -9,7 +9,6 @@ dssSuggestPivot(
   cols = NULL,
   by.col = NULL,
   async = TRUE,
-  wait = TRUE,
   datasources = NULL
 )
 }
@@ -21,8 +20,6 @@ dssSuggestPivot(
 \item{by.col}{typically the patient id, the column that will end up as key of the resulting 'wide' data.frame.}
 
 \item{async}{a logical, see datashield.aggregate}
-
-\item{wait}{a logical, see datashield.aggregate}
 
 \item{datasources}{a list of opal objects obtained after logging into the opal servers (see datashield.login)}
 }

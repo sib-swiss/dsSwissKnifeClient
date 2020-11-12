@@ -10,7 +10,6 @@ dssJoin(
   by = NULL,
   join.type = "full",
   async = TRUE,
-  wait = TRUE,
   datasources = NULL
 )
 }
@@ -26,8 +25,6 @@ For example, by = c("a" = "b") will match x.a to y.b.}
 \item{join.type}{a character, the type of the join, the possible values are above. Default is 'full'}
 
 \item{async}{same as in datashield.assign}
-
-\item{wait}{same as in datashield.assign}
 
 \item{datasources}{same as in datashield.assign}
 }

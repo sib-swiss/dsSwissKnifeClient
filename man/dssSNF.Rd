@@ -11,7 +11,6 @@ dssSNF(
   action = c("keep", "return"),
   keep.name = NULL,
   async = TRUE,
-  wait = TRUE,
   datasources = NULL
 )
 }
@@ -27,8 +26,6 @@ dssSNF(
 \item{keep.name}{a character, if action is 'keep', the name of the  output object on the remote nodes. If NULL, a name will be generated.}
 
 \item{async}{a logical, see datashield.aggregate}
-
-\item{wait}{a logical, see datashield.aggregate}
 
 \item{datasources}{a list of opal objects obtained after logging into the opal servers (see datashield.login)}
 }

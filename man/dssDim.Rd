@@ -4,14 +4,12 @@
 \alias{dssDim}
 \title{Dimension of an object}
 \usage{
-dssDim(x = NULL, async = TRUE, wait = TRUE, datasources = NULL)
+dssDim(x = NULL, async = TRUE, datasources = NULL)
 }
 \arguments{
 \item{x}{a character name of the data frame or matrix}
 
 \item{async}{a logical, see datashield.aggregate}
-
-\item{wait}{a logical, see datashield.aggregate}
 
 \item{datasources}{a list of opal objects obtained after logging into the opal servers (see datashield.login)}
 }

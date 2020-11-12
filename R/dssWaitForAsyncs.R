@@ -1,6 +1,6 @@
 
 #' @title Wait for previous datashield commands
-#' @description It polls the current opal commands launched with async = TRUE, wait = FALSE
+#' @description It polls the current opal commands launched with async = TRUE
 #' until all of them complete. Allows the launch of nonblocking datashield commands, useful in
 #' web applications. The "sleep" argument must not be set too low (0.3 seconds is probably a good minimum)
 #' otherwise it might look like a DOS attack and be blocked by the remote server.
@@ -21,7 +21,7 @@ dssWaitForAsyncs <- function(datasources, sleep = 0.5){
       if(nrow(y <- as.data.frame(datashield.commands(datasources[[x]]))) > 0){
         apply(y,1, function(z){
           # print(z)
-          try( ret <- as.list(datashield.command_result(datasources[[x]], z['id'], wait = FALSE)), silent = FALSE)
+          try( ret <- as.list(datashield.command_result(datasources[[x]], z['id'])), silent = FALSE)
           if(length(ret) == 0){
             ret <- NULL
           }

@@ -4,7 +4,7 @@
 \alias{dssNlme_groupedData}
 \title{Calls nlme::groupedData on the provided arguments}
 \usage{
-dssNlme_groupedData(newobj, ..., async = TRUE, wait = TRUE, datasources = NULL)
+dssNlme_groupedData(newobj, ..., async = TRUE, datasources = NULL)
 }
 \arguments{
 \item{newobj}{a character, name of the new dataframe}
@@ -12,8 +12,6 @@ dssNlme_groupedData(newobj, ..., async = TRUE, wait = TRUE, datasources = NULL)
 \item{...}{further arguments to be passed to nlme:groupedData. The data argument must pe passed as a character, the name of the input dataframe}
 
 \item{async}{same as in datashield.assign}
-
-\item{wait}{same as in datashield.assign}
 
 \item{datasources}{same as in datashield.assign}
 }

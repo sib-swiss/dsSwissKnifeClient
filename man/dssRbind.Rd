@@ -4,15 +4,7 @@
 \alias{dssRbind}
 \title{Rbind 2 dataframes}
 \usage{
-dssRbind(
-  newobj,
-  x,
-  y,
-  new.colnames = NULL,
-  async = TRUE,
-  wait = TRUE,
-  datasources = NULL
-)
+dssRbind(newobj, x, y, new.colnames = NULL, async = TRUE, datasources = NULL)
 }
 \arguments{
 \item{x, y}{characters names of the input dataframes.}
@@ -20,8 +12,6 @@ dssRbind(
 \item{new.colnames}{a vector the column names of the new dataframe (optional)}
 
 \item{async}{same as in datashield.assign}
-
-\item{wait}{same as in datashield.assign}
 
 \item{datasources}{same as in datashield.assign}
 

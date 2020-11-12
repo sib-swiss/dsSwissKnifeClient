@@ -4,14 +4,12 @@
 \alias{dssNlme_lme}
 \title{Calls nlme::lme on the provided arguments}
 \usage{
-dssNlme_lme(..., async = TRUE, wait = TRUE, datasources = NULL)
+dssNlme_lme(..., async = TRUE, datasources = NULL)
 }
 \arguments{
 \item{...}{further arguments to be passed to nlme::lme. The data argument must pe passed as a character, the name of the input dataframe}
 
 \item{async}{same as in datashield.assign}
-
-\item{wait}{same as in datashield.assign}
 
 \item{datasources}{same as in datashield.assign}
 

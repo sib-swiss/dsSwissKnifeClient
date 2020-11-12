@@ -4,14 +4,7 @@
 \alias{dssDeriveColumn}
 \title{Add a calculated column to a dataframe}
 \usage{
-dssDeriveColumn(
-  df,
-  col.name,
-  formula,
-  datasources = NULL,
-  async = TRUE,
-  wait = TRUE
-)
+dssDeriveColumn(df, col.name, formula, datasources = NULL, async = TRUE)
 }
 \arguments{
 \item{df}{a character, the name of the dataframe}
@@ -21,8 +14,6 @@ dssDeriveColumn(
 \item{datasources}{same as in datashield.assign}
 
 \item{async}{same as in datashield.assign}
-
-\item{wait}{same as in datashield.assign}
 
 \item{new.col}{a character, the name of the new column}
 }

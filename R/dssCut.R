@@ -13,21 +13,22 @@
 #' calculated as length(labels)
 #' @param ... further parameters are sent directly to the cut function on each node
 #' @param async a logical, see datashield.aggregate
-#' @param wait a logical, see datashield.aggregate
+
 #' @param  datasources a list of opal objects obtained after logging into the opal servers (see datashield.login)
 #' @return name of the new object
 #' @export
 #'
-dssCut <- function(x, new.name = 'newObj', df = NULL, in.place = FALSE, breaks =  NULL, labels = NULL, ...,  async = TRUE, wait = TRUE, datasources = NULL){
+dssCut <- function(x, new.name = 'newObj', df = NULL, in.place = FALSE, breaks =  NULL, labels = NULL, ...,  async = TRUE, datasources = NULL){
   if(is.null(datasources)){
-    datasources <- dsBaseClient_findLoginObjects()
+    datasources <- datashield.connections_find()
+
   }
 
 
 
   actual.args <- as.list(match.call())[-1]
   arglist <- RCurl::merge.list(actual.args,formals())
-  arglist[c( 'async', 'wait', 'datasources')] <- NULL # we don't need to send these ones
+
   if (is.null(breaks)){
     if(is.null(labels)){
       stop('Please provide at least one of breaks or labels')
@@ -36,13 +37,17 @@ dssCut <- function(x, new.name = 'newObj', df = NULL, in.place = FALSE, breaks =
 
     }
   }
+  # trim the arglist
+  arglist$datasources = NULL
+  arglist$async = NULL
   if(arglist$... == ''){
     arglist$... <- NULL
   }
+
   #capture the environment where to eval the args (not exceedingly nice but it'll do )
   pf <- parent.frame()
   arglist <- sapply(arglist, function(x)eval(x, envir=pf), USE.NAMES = TRUE, simplify = FALSE)
   arglist <- .encode.arg(arglist)
   cally <- paste0('cutDSS("', arglist, '")')
-  opal::datashield.aggregate(datasources, as.symbol(cally), async = async, wait = wait)
+  datashield.aggregate(datasources, as.symbol(cally), async = async)
 }

@@ -4,14 +4,12 @@
 \alias{dssGetOption}
 \title{Get options from remote R sessions}
 \usage{
-dssGetOption(opt = NULL, async = TRUE, wait = TRUE, datasources = NULL)
+dssGetOption(opt = NULL, async = TRUE, datasources = NULL)
 }
 \arguments{
 \item{opt}{the name of the option. If nULL all the session options will be retrieved}
 
 \item{async}{a logical, see datashield.aggregate}
-
-\item{wait}{a logical, see datashield.aggregate}
 
 \item{datasources}{a list of opal objects obtained after logging into the opal servers (see datashield.login)}
 }

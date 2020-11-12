@@ -4,15 +4,13 @@
 \alias{dssClogit}
 \title{Remote clogit}
 \usage{
-dssClogit(..., async = TRUE, wait = TRUE, datasources = NULL)
+dssClogit(..., async = TRUE, datasources = NULL)
 }
 \arguments{
 \item{...}{arguments to be sent to clogit.
 Note, the data argument must be a character, the name of the input dataframe.}
 
 \item{async}{same as in datashield.assign}
-
-\item{wait}{same as in datashield.assign}
 
 \item{datasources}{same as in datashield.assign}
 }

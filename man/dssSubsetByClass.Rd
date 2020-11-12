@@ -10,7 +10,6 @@ dssSubsetByClass(
   variables = NULL,
   keep.cols = NULL,
   async = TRUE,
-  wait = TRUE,
   datasources = NULL
 )
 }
@@ -25,8 +24,6 @@ dssSubsetByClass(
 
 \item{async}{same as in datashield.assign}
 
-\item{wait}{same as in datashield.assign}
-
 \item{datasources}{same as in datashield.assign}
 }
 \value{
@@ -39,7 +36,7 @@ Alternative to the datashield function ds.SubsetByClass
 # open a local pseudo connection:
 opals <-  dssCreatePseudoServers('test', servers = 1)
 # load iris and create a vector and a factor:
-datashield.aggregate(opals['local1'], as.symbol('partialData("iris", 41, 150)'))
+datashield.aggregate(opals[1], as.symbol('partialData("iris", 41, 150)'))
 play_env <- opals$local1$envir
 assign('a', play_env$iris$Petal.Length, envir = play_env)
 assign('b', factor(c(rep('category1',10), rep('category2',100))), envir = play_env)

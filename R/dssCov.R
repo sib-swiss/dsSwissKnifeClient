@@ -6,7 +6,7 @@
 #' If type is set to 'combine',  global column means are calculated if type is set to 'split', the column means are
 #' calculated separately for each node.
 #' @param async a logical, see datashield.aggregate
-#' @param wait a logical, see datashield.aggregate
+
 #' @param  datasources a list of opal objects obtained after logging into the opal servers (see datashield.login)
 #' @return a list with one element for each node (or one $global element if type='combine'). Each element contains
 #' a vector with the respective column means, the covariance matrix and the number of rows
@@ -14,11 +14,11 @@
 #'
 
 
-dssCov <- function(x,  collist = NULL, type = 'combine',  async = TRUE, wait = TRUE, datasources = NULL){
+dssCov <- function(x,  collist = NULL, type = 'combine',  async = TRUE, datasources = NULL){
   if(is.null(datasources)){
-    datasources <- dsBaseClient_findLoginObjects()
+    datasources <- datashield.connections_find()
   }
-  mlist <- dssColMeans(x,  FALSE, collist, type, async = async, wait = wait, datasources)
+  mlist <- dssColMeans(x,  FALSE, collist, type, async = async, datasources)
 
   if (type == 'combine'){
     # if we didn't specify any columns grab now the numeric ones:
@@ -45,8 +45,8 @@ dssCov <- function(x,  collist = NULL, type = 'combine',  async = TRUE, wait = T
     expr <- c(expr, .encode.arg(collist))
   }
   #expr <- paste0(expr, ')')
-  #  covs <- opal::datashield.aggregate(datasources,as.symbol(expr), async=async, wait = wait)
-  covs <- opal::datashield.aggregate(datasources,as.call(expr), async=async, wait = wait)
+  #  covs <- datashield.aggregate(datasources,as.symbol(expr), async=async)
+  covs <- datashield.aggregate(datasources,as.call(expr), async=async)
   if (type == 'combine'){
     #sum them up:
     covs <- list(global = Reduce('+', covs))

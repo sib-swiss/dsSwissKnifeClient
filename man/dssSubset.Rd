@@ -10,7 +10,6 @@ dssSubset(
   row.filter = TRUE,
   col.filter = TRUE,
   async = TRUE,
-  wait = TRUE,
   datasources = NULL
 )
 }
@@ -25,8 +24,6 @@ qualify the column names. Ex: .... row.filter = "LBTESTCD == 'HDL'"}
 \item{col.filter}{a character containing the column filtering conditions. Ex: "c('LBTESTCD', 'LBORRES')"}
 
 \item{async}{same as in datashield.assign}
-
-\item{wait}{same as in datashield.assign}
 
 \item{datasources}{same as in datashield.assign}
 }

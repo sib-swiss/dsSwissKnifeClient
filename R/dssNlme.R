@@ -3,13 +3,13 @@
 #' @param newobj a character, name of the new dataframe
 #' @param ... further arguments to be passed to nlme:groupedData. The data argument must pe passed as a character, the name of the input dataframe
 #' @param async same as in datashield.assign
-#' @param wait same as in datashield.assign
+
 #' @param datasources same as in datashield.assign
 
 
-dssNlme_groupedData <- function(newobj, ..., async = TRUE, wait = TRUE, datasources = NULL){
+dssNlme_groupedData <- function(newobj, ..., async = TRUE, datasources = NULL){
   if(is.null(datasources)){
-    datasources <- dsBaseClient_findLoginObjects()
+    datasources <- datashield.connections_find()
   }
   arglist <- list(...) # pass the args list almost as is to  the local nodes
   if(typeof(arglist$formula) ==  'language'){
@@ -17,7 +17,7 @@ dssNlme_groupedData <- function(newobj, ..., async = TRUE, wait = TRUE, datasour
   }
   arglist <- .encode.arg(arglist)
   cally <- paste0('groupedDataDSS("', arglist, '")')
-  opal::datashield.assign(datasources, symbol = newobj, value = as.symbol(cally), async = async, wait = wait)
+  datashield.assign(datasources, symbol = newobj, value = as.symbol(cally), async = async)
 
 }
 
@@ -27,7 +27,7 @@ dssNlme_groupedData <- function(newobj, ..., async = TRUE, wait = TRUE, datasour
 #' @param newobj a character, name of the new dataframe
 #' @param ... further arguments to be passed to nlme::lme. The data argument must pe passed as a character, the name of the input dataframe
 #' @param async same as in datashield.assign
-#' @param wait same as in datashield.assign
+
 #' @param datasources same as in datashield.assign
 #' @return a stripped down lmeObject (without the 'data' and 'call' elements). See the documentation for lme and lmeObject in package lme.
 #' @examples
@@ -39,9 +39,9 @@ dssNlme_groupedData <- function(newobj, ..., async = TRUE, wait = TRUE, datasour
 #'  lme.model <- dssNlme_lme(fixed = distance ~ age, data = 'grouped', random = ~ 1, async = FALSE, datasources = opals[1])
 #' summary(lme.model[[1]])
 #'
-dssNlme_lme <- function(..., async = TRUE, wait = TRUE, datasources = NULL){
+dssNlme_lme <- function(..., async = TRUE, datasources = NULL){
   if(is.null(datasources)){
-    datasources <- dsBaseClient_findLoginObjects()
+    datasources <- datashield.connections_find()
   }
   arglist <- list(...) # pass the args list almost as is to  the local nodes
   arglist <- sapply(arglist, function(x){
@@ -56,5 +56,5 @@ dssNlme_lme <- function(..., async = TRUE, wait = TRUE, datasources = NULL){
 
   arglist <- .encode.arg(arglist)
   cally <- paste0('nlme_lmeDSS("', arglist, '")')
-  opal::datashield.aggregate(datasources, as.symbol(cally), async = async, wait = wait)
+  datashield.aggregate(datasources, as.symbol(cally), async = async)
 }

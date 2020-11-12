@@ -4,14 +4,12 @@
 \alias{dssSetOption}
 \title{Set  options in remote R sessions}
 \usage{
-dssSetOption(option_list, async = TRUE, wait = TRUE, datasources = NULL)
+dssSetOption(option_list, async = TRUE, datasources = NULL)
 }
 \arguments{
 \item{option_list}{a list describing the options to be set}
 
 \item{async}{a logical, see datashield.aggregate}
-
-\item{wait}{a logical, see datashield.aggregate}
 
 \item{datasources}{a list of opal objects obtained after logging into the opal servers (see datashield.login)}
 }

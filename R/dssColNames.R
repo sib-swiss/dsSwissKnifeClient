@@ -4,7 +4,7 @@
 #' @param value  a vector containing the new column names (if null, the function simply returns the colnames)
 #' @param to.replace a vector containing the names of the columns to replace. It must have the same length as the value vector. If null, all column names will be replaced.
 #' @param async same as in datashield.assign
-#' @param wait same as in datashield.assign
+
 #' @param datasources same as in datashield.assign
 #' @return the column names of the dataframe
 #' @examples
@@ -20,9 +20,9 @@
 #' #check again:
 #' dssColNames('iris')
 
-dssColNames<- function(df, value =  NULL, to.replace = NULL, async = TRUE, wait = TRUE, datasources = NULL){
+dssColNames<- function(df, value =  NULL, to.replace = NULL, async = TRUE, datasources = NULL){
   if(is.null(datasources)){
-    datasources <- dsBaseClient_findLoginObjects()
+    datasources <- datashield.connections_find()
   }
   if(!is.null(to.replace) && !is.null(value)){
     if(length(to.replace)%%length(value) != 0){
@@ -30,5 +30,5 @@ dssColNames<- function(df, value =  NULL, to.replace = NULL, async = TRUE, wait 
     }
   }
   expr <- paste0('colnamesDSS(', df,',"', .encode.arg(to.replace), '", "', .encode.arg(value),'")')
-  opal::datashield.aggregate(datasources, as.symbol(expr), async = async, wait = wait)
+  datashield.aggregate(datasources, as.symbol(expr), async = async)
 }

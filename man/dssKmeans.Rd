@@ -12,7 +12,6 @@ dssKmeans(
   type = "combine",
   algorithm = "Forgy",
   async = TRUE,
-  wait = TRUE,
   datasources = NULL
 )
 }
@@ -30,8 +29,6 @@ dssKmeans(
 \item{algorithm}{same as kmeans, it defaults to "Forgy" as it's the only one that doesn't error out in the case of empty clusters}
 
 \item{async}{same as in datashield.assign}
-
-\item{wait}{same as in datashield.assign}
 
 \item{datasources}{same as in datashield.assign}
 }

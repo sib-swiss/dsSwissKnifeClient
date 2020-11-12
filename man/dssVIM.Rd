@@ -4,7 +4,7 @@
 \alias{dssVIM}
 \title{Call selected functions from the package VIM}
 \usage{
-dssVIM(func, newobj = NULL, async = TRUE, wait = TRUE, datasources = NULL, ...)
+dssVIM(func, newobj = NULL, async = TRUE, datasources = NULL, ...)
 }
 \arguments{
 \item{func}{a character, the name of the function to call}
@@ -13,8 +13,6 @@ dssVIM(func, newobj = NULL, async = TRUE, wait = TRUE, datasources = NULL, ...)
 If an assign function is called without this, the original object will be modified in place.}
 
 \item{async}{a logical, see datashield.aggregate}
-
-\item{wait}{a logical, see datashield.aggregate}
 
 \item{datasources}{a list of opal objects obtained after logging into the opal servers (see datashield.login)}
 
