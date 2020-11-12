@@ -1,4 +1,3 @@
-
 dsBaseClient
 ============
 
@@ -13,7 +12,4 @@ dsSwissKnifeClient is a software package which builds upon (and extends) DataSHI
 
 Functionality include implementations for a kmeans clustering algorithm, PCA, as well as a number of functions from specific packages (imputation with VIM, random forests with randomForest, synthetic data generation with Synthpop, etc).
 Please consult the documentation for the individual functions for more details.
-
-
-
-
+~                                                                                 
