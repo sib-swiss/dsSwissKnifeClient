@@ -9,9 +9,9 @@ Functions and utilities that are based on and extend the functionality of the op
 About
 =====
 
-dsSwissKnifeClient is a software package which builds upon (and extends) DataSHIELD (https://www.datashield.ac.uk) to allow non-disclosive remote federated analysis on sensitive data. Like most DataSHIELD packages it has a client-server infrastructure so it needs to be used with together with the server version, dsSwissKnife (https://github.com/datashield/dsSwissKnife).
+dsSwissKnifeClient is a software package which builds upon (and extends) DataSHIELD (https://www.datashield.ac.uk) to allow non-disclosive remote federated analysis on sensitive data. Like most DataSHIELD packages it has a client-server infrastructure so it needs to be used together with the server version, dsSwissKnife (https://github.com/datashield/dsSwissKnife).
 
-New functionality include implementations for a kmeans clustering alghorithm, PCA, as well as a number of functions from specific packages (imputation with VIM, random forests with randomForest, synthetic data generation with Synthpop, etc)
+Functionality include implementations for a kmeans clustering alghorithm, PCA, as well as a number of functions from specific packages (imputation with VIM, random forests with randomForest, synthetic data generation with Synthpop, etc). Please consult the documentation for the individual functions for more details.
 
 
 
