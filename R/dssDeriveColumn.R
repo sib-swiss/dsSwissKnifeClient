@@ -12,8 +12,14 @@
 #' @return It doesn't return anything, the dataframe in the server session will now contain the new column.
 #' @examples
 #' # open a local pseudo connection:
-#'opals <- dssCreatePseudoServers(servers = 1, tie_first_to_GlobalEnv = TRUE)
-#' data('iris')
+#' library(DSLite)
+#' dslite.server1 <<- newDSLiteServer(config = defaultDSConfiguration(include=c('dsSwissKnife')))
+#' builder <- newDSLoginBuilder()
+#' builder$append(server="server1", url='dslite.server1',driver = "DSLiteDriver")
+#' logindata <- builder$build()
+#' opals <- datashield.login(logins = logindata, assign = TRUE)
+#' # load the iris dataset
+#' datashield.aggregate(opals[1], as.symbol('partialData("iris")'))
 #' #now play around:
 #' dssDeriveColumn('iris', 'new_col', 'Sepal.Length/round(2.2)', datasources = opals)
 #' str(iris)

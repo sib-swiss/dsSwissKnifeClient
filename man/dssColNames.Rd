@@ -31,7 +31,14 @@ Unlike ds.colnames this function allows to set the names too
 }
 \examples{
 # open a local pseudo connection:
-opals <- dssCreatePseudoServers(servers = 2, tie_first_to_GlobalEnv = 1)
+library(DSLite)
+dslite.server1 <<- newDSLiteServer(config = defaultDSConfiguration(include=c('dsSwissKnife')))
+dslite.server2 <<- newDSLiteServer(config = defaultDSConfiguration(include=c('dsSwissKnife')))
+builder <- newDSLoginBuilder()
+builder$append(server="server1", url='dslite.server1',driver = "DSLiteDriver")
+builder$append(server="server2", url='dslite.server2',driver = "DSLiteDriver")
+logindata <- builder$build()
+opals <- datashield.login(logins = logindata, assign = TRUE)
 # load the iris dataset
 datashield.aggregate(opals[1], as.symbol('partialData("iris", 1, 70)'))
 datashield.aggregate(opals[2], as.symbol('partialData("iris", 71, 150)'))

@@ -10,7 +10,12 @@
 #' @return  A list containing the stripped down coxph model (without the call and the residuals)
 #' @examples
 #' # open a local pseudo connection:
-#' opals <- dssCreatePseudoServers(servers = 1, tie_first_to_GlobalEnv = 1)
+#' library(DSLite)
+#' dslite.server1 <<- newDSLiteServer(config = defaultDSConfiguration(include=c('dsSwissKnife')))
+#' builder <- newDSLoginBuilder()
+#' builder$append(server="server1", url='dslite.server1',driver = "DSLiteDriver")
+#' logindata <- builder$build()
+#' opals <- datashield.login(logins = logindata)
 #' # load the lung dataset
 #' datashield.aggregate(opals[1], as.symbol('partialData("lung", NULL, NULL, "survival")'))
 #' #create the new.dataframe argument (note the reference to the  'lung' data frame)
@@ -18,7 +23,7 @@
 #'
 #' # execute the function:
 #' cox.res <- dssCoxph(formula = survival::Surv(time, status) ~ age + sex + ph.ecog, data = 'lung', new.dataframe = new.df, async = FALSE, datasources = opals[1])
-#' summary(cox.res$local1$model)
+#' summary(cox.res$server1$model)
 #' # plot the fit:
 #' plot(cox.res$local1$fit, conf.int = TRUE, col = c('blue', 'red'))
 #'

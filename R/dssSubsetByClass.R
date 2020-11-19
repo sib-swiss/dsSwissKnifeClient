@@ -9,10 +9,15 @@
 #' @return It doesn't return anything of value, it creates a list containing dataframes (as many as the combinations of categories of "variables") on each node
 #' @examples
 #' # open a local pseudo connection:
-#' opals <-  dssCreatePseudoServers('test', servers = 1)
+#' library(DSLite)
+#' dslite.server1 <<- newDSLiteServer(config = defaultDSConfiguration(include=c('dsSwissKnife')))
+#' builder <- newDSLoginBuilder()
+#' builder$append(server="server1", url='dslite.server1',driver = "DSLiteDriver")
+#' logindata <- builder$build()
+#' opals <- datashield.login(logins = logindata)
 #' # load iris and create a vector and a factor:
 #' datashield.aggregate(opals[1], as.symbol('partialData("iris", 41, 150)'))
-#' play_env <- opals$local1$envir
+#' play_env <- dslite.server1$getSession(dslite.server1$getSessionIds())
 #' assign('a', play_env$iris$Petal.Length, envir = play_env)
 #' assign('b', factor(c(rep('category1',10), rep('category2',100))), envir = play_env)
 #' #now play around:

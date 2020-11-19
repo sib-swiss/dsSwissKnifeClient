@@ -23,7 +23,12 @@ See the documentation of lme in package nlme
 }
 \examples{
 # open a local pseudo connection:
-opals <- dssCreatePseudoServers(servers = 1, tie_first_to_GlobalEnv = TRUE)
+library(DSLite)
+dslite.server1 <<- newDSLiteServer(config = defaultDSConfiguration(include=c('dsSwissKnife')))
+builder <- newDSLoginBuilder()
+builder$append(server="server1", url='dslite.server1',driver = "DSLiteDriver")
+logindata <- builder$build()
+opals <- datashield.login(logins = logindata)#' # load the Orthodont dataset
 # load the Orthodont dataset
  datashield.aggregate(opals[1], as.symbol('partialData("Orthodont", NULL, NULL, "nlme")'))
   dssNlme_groupedData(newobj = 'grouped', formula =  distance ~ age | Subject, data ='Orthodont', async = FALSE, datasources = opals[1] )

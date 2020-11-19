@@ -11,12 +11,19 @@
 #' @return It doesn't return anything,  it creates a filtered dataframe on the remote node
 #' @examples
 #' # open a local pseudo connection:
-#' opals <- dssCreatePseudoServers(servers = 1, tie_first_to_GlobalEnv = TRUE)
+#' library(DSLite)
+#' dslite.server1 <<- newDSLiteServer(config = defaultDSConfiguration(include=c('dsSwissKnife')))
+#' builder <- newDSLoginBuilder()
+#' builder$append(server="server1", url='dslite.server1',driver = "DSLiteDriver")
+#' logindata <- builder$build()
+#' opals <- datashield.login(logins = logindata)
 #' # load iris
-#' data('iris')
+#' datashield.aggregate(opals[1], as.symbol('partialData("iris")'))
+#' # put a label on the pseudo-remote session so we can retrieve it later:
+#' session1 <- dslite.server1$getSession(dslite.server1$getSessionIds())
 #' # now play around:
 #' dssSubset('iris_filtered', 'iris', row.filter = 'Sepal.Length < 6 & Species == "setosa"', col.filter = '!(colnames(iris) == "Petal.Width")', datasources = opals)
-#' str(iris_filtered)
+#' str(session1$iris_filtered)
 #'
 #' @export
 #'

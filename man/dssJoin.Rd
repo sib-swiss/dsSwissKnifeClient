@@ -36,11 +36,17 @@ Applies dplyr::xxx_join on the local nodes where xxx can be any of ('inner', 'fu
 }
 \examples{
 # open a local pseudo connection:
-opals <- dssCreatePseudoServers(servers = 1, tie_first_to_GlobalEnv = 1)
-# load iris
-data('iris')
+library(DSLite)
+dslite.server1 <<- newDSLiteServer(config = defaultDSConfiguration(include=c('dsSwissKnife')))
+builder <- newDSLoginBuilder()
+builder$append(server="server1", url='dslite.server1',driver = "DSLiteDriver")
+logindata <- builder$build()
+opals <- datashield.login(logins = logindata)
+# load the iris dataset
+datashield.aggregate(opals[1], as.symbol('partialData("iris")'))
 # join iris with itself just for fun:
 dssJoin(c('iris', 'iris'), symbol = 'joined_iris', by = 'Sepal.Length', join.type = 'inner', datasources = opals)
-str(joined_iris)
+session1 <- dslite.server1$getSession(dslite.server1$getSessionIds())
+str(session1$joined_iris)
 
 }
