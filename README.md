@@ -1,4 +1,4 @@
-dsBaseClient
+dsSwissKnifeClient
 ============
 
 Functions and utilities that extend the functionality of the opal/datashield suite of packages. Client side.
