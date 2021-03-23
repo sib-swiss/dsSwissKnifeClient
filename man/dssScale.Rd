@@ -9,6 +9,7 @@ dssScale(
   what,
   center = TRUE,
   scale = TRUE,
+  type = "combine",
   async = TRUE,
   datasources = NULL
 )
@@ -21,6 +22,10 @@ dssScale(
 \item{center}{either a logical value or a numeric vector of length equal to the number of columns of "what"}
 
 \item{scale}{either a logical value or a numeric vector of length equal to the number of columns of "what"}
+
+\item{type}{a character, 'split' or 'combine'. If either center or scaled are set to  TRUE it defines the
+scope for the means used for centering and/or standard deviations used for scaling. If 'combine', global values,
+calculated accross all nodes are used, in case of 'split' the node local values are used. Default 'combine'.}
 
 \item{async}{a logical, see datashield.aggregate}
 
