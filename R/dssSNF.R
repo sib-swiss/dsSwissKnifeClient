@@ -27,7 +27,7 @@ dssSNF <- function(func, symbols,..., action = c('keep', 'return'), keep.name = 
     expr <- paste0(expr,  ',"',keep.name, '"')
   }
   expr <- paste0(expr, ')')
-
+  datashield.aggregate(datasources, as.symbol(expr), async)
 
 
 }
