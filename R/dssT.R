@@ -18,7 +18,7 @@ dssT <- function(symbol, newobj = paste0(symbol, '_tr'), async = TRUE, datasourc
   }
 
   expr <- paste0('tDSS(', symbol, ')')
-
+  datashield.assign(datasources, newobj, as.symbol(expr), async)
 
 
 }
