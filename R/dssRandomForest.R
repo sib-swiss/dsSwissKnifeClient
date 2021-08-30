@@ -14,7 +14,7 @@
 #' @return a list with members `$forests`: the individual forests from the nodes,
 #'   and `$prediction`, the average prediction of `testData` (if given) by all nodes together.
 #'
-dssRandomForest <- function(what, dep_var, expl_vars = NULL, testData = NULL,
+a_dssRandomForest <- function(what, dep_var, expl_vars = NULL, testData = NULL,
                             async = TRUE,  datasources = NULL) {
   if (is.null(datasources)) {
     datasources <- dsBaseClient:::findLoginObjects()
@@ -34,6 +34,39 @@ dssRandomForest <- function(what, dep_var, expl_vars = NULL, testData = NULL,
   }
   return(result)
 }
+
+dssRandomForest <- function(train = list(what = NULL, dep_var = NULL, expl_vars = NULL, ...),
+                            test = list(forest = NULL, testData = NULL, ...),
+                            async = TRUE,  datasources = NULL) {
+  if (is.null(datasources)) {
+    datasources <- dsBaseClient:::findLoginObjects()
+  }
+
+  expr <- list(as.symbol('forestDSS'))
+  if(length(train[!sapply(train,is.null)]) > 0 ){  # meaning at least one non null
+    if (is.null(train$dep_var)) {
+      stop('Unsupervised version is not implemented yet')
+    }
+    if (is.null(train$what)) {
+      stop('No training dataset provided')
+    }
+    result_type <-  'forest'
+    expr$train <- .encode.arg(train)
+  } else if (length(test[!sapply(test,is.null)]) == 2){ # one or the other, not both
+    result_type <- 'prediction'
+    expr$test <- .encode.arg(test)
+  } else {
+    stop('One of the "train" or "test" lists must be populated, the latter with both elements')
+  }
+
+
+  # Get a list of randomForests from the nodes
+  reslist <- datashield.aggregate(datasources, as.call(expr), async)
+  result <- list()
+  result[[result_type]] <- reslist
+  return(result)
+}
+
 
 
 #'

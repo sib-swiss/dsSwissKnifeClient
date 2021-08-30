@@ -12,7 +12,7 @@
 dssSynthpop <- function(data,..., async = TRUE, datasources = NULL){
 
   if(is.null(datasources)){
-    datasources <- dsBaseClient:::findLoginObjects()
+    datasources <- datashield.connections_find()
   }
   data <- .encode.arg(data)
   arglist <- .encode.arg(list(...)) # pass the args list almost as is to the original function on the local nodes

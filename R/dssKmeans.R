@@ -115,8 +115,8 @@ dssKmeans <- function(what, centers, iter.max = 10, nstart = 1, type = 'combine'
 
     expr <- list(as.symbol('partialKmeans'), what, .encode.arg(as.data.frame(this.km$centers)), NULL, TRUE)
     # kms <- datashield.aggregate(datasources, as.symbol(expr), async = async)
-    kms <- datashield.aggregate(datasources, as.call(expr), async = async)
-
+    sil <- datashield.aggregate(datasources, as.call(expr), async = async)
+    this.km[['silhouette']] <- sil
     #return(list(good = this.km, bad = bad.km))
     return(list(global = this.km))
   }

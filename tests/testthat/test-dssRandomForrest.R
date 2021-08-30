@@ -26,7 +26,9 @@ test_that("Classification works (discrete y).", {
   # reset iris for the other tests:
   datashield.aggregate(opals["server1"], as.symbol('partialData("iris", 1, 40)'))
   datashield.aggregate(opals["server2"], as.symbol('partialData("iris", 41, 150)'), async=FALSE)
-  result = dssRandomForest('subiris', dep_var, expl_vars, testData, async = FALSE,datasources = opals)
+ # result = dssRandomForest('subiris', dep_var, expl_vars, testData, async = FALSE,datasources = opals)
+  train_args <- list('what' = 'subiris' , dep_var = dep_var, expl_vars = expl_vars)
+  result = dssRandomForest(train = train_args, async = FALSE,datasources = opals)
 
   p = result$prediction
   expect_equal(as.character(p[1]), "setosa")
