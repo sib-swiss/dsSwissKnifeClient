@@ -3,37 +3,15 @@
 #'   as a model to predict classification of new data of the same type
 #'   (new patients, same variables). The randomForest package needs to be
 #'   installed on all nodes and on the client.
-#' @return a randomForest object.
-#' @param what: name of the training data frame on the server.
-#' @param dep_var: [string] the response factor ("y"), i.e. the categories
-#'   that will be the leaves of each tree.
-#' @param expl_vars: [vector[string]] the classification variables.
-#' @param testData: [data frame] new data to classify using the forests.
-#'   It must have at least the columns in `expl_vars`.
-#'   (We want to predict the value of `dep_var` for it.)
-#' @return a list with members `$forests`: the individual forests from the nodes,
-#'   and `$prediction`, the average prediction of `testData` (if given) by all nodes together.
+#' @return a list of randomForest objects if called for training or a prediction vector if called for testing.
+#' @param train, a list of parameters for the training phase. The elements are: what - name of the training data frame on the server.
+#' dep_var [string] - name of the response factor ("y"), i.e. the categories, expl_vars [vector[string]]  - the classification variables,
+#' ... - further arguments that will be passed to the randomForest function
+#' @param test, a list of parameters for the testing phase. The elements are: forest [list] - a list of forests obtained in the training phase ,
+#' testData: new data to classify using the forests. If testData is a character, this will be considered the name of the remote data frame;
+#' the testing phase will take place on the remote servers. If testData is a data frame the testing phase and prediction will take place in the client session.
+#'  testData must have at least the columns in `expl_vars` (We want to predict the value of `dep_var` for it.)
 #'
-a_dssRandomForest <- function(what, dep_var, expl_vars = NULL, testData = NULL,
-                            async = TRUE,  datasources = NULL) {
-  if (is.null(datasources)) {
-    datasources <- dsBaseClient:::findLoginObjects()
-  }
-  expr <- paste0('forestDSS(', what)
-  dep_var.arg <- .encode.arg(dep_var)
-  expr <- paste0(expr, ', "', dep_var.arg, '"')
-  expl_vars.arg <- .encode.arg(expl_vars)
-  expr <- paste0(expr, ', "', expl_vars.arg , '"', ')')
-  # Get a list of randomForests from the nodes
-  reslist <- datashield.aggregate(datasources, as.symbol(expr), async)
-
-  result <- list(forests = reslist)
-  if (!is.null(testData)) {
-    testData <- testData[,expl_vars]
-    result$prediction <- .predict(reslist, testData)
-  }
-  return(result)
-}
 
 dssRandomForest <- function(train = list(what = NULL, dep_var = NULL, expl_vars = NULL, ...),
                             test = list(forest = NULL, testData = NULL, ...),

@@ -5,31 +5,24 @@
 \title{Distributed random forests based on the randomForest package.}
 \usage{
 dssRandomForest(
-  what,
-  dep_var,
-  expl_vars = NULL,
-  testData = NULL,
+  train = list(what = NULL, dep_var = NULL, expl_vars = NULL, ...),
+  test = list(forest = NULL, testData = NULL, ...),
   async = TRUE,
   datasources = NULL
 )
 }
 \arguments{
-\item{what:}{name of the training data frame on the server.}
+\item{train, }{a list of parameters for the training phase. The elements are: what - name of the training data frame on the server.
+dep_var [string] - name of the response factor ("y"), i.e. the categories, expl_vars [vector[string]]  - the classification variables,
+... - further arguments that will be passed to the randomForest function}
 
-\item{dep_var:}{[string] the response factor ("y"), i.e. the categories
-that will be the leaves of each tree.}
-
-\item{expl_vars:}{[vector[string]] the classification variables.}
-
-\item{testData:}{[data frame] new data to classify using the forests.
-It must have at least the columns in `expl_vars`.
-(We want to predict the value of `dep_var` for it.)}
+\item{test, }{a list of parameters for the testing phase. The elements are: forest [list] - a list of forests obtained in the training phase ,
+testData: new data to classify using the forests. If testData is a character, this will be considered the name of the remote data frame;
+the testing phase will take place on the remote servers. If testData is a data frame the testing phase and prediction will take place in the client session.
+ testData must have at least the columns in `expl_vars` (We want to predict the value of `dep_var` for it.)}
 }
 \value{
-a randomForest object.
-
-a list with members `$forests`: the individual forests from the nodes,
-  and `$prediction`, the average prediction of `testData` (if given) by all nodes together.
+a list of randomForest objects if called for training or a prediction vector if called for testing.
 }
 \description{
 Builds a random forest on each server node,

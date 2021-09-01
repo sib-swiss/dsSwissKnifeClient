@@ -62,8 +62,11 @@ test_that("Regression works (continuous y).", {
 
   # Assign a fraction to the iris data to the "subiris" variable name on each node
   datashield.aggregate(opals, as.symbol('fullData("iris")'))
-  dssSubset("subiris", "iris", row.filter = "idx1", datasources = opals["server1"])
-  dssSubset("subiris", "iris", row.filter = "idx2", datasources = opals["server2"])
+ # dssSubset("subiris", "iris", row.filter = "idx1", datasources = opals["server1"])
+#  dssSubset("subiris", "iris", row.filter = "idx2", datasources = opals["server2"])
+  dssSubset("subiris", "iris", row.filter = 'sample(150,100)', datasources = opals)
+  dssSubset("subiris_train", "subiris", row.filter = 'sample(100,90)', datasources = opals)
+  dssSubset("subiris_test", "subiris", row.filter = '!(rownames(subiris) %in% rownames(subiris_train))', datasources = opals)
 
   # Run `forest` - in sync mode for debugging
   dep_var = "Sepal.Length"
@@ -73,10 +76,12 @@ test_that("Regression works (continuous y).", {
   #result = dssRandomForest('subiris', dep_var, expl_vars, testData, async = FALSE, datasources = opals)
   train_args <- list('what' = 'subiris_train' , dep_var = dep_var, expl_vars = expl_vars, nodesize = 5)
   result = dssRandomForest(train_args, async = FALSE, datasources = opals)
+  test_args <- list(result$forest, testData)
+  prediction <- dssRandomForest(NULL, test_args)
   # reset iris for the other tests:
   datashield.aggregate(opals["server1"], as.symbol('partialData("iris", 1, 40)'))
   datashield.aggregate(opals["server2"], as.symbol('partialData("iris", 41, 150)'))
-  p = result$prediction
+  p = prediction
   expect_lte(p[1], 5.0)
   expect_lte(p[2], 5.0)
 })
@@ -113,14 +118,14 @@ test_that("It still works when one of the nodes is missing a category.", {
   expect_equal(as.character(pred2), c("versicolor", "versicolor"))
 
   # Use .predict to merge the predictions
-  pred = dsSwissKnifeClient:::.predict(forests, testData)
+  pred = dsSwissKnifeClient::dssRandomForest(NULL,list(forests, testData))
   # Because the second partial prediction has slightly more votes, the merged prediction is off!
   # The node that does not know about setosa puts all its 150 votes into the wrong category,
   #  while the one that does know setosa has 2 misclassified votes, so by
   #  150 votes vs 148, the answer is versicolor instead of setosa.
   # This is a - weird - example showing that merging the forests is actually not the same as
   # using a forest built on the whole dataset.
-  expect_equal(as.character(pred2), c("versicolor", "versicolor"))
+  expect_equal(as.character(pred), c("versicolor", "versicolor"))
 })
 
 
