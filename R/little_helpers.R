@@ -9,7 +9,8 @@
 #'
 #'
 .encode.arg <- function(some.object){
-  encoded <- RCurl::base64Encode(jsonlite::toJSON(some.object, null = 'null'));
+  #encoded <- RCurl::base64Encode(jsonlite::toJSON(some.object, null = 'null'));
+  encoded <- RCurl::base64Encode(jsonlite::serializeJSON(some.object));
   # go fishing for '+', '/' and '=', opal rejects them :
   my.dictionary <- c('\\/' = '-slash-', '\\+' = '-plus-', '\\=' = '-equals-')
   sapply(names(my.dictionary), function(x){

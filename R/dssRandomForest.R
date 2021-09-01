@@ -38,22 +38,27 @@ a_dssRandomForest <- function(what, dep_var, expl_vars = NULL, testData = NULL,
 dssRandomForest <- function(train = list(what = NULL, dep_var = NULL, expl_vars = NULL, ...),
                             test = list(forest = NULL, testData = NULL, ...),
                             async = TRUE,  datasources = NULL) {
-  if (is.null(datasources)) {
-    datasources <- dsBaseClient:::findLoginObjects()
+  if(is.null(datasources)){
+    datasources <- datashield.connections_find()
   }
+
 
   expr <- list(as.symbol('forestDSS'))
   if(length(train[!sapply(train,is.null)]) > 0 ){  # meaning at least one non null
-    if (is.null(train$dep_var)) {
+    if (is.null(train[[2]])) {
       stop('Unsupervised version is not implemented yet')
     }
-    if (is.null(train$what)) {
+    if (is.null(train[[1]])) {
       stop('No training dataset provided')
     }
     result_type <-  'forest'
     expr$train <- .encode.arg(train)
   } else if (length(test[!sapply(test,is.null)]) == 2){ # one or the other, not both
     result_type <- 'prediction'
+    #test$forest <- sapply(test$forest, unclass, simplify = FALSE) # can't jsonize otherwise
+    if(is.data.frame(test[[2]])){ # local data
+      return(do.call(.predict, test))
+    }
     expr$test <- .encode.arg(test)
   } else {
     stop('One of the "train" or "test" lists must be populated, the latter with both elements')

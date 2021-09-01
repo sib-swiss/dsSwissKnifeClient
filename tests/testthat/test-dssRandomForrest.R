@@ -1,4 +1,5 @@
 test_that("Classification works (discrete y).", {
+
   # We know these are "setosa" because of their small Petal.Width
   testData = data.frame(
     Sepal.Length = c(5.5, 6.1),
@@ -17,8 +18,12 @@ test_that("Classification works (discrete y).", {
 
   # Assign a fraction to the iris data to the "subiris" variable name on each node
   datashield.aggregate(opals, as.symbol('fullData("iris")'))
-  dssSubset("subiris", "iris", row.filter = "idx1", datasources = opals["server1"])
-  dssSubset("subiris", "iris", row.filter = "idx2", datasources = opals["server2"], async = FALSE)
+#  dssSubset("subiris", "iris", row.filter = idx1, datasources = opals["server1"])
+ # dssSubset("subiris", "iris", row.filter = idx2, datasources = opals["server2"], async = FALSE)
+
+  dssSubset("subiris", "iris", row.filter = 'sample(150,100)', datasources = opals)
+  dssSubset("subiris_train", "subiris", row.filter = 'sample(100,90)', datasources = opals)
+  dssSubset("subiris_test", "subiris", row.filter = '!(rownames(subiris) %in% rownames(subiris_train))', datasources = opals)
 
   # Run `forest` - in sync mode for debugging
   dep_var = "Species"
@@ -27,17 +32,18 @@ test_that("Classification works (discrete y).", {
   datashield.aggregate(opals["server1"], as.symbol('partialData("iris", 1, 40)'))
   datashield.aggregate(opals["server2"], as.symbol('partialData("iris", 41, 150)'), async=FALSE)
  # result = dssRandomForest('subiris', dep_var, expl_vars, testData, async = FALSE,datasources = opals)
-  train_args <- list('what' = 'subiris' , dep_var = dep_var, expl_vars = expl_vars)
+  train_args <- list('what' = 'subiris_train' , dep_var = dep_var, expl_vars = expl_vars, nodesize = 5)
   result = dssRandomForest(train = train_args, async = FALSE,datasources = opals)
-
-  p = result$prediction
-  expect_equal(as.character(p[1]), "setosa")
-  expect_equal(as.character(p[2]), "setosa")
+  test_args <- list(forest = result$forest, testData = 'subiris_test')
+  prediction = dssRandomForest(train = NULL,test = test_args, async = FALSE,datasources = opals)
+  local_prediction <- dssRandomForest(train = NULL, test = list(result$forest, testData))
+  expect_identical(local_prediction, c('setosa', 'setosa'))
 
 })
 
 
 test_that("Regression works (continuous y).", {
+
 
   # These ones are setosa based on the small Petal.Width,
   # and should be predicted to have small Sepal.Length (< 5).
@@ -62,7 +68,11 @@ test_that("Regression works (continuous y).", {
   # Run `forest` - in sync mode for debugging
   dep_var = "Sepal.Length"
   expl_vars = c("Sepal.Width","Petal.Length","Petal.Width")
-  result = dssRandomForest('subiris', dep_var, expl_vars, testData, async = FALSE, datasources = opals)
+
+
+  #result = dssRandomForest('subiris', dep_var, expl_vars, testData, async = FALSE, datasources = opals)
+  train_args <- list('what' = 'subiris_train' , dep_var = dep_var, expl_vars = expl_vars, nodesize = 5)
+  result = dssRandomForest(train_args, async = FALSE, datasources = opals)
   # reset iris for the other tests:
   datashield.aggregate(opals["server1"], as.symbol('partialData("iris", 1, 40)'))
   datashield.aggregate(opals["server2"], as.symbol('partialData("iris", 41, 150)'))
