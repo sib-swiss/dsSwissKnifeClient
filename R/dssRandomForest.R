@@ -38,7 +38,7 @@ dssRandomForest <- function(train = list(what = NULL, dep_var = NULL, expl_vars 
     if(is.data.frame(test[[2]])){ # local data
       return(do.call(.predict, test))
     }
-    expr$test <- .encode.arg(test)
+    expr$test <- .encode.arg(test, serialize.it = TRUE)
   } else {
     stop('One of the "train" or "test" lists must be populated, the latter with both elements')
   }
