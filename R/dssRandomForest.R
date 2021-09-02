@@ -3,18 +3,19 @@
 #'   as a model to predict classification of new data of the same type
 #'   (new patients, same variables). The randomForest package needs to be
 #'   installed on all nodes and on the client.
-#' @return a list of randomForest objects if called for training or a prediction vector if called for testing.
-#' @param train, a list of parameters for the training phase. The elements are: what - name of the training data frame on the server.
+#' @return a list of randomForest objects if called for training or of prediction vectors if called for testing (validation).
+#' @param train a list of parameters for the training phase. The elements are: what - name of the training data frame on the server.
 #' dep_var [string] - name of the response factor ("y"), i.e. the categories, expl_vars [vector[string]]  - the classification variables,
 #' ... - further arguments that will be passed to the randomForest function
-#' @param test, a list of parameters for the testing phase. The elements are: forest [list] - a list of forests obtained in the training phase ,
+#' @param test a list of parameters for the validation phase. The elements are: forest [list] - a list of forests obtained in the training phase ,
 #' testData: new data to classify using the forests. If testData is a character, this will be considered the name of the remote data frame;
-#' the testing phase will take place on the remote servers. If testData is a data frame the testing phase and prediction will take place in the client session.
+#' the testing phase will take place on the remote servers. If testData is a local data frame the testing phase and prediction will take place in the client session.
 #'  testData must have at least the columns in `expl_vars` (We want to predict the value of `dep_var` for it.)
+#'
 #'
 
 dssRandomForest <- function(train = list(what = NULL, dep_var = NULL, expl_vars = NULL, ...),
-                            test = list(forest = NULL, testData = NULL, ...),
+                            test = list(forest = NULL, testData = NULL),
                             async = TRUE,  datasources = NULL) {
   if(is.null(datasources)){
     datasources <- datashield.connections_find()
