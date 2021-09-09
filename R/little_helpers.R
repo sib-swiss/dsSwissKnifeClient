@@ -118,3 +118,9 @@ dssSwapKeys <- function(l){
   new.colours <- rgb(old.rgb[1,], old.rgb[2,], old.rgb[3,], old.rgb[4,], maxColorValue = 255)
   return(new.colours)
 }
+
+
+.splitInEqualChunks <- function(string, size){
+  pat <- paste0('(?<=.{',as.character(size),'})')
+  strsplit(string, pat, perl=TRUE)[[1]]
+}

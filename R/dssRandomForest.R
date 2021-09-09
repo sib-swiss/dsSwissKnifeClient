@@ -38,7 +38,14 @@ dssRandomForest <- function(train = list(what = NULL, dep_var = NULL, expl_vars 
     if(is.data.frame(test[[2]])){ # local data
       return(do.call(.predict, test))
     }
-    expr$test <- .encode.arg(test, serialize.it = TRUE)
+    #expr$test <- .encode.arg(test, serialize.it = TRUE)
+    expr$testData <- test$testData
+    forests <- .encode.arg(test$forest, serialize.it = TRUE)
+    if(nchar(forests) > 100000){
+      expr <- c(expr, .splitInEqualChunks(forests,65535)) # there's a 64 k limit on the pattern
+    } else {
+      expr <- c(expr, forests)
+    }
   } else {
     stop('One of the "train" or "test" lists must be populated, the latter with both elements')
   }
@@ -46,9 +53,7 @@ dssRandomForest <- function(train = list(what = NULL, dep_var = NULL, expl_vars 
 
   # Get a list of randomForests from the nodes
   reslist <- datashield.aggregate(datasources, as.call(expr), async)
-  result <- list()
-  result[[result_type]] <- reslist
-  return(result)
+  return(reslist)
 }
 
 
