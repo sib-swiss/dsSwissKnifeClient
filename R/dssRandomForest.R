@@ -30,18 +30,21 @@ dssRandomForest <- function(train = list(what = NULL, dep_var = NULL, expl_vars 
     if (is.null(train[[1]])) {
       stop('No training dataset provided')
     }
-    result_type <-  'forest'
-    expr$train <- .encode.arg(train)
+    #result_type <-  'forest'
+    expr <- c(expr, 'train', .encode.arg(train))
+   # expr$train <- .encode.arg(train)
+
   } else if (length(test[!sapply(test,is.null)]) == 2){ # one or the other, not both
-    result_type <- 'prediction'
+    #result_type <- 'prediction'
     #test$forest <- sapply(test$forest, unclass, simplify = FALSE) # can't jsonize otherwise
     if(is.data.frame(test[[2]])){ # local data
       return(do.call(.predict, test))
     }
     #expr$test <- .encode.arg(test, serialize.it = TRUE)
-    expr$testData <- test$testData
+    #expr$testData <- test$testData
+    expr <- c(expr, 'test', test$testData)
     forests <- .encode.arg(test$forest, serialize.it = TRUE)
-    if(nchar(forests) > 100000){
+    if(nchar(forests) > 65535){
       expr <- c(expr, .splitInEqualChunks(forests,65535)) # there's a 64 k limit on the pattern
     } else {
       expr <- c(expr, forests)
@@ -49,7 +52,6 @@ dssRandomForest <- function(train = list(what = NULL, dep_var = NULL, expl_vars 
   } else {
     stop('One of the "train" or "test" lists must be populated, the latter with both elements')
   }
-
 
   # Get a list of randomForests from the nodes
   reslist <- datashield.aggregate(datasources, as.call(expr), async)

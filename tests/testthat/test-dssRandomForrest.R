@@ -36,7 +36,7 @@ test_that("Classification works (discrete y).", {
   result = dssRandomForest(train = train_args, async = FALSE,datasources = opals)
   test_args <- list(forest = result, testData = 'subiris_test')
   prediction = dssRandomForest(train = NULL,test = test_args, async = FALSE,datasources = opals)
-  local_prediction <- dssRandomForest(train = NULL, test = list(result$forest, testData))
+  local_prediction <- dssRandomForest(train = NULL, test = list(result, testData))
   expect_identical(local_prediction, c('setosa', 'setosa'))
 
 })
