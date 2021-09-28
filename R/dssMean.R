@@ -13,15 +13,17 @@ dssMean <- function (what, na.rm = TRUE, datasources = NULL) {
   }
   expr <- paste0('partMean(', what, ', ',na.rm, ')')
   mns <- datashield.aggregate(datasources, as.symbol(expr))
-  out <- Reduce(function(a,b){
+  out <- Reduce(function(a, b) {
+    if(is.null(a[['weight']])){
+      a[['weight']] <- a$mean*a$len
+    }
+    list(weight = a$weight + b$mean*b$len, len = a$len + b$len)
+  }, mns)
 
-      (a$mean * a$len + b$mean * b$len)/(a$len + b$len)
-    }, mns)
   mns <- dssSwapKeys(mns)$mean
-  if(is.list(out)){
-    out <- out$mean
+  if (is.list(out)) {
+    out <- out$weight/out$len
   }
-  mns$global <-  out
-
+  mns$global <- out
   mns
 }
