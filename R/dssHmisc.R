@@ -14,7 +14,7 @@
 dssHmisc <- function(func, ...,  newobj = NULL, async = TRUE, datasources = NULL){
 
   if(is.null(datasources)){
-    datasources <- dsBaseClient:::findLoginObjects()
+    datasources <- datashield.connections_find()
   }
   arglist <- list(...)
   arglist <- .encode.arg(arglist)

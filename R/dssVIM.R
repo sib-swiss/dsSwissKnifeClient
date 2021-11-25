@@ -13,7 +13,7 @@
 #'
 dssVIM <- function(func, newobj = NULL, async = TRUE, datasources = NULL, ...){
   if(is.null(datasources)){
-    datasources <- dsBaseClient:::findLoginObjects()
+    datasources <- datashield.connections_find()
   }
   arglist <- .encode.arg(list(...)) # pass the args list almost as is to the original function on the local nodes
   func <- .encode.arg(func)
