@@ -76,7 +76,7 @@ test_that("Regression works (continuous y).", {
   #result = dssRandomForest('subiris', dep_var, expl_vars, testData, async = FALSE, datasources = opals)
   train_args <- list('what' = 'subiris_train' , dep_var = dep_var, expl_vars = expl_vars, nodesize = 5)
   result = dssRandomForest(train_args, async = FALSE, datasources = opals)
-  test_args <- list(result$forest, testData)
+  test_args <- list(result, testData)
   prediction <- dssRandomForest(NULL, test_args)
   # reset iris for the other tests:
   datashield.aggregate(opals["server1"], as.symbol('partialData("iris", 1, 40)'))

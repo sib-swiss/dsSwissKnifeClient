@@ -4,7 +4,7 @@
 \alias{.encode.arg}
 \title{Encode function  arguments}
 \usage{
-.encode.arg(some.object)
+.encode.arg(some.object, serialize.it = FALSE)
 }
 \arguments{
 \item{some.object}{the object to be encoded}

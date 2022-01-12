@@ -11,6 +11,7 @@ dssKmeans(
   nstart = 1,
   type = "combine",
   algorithm = "Forgy",
+  membership_suffix = NULL,
   async = TRUE,
   datasources = NULL
 )
@@ -27,6 +28,9 @@ dssKmeans(
 \item{type}{a character, 'split' or 'combine', should it find the global cluster centers or one set for each node? Default 'combine'.}
 
 \item{algorithm}{same as kmeans, it defaults to "Forgy" as it's the only one that doesn't error out in the case of empty clusters}
+
+\item{membership_suffix}{a character. A factor with the cluster membership will be created on each node. It's name will be the name of
+the dataframe followed by this suffix. If null (the default) the suffix will be 'km_clust<number of clusters>'.}
 
 \item{async}{same as in datashield.assign}
 
@@ -47,27 +51,4 @@ is calculated and so on until nstart is reached. Then the 'best' cluster centers
 In both cases ('split' and 'combine') a factor representing the cluster membership of each point is created on the nodes. The name of the factor is derived
 from the dataframe name: <dataframe name>_km_clust<number of clusters>.
 If iter.max is 0 and centers is a matrix the function simply creates the cluster membership factor (as above) using the given centers.
-}
-\examples{
-# open a local pseudo connection:
-library(DSLite)
-dslite.server1 <<- newDSLiteServer(config = defaultDSConfiguration(include=c('dsSwissKnife')))
-dslite.server2 <<- newDSLiteServer(config = defaultDSConfiguration(include=c('dsSwissKnife')))
-builder <- newDSLoginBuilder()
-builder$append(server="server1", url='dslite.server1',driver = "DSLiteDriver")
-builder$append(server="server2", url='dslite.server2',driver = "DSLiteDriver")
-logindata <- builder$build()
-opals <- datashield.login(logins = logindata, assign = TRUE)
-# load the iris dataset
-datashield.aggregate(opals[1], as.symbol('partialData("iris", 1, 70)'))
-datashield.aggregate(opals[2], as.symbol('partialData("iris", 71, 150)'))
-#combined kmeans:
-my.kmeans <- dssKmeans('iris', centers = 3, iter.max =30, nstart = 30, type = 'combine', datasources = opals)
-#compare it with simple kmeans on iris:
-data("iris")
-#kmeans allows only numeric data, so no 'Species', hence iris[,1:4]
-local.kmeans <- kmeans(iris[,1:4], centers = 3, iter.max = 30, nstart = 30, algorithm = 'Forgy')
-my.kmeans$global$centers
-local.kmeans$centers
-
 }

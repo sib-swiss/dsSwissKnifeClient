@@ -1,5 +1,5 @@
 test_that("dssKmeans works", {
-  my_kmeans <- dssKmeans('iris', centers = 3, iter.max =30, nstart = 30, type = 'combine')
+  my_kmeans <- dssKmeans('iris', centers = 3, iter.max =30, nstart = 30, type = 'combine', membership_suffix = 'test_km_3')
   data("iris", envir = environment())
   local.kmeans <- kmeans(iris[,1:4], centers = 3, iter.max = 30, nstart = 30, algorithm = 'Forgy')
 # the order of the 2 matrices might be different so we need to contort like so:

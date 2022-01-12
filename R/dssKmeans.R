@@ -6,6 +6,10 @@
 #' @param nstart same as kmeans, if centers is a number, how many random sets should be chosen
 #' @param type a character, 'split' or 'combine', should it find the global cluster centers or one set for each node? Default 'combine'.
 #' @param algorithm same as kmeans, it defaults to "Forgy" as it's the only one that doesn't error out in the case of empty clusters
+#' @param membership_suffix a character. A factor with the cluster membership will be created on each node. It's name will be the name of
+#' the dataframe followed by this suffix. If null (the default) the suffix will be 'km_clust<number of clusters>'.
+#' @param async same as in datashield.assign
+#' @param datasources same as in datashield.assign
 #' @details If type = 'split' the function simply executes kmeans with the provided arguments and returns one set of cluster centers for each node.
 #' If type = 'combine', and centers are provided as a number it first chooses a set of random initial centers from the ranges of the combined dataset, then
 #' it executes exactly one iteration of kmeans (with these initial centers) on each node. The results are then retrieved, averaged and the newly obtained centers
@@ -14,34 +18,11 @@
 #' In both cases ('split' and 'combine') a factor representing the cluster membership of each point is created on the nodes. The name of the factor is derived
 #' from the dataframe name: <dataframe name>_km_clust<number of clusters>.
 #' If iter.max is 0 and centers is a matrix the function simply creates the cluster membership factor (as above) using the given centers.
-#' @param async same as in datashield.assign
-#' @param datasources same as in datashield.assign
 #' @return A list containing one (in the case of 'combined') or more ('split') stripped down kmeans objects.
-#' @examples
-#' # open a local pseudo connection:
-#' library(DSLite)
-#' dslite.server1 <<- newDSLiteServer(config = defaultDSConfiguration(include=c('dsSwissKnife')))
-#' dslite.server2 <<- newDSLiteServer(config = defaultDSConfiguration(include=c('dsSwissKnife')))
-#' builder <- newDSLoginBuilder()
-#' builder$append(server="server1", url='dslite.server1',driver = "DSLiteDriver")
-#' builder$append(server="server2", url='dslite.server2',driver = "DSLiteDriver")
-#' logindata <- builder$build()
-#' opals <- datashield.login(logins = logindata, assign = TRUE)
-#' # load the iris dataset
-#' datashield.aggregate(opals[1], as.symbol('partialData("iris", 1, 70)'))
-#' datashield.aggregate(opals[2], as.symbol('partialData("iris", 71, 150)'))
-#' #combined kmeans:
-#' my.kmeans <- dssKmeans('iris', centers = 3, iter.max =30, nstart = 30, type = 'combine', datasources = opals)
-#' #compare it with simple kmeans on iris:
-#' data("iris")
-#' #kmeans allows only numeric data, so no 'Species', hence iris[,1:4]
-#' local.kmeans <- kmeans(iris[,1:4], centers = 3, iter.max = 30, nstart = 30, algorithm = 'Forgy')
-#' my.kmeans$global$centers
-#' local.kmeans$centers
-#'
 
 
-dssKmeans <- function(what, centers, iter.max = 10, nstart = 1, type = 'combine', algorithm = "Forgy",
+
+dssKmeans <- function(what, centers, iter.max = 10, nstart = 1, type = 'combine', algorithm = "Forgy", membership_suffix = NULL,
                       async = TRUE, datasources = NULL){
 
   if(is.null(datasources)){
@@ -56,7 +37,11 @@ dssKmeans <- function(what, centers, iter.max = 10, nstart = 1, type = 'combine'
     return(datashield.aggregate(datasources, as.call(expr), async = async))
   }
   if(type == 'split'){ # execute on each node and get out
-    expr <- paste0('partialKmeans("', what, '","',.encode.arg(centers) ,'",NULL, FALSE, TRUE,', iter.max, ',', nstart, ',"', .encode.arg(algorithm) ,'")')
+    expr <- paste0('partialKmeans("', what, '","',.encode.arg(centers) ,'",NULL, FALSE, TRUE,', iter.max, ',', nstart, ',"', .encode.arg(algorithm) ,'"')
+    if(!is.null(membership_suffix)){
+      expr <- paste0(expr, ' ,"', membership_suffix, '"')
+    }
+    expr <- paste0(expr,')')
     km <- datashield.aggregate(datasources, as.symbol(expr), async = async)
     return(km)
   } else if (type == 'combine'){
@@ -113,7 +98,7 @@ dssKmeans <- function(what, centers, iter.max = 10, nstart = 1, type = 'combine'
     #datashield.aggregate(datasources, as.symbol(expr), async = async, wait = wait)
     #build expr as a list to be sent as.call
 
-    expr <- list(as.symbol('partialKmeans'), what, .encode.arg(as.data.frame(this.km$centers)), NULL, TRUE)
+    expr <- list(as.symbol('partialKmeans'), what, .encode.arg(as.data.frame(this.km$centers)), NULL, TRUE, suffix = membership_suffix)
     # kms <- datashield.aggregate(datasources, as.symbol(expr), async = async)
     sil <- datashield.aggregate(datasources, as.call(expr), async = async)
     this.km[['silhouette']] <- sil
