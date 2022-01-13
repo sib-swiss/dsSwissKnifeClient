@@ -6,7 +6,7 @@
 #' @param nstart same as kmeans, if centers is a number, how many random sets should be chosen
 #' @param type a character, 'split' or 'combine', should it find the global cluster centers or one set for each node? Default 'combine'.
 #' @param algorithm same as kmeans, it defaults to "Forgy" as it's the only one that doesn't error out in the case of empty clusters
-#' @param membership_suffix a character. A factor with the cluster membership will be created on each node. It's name will be the name of
+#' @param membership_suffix a character. A factor with the cluster membership will be created on each node. Its name will be the name of
 #' the dataframe followed by this suffix. If null (the default) the suffix will be 'km_clust<number of clusters>'.
 #' @param async same as in datashield.assign
 #' @param datasources same as in datashield.assign

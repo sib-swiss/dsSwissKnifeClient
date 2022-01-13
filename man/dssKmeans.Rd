@@ -29,7 +29,7 @@ dssKmeans(
 
 \item{algorithm}{same as kmeans, it defaults to "Forgy" as it's the only one that doesn't error out in the case of empty clusters}
 
-\item{membership_suffix}{a character. A factor with the cluster membership will be created on each node. It's name will be the name of
+\item{membership_suffix}{a character. A factor with the cluster membership will be created on each node. Its name will be the name of
 the dataframe followed by this suffix. If null (the default) the suffix will be 'km_clust<number of clusters>'.}
 
 \item{async}{same as in datashield.assign}
