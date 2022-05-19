@@ -5,24 +5,24 @@
 #'   installed on all nodes and on the client.
 #' @return a list of randomForest objects if called for training or of prediction vectors if called for testing (validation).
 #' @param train a list of parameters for the training phase. The elements are: what - name of the training data frame on the server.
-#' dep_var [string] - name of the response factor ("y"), i.e. the categories, expl_vars [vector[string]]  - the classification variables,
-#' ... - further arguments that will be passed to the randomForest function
+#' dep_var [string] - name of the response factor ("y"), i.e. the categories, expl_vars [vector[string]]  - the classification variables
 #' @param test a list of parameters for the validation phase. The elements are: forest [list] - a list of forests obtained in the training phase ,
 #' testData: new data to classify using the forests. If testData is a character, this will be considered the name of the remote data frame;
 #' the testing phase will take place on the remote servers. If testData is a local data frame the testing phase and prediction will take place in the client session.
 #'  testData must have at least the columns in `expl_vars` (We want to predict the value of `dep_var` for it.)
-#'
+#' @param ... - further arguments that will be passed to the randomForest function for the *training* phase only
 #'
 
-dssRandomForest <- function(train = list(what = NULL, dep_var = NULL, expl_vars = NULL, ...),
+dssRandomForest <- function(train = list(what = NULL, dep_var = NULL, expl_vars = NULL),
                             test = list(forest = NULL, testData = NULL),
-                            async = TRUE,  datasources = NULL) {
+                            async = TRUE,  datasources = NULL, ...) {
   if(is.null(datasources)){
     datasources <- datashield.connections_find()
   }
 
 
   expr <- list(as.symbol('forestDSS'))
+
   if(length(train[!sapply(train,is.null)]) > 0 ){  # meaning at least one non null
     if (is.null(train[[2]])) {
       stop('Unsupervised version is not implemented yet')
@@ -31,6 +31,10 @@ dssRandomForest <- function(train = list(what = NULL, dep_var = NULL, expl_vars 
       stop('No training dataset provided')
     }
     #result_type <-  'forest'
+    supp <- list(...) # add more args if necessary
+    if(length(supp) > 0 ){
+      train <- c(train, supp)
+    }
     expr <- c(expr, 'train', .encode.arg(train))
    # expr$train <- .encode.arg(train)
 
