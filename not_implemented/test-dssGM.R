@@ -1,10 +1,12 @@
 test_that("dssGM works", {
+  set.seed(1234)
+  cols = c("Sepal.Length", "Sepal.Width")
 
-  merged.mix <- dssGM('iris', NULL, 2, datasources = opals)
+  merged.mix <- dssGM('iris', cols, 3, datasources = opals)
   merged.components = merged.mix$components
 
   data(iris)
-  real.mix = mixtools::mvnormalmixEM(iris[,1:4], k = 2);
+  real.mix = mixtools::mvnormalmixEM(iris[,cols], k = 3);
 
   expect_equal(length(merged.components), length(real.mix$mu))
   sapply(merged.components, `[[`, 'mu')
