@@ -33,7 +33,7 @@
 #' @param cols: Vector of column names for the numeric variables to consider.
 #' @param K: the number of expected Gaussian components in the mix.
 #'
-dssGM <- function(what, cols = NULL, K, async = TRUE, wait = TRUE, datasources = NULL) {
+dssGM <- function(what, cols = NULL, K, async = TRUE,  datasources = NULL) {
     if(is.null(datasources)){
         datasources <- datashield.connections_find()
     }
@@ -45,7 +45,7 @@ dssGM <- function(what, cols = NULL, K, async = TRUE, wait = TRUE, datasources =
     expr <- paste0(expr, ', "', K.arg , '"', ')')
 
 
-    mixtures = datashield.aggregate(datasources, as.symbol(expr), async, wait)
+    mixtures = datashield.aggregate(datasources, as.symbol(expr), async)
 
     mixture = .merge.client(mixtures)
 }

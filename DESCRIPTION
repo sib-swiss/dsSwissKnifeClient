@@ -13,9 +13,11 @@ Description: More DataSHIELD methods including PCA, Kmeans and others.
 License: 
 Encoding: UTF-8
 LazyData: true
-RoxygenNote: 7.1.2
+RoxygenNote: 7.2.0
 Depends: R (>= 3.5.0),
   DSI,
-  DSOpal
-Suggests: VIM,
-    testthat (>= 2.1.0)
+  DSOpal,
+  opalr,
+  VIM
+Suggests: uwot,
+  testthat (>= 2.1.0)
