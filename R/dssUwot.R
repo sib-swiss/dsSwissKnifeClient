@@ -35,7 +35,7 @@ dssUwot <- function(func, X, model = NULL, async = TRUE, datasources = NULL, ...
         fname <- tempfile(pattern='dssUwot', tmpdir = tempdir(check=TRUE))
         uwot::save_uwot(model, fname)
         file_is_local <- TRUE
-      } else { # it's already on disk, not sur if here or there yet
+      } else { # it's already on disk, not sure if here or there yet
         fname <- model
         if(file.exists(fname)){ # it's here
           file_is_local <- TRUE
@@ -51,10 +51,21 @@ dssUwot <- function(func, X, model = NULL, async = TRUE, datasources = NULL, ...
     }
   }
 
-  response <- datashield.aggregate(datasources, as.call(expr), async = async) # get the location of the saved model
-  sapply(names(datasources), function(x){
+  response <- datashield.aggregate(datasources, as.call(expr), async = async)
+#  sapply(names(datasources), function(x){
+#    rfname <- tempfile(pattern='uwotDSS', tmpdir = tempdir(check=TRUE))
+#    opal.file_download(datasources[[x]]@opal, response[[x]], rfname)
+#    uwot::load_uwot(rfname)
+#    }, simplify = FALSE)
+  if(!is.list(response)){ # buggy datashield.aggregate doesn't return a list if it's a single node
+    node <- names(datasources) # it's only one
+    tmp <- list()
+    tmp[[node]] <- response
+    response <- tmp
+  }
+  sapply(names(response), function(x){
     rfname <- tempfile(pattern='uwotDSS', tmpdir = tempdir(check=TRUE))
-    opal.file_download(datasources[[x]]@opal, response[[x]], rfname)
+    writeBin(response[[x]], rfname,  useBytes = TRUE)
     uwot::load_uwot(rfname)
-    }, simplify = FALSE)
+  }, simplify = FALSE)
 }
