@@ -42,12 +42,13 @@ dssUwot <- function(func, X, model = NULL, async = TRUE, datasources = NULL, ...
         }
       }
       if(file_is_local){
-        destfile <- '/tmp/uwot_model'
-        opal.file_upload(datasources, fname , destfile)
+        uwot_model <- readBin(fname, 'raw', n = file.info(fname)$size)
+        destfile <- 'uwot_model'
+        dssUpload(destfile, maxsize = 1e+7, async, datasources) # upload 10 megs at a time
       } else {
         destfile <- model # we have a model already out there
       }
-      expr$model <- destfile
+      expr$model <- .encode.arg(destfile)
     }
   }
 
