@@ -12,7 +12,8 @@ dssUwot(func, X, model = NULL, async = TRUE, datasources = NULL, ...)
 \item{X, }{a character, the name of the dataframe containing the input data. The non-numeric columns are
 automatically stripped of before running the function.}
 
-\item{model}{a umap model, used only for the function umap_transform}
+\item{model}{a umap model, used only for the function umap_transform. This can be: a model in the current (local) session,
+the path to a saved model (with uwot::save_model()) on the local disk or the path to a saved model on the server storage}
 
 \item{async}{a logical, see datashield.aggregate}
 

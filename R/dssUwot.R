@@ -3,7 +3,8 @@
 #' @param func a character, the name of the function to call
 #' @param X, a character, the name of the dataframe containing the input data. The non-numeric columns are
 #' automatically stripped of before running the function.
-#' @param model a umap model, used only for the function umap_transform
+#' @param model a umap model, used only for the function umap_transform. This can be: a model in the current (local) session,
+#' the path to a saved model (with uwot::save_model()) on the local disk or the path to a saved model on the server storage
 #' @param async a logical, see datashield.aggregate
 #' @param  datasources a list of opal objects obtained after logging into the opal servers (see datashield.login)
 #' @param ... further arguments to be passed to the function (see the documentation of the uwot package).
@@ -53,6 +54,7 @@ dssUwot <- function(func, X, model = NULL, async = TRUE, datasources = NULL, ...
   }
 
   response <- datashield.aggregate(datasources, as.call(expr), async = async)
+
 #  sapply(names(datasources), function(x){
 #    rfname <- tempfile(pattern='uwotDSS', tmpdir = tempdir(check=TRUE))
 #    opal.file_download(datasources[[x]]@opal, response[[x]], rfname)
@@ -64,9 +66,12 @@ dssUwot <- function(func, X, model = NULL, async = TRUE, datasources = NULL, ...
     tmp[[node]] <- response
     response <- tmp
   }
-  sapply(names(response), function(x){
-    rfname <- tempfile(pattern='uwotDSS', tmpdir = tempdir(check=TRUE))
-    writeBin(response[[x]], rfname,  useBytes = TRUE)
-    uwot::load_uwot(rfname)
-  }, simplify = FALSE)
+  if(func == 'umap'){ # the model is tricky, it comes as a blob
+    response <- sapply(names(response), function(x){
+      rfname <- tempfile(pattern='uwotDSS', tmpdir = tempdir(check=TRUE))
+      writeBin(response[[x]], rfname,  useBytes = TRUE)
+      uwot::load_uwot(rfname)
+    }, simplify = FALSE)
+  }
+  return(response)
 }
