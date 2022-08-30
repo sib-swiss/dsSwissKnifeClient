@@ -17,3 +17,10 @@ test_that("dssDeriveColumn works", {
      }, regexp = 'rnorm, mean not allowed here')
 
 })
+
+test_that("dssDeriveColumn one.versus.others work", {
+  dssSubset('iris_der', 'iris', row.filter = '1==1')
+  dssDeriveColumn('iris_der', 'new_col', 'one.versus.others(Species, "setosa")')
+  expect_equal(levels(session1$iris_der$new_col), c('setosa', 'no_setosa'))
+
+})

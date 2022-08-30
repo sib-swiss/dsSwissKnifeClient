@@ -25,6 +25,8 @@ The new column is calculated from a formula that can contain arithmetic operator
 At the moment the permitted functions are: abs, round, ceiling, floor, trunc, signif, length, as.Date, as.character, as.numeric, as.factor.
 The administrators of remote nodes can make more functions available with a procedure described
 in the help of the function .init in the package dsSwissKnife (?dsSwissKnife:::.init)
+There's one more function available: one.versus.others(col, positive.level) - this function reduces any factor to 2 levels
+in preparation for a logistic regression (see example below).
 }
 \examples{
 # open a local pseudo connection:
@@ -38,12 +40,16 @@ opals <- datashield.login(logins = logindata, assign = TRUE)
 datashield.aggregate(opals[1], as.symbol('partialData("iris")'))
 #now play around:
 dssDeriveColumn('iris', 'new_col', 'Sepal.Length/round(2.2)', datasources = opals)
-str(iris)
+str(pseudo_server$iris)
 dssDeriveColumn('iris', 'new_col2', 'iris$Sepal.Length/abs(-2)', datasources = opals)
-str(iris)
+str(pseudo_server$iris)
 a <- iris$Petal.Length
 dssDeriveColumn('iris', 'new_col3', 'a/abs(-2)', datasources = opals)
-str(iris)
+str(pseudo_server$iris)
+The built in function one.versus.others:
+dssDeriveColumn('iris', 'new_col', 'one.versus.others(Species, "setosa")')
+str(pseudo_server$iris$new_col)
+#### ...Factor w/ 2 levels "setosa","no_setosa": 1 1 1 1 1 1 1 1 1 1 ...#
 # this will fail:
 dssDeriveColumn('iris', 'new_col', 'Sepal.Length[1]', datasources = opals)
 # as will this
