@@ -1,6 +1,7 @@
 test_that("dssDeriveColumn works", {
   dssSubset('iris_der', 'iris', row.filter = '1==1')
    dssDeriveColumn('iris_der', 'new_col', 'Sepal.Length/round(2.2)')
+   dssDeriveColumn('iris_der', 'rnorm', 'rnorm.0.1()')
   data('iris', envir = environment())
   iris$new_col <- iris$Sepal.Length/round(2.2)
   x <- dssMean('iris_der$new_col', datasources = opals)
@@ -15,6 +16,7 @@ test_that("dssDeriveColumn works", {
     try(dssDeriveColumn('iris_der', 'new_col', 'rnorm(length(iris$Sepal.Length), mean = mean(iris$Sepal.Length),1)', datasources = opals), silent = TRUE)
      datashield.errors()[[1]]
      }, regexp = 'rnorm, mean not allowed here')
+  expect_lt(abs(mean(session1$iris_der$rnorm)),1 )
 
 })
 

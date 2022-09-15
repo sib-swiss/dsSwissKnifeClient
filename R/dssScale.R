@@ -21,7 +21,9 @@ dssScale <- function(symbol, what, center = TRUE, scale = TRUE, type = 'combine'
   if(is.null(datasources)){
     datasources <- datashield.connections_find()
   }
-
+  if(length(datasources) == 1){
+    type = 'split' # regardless
+  }
   if(type == 'combine'){
       useRootMeanSquare <- FALSE
       if (is.logical(center)){

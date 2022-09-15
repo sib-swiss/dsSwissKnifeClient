@@ -9,13 +9,13 @@ dssDeriveColumn(df, col.name, formula, datasources = NULL, async = TRUE)
 \arguments{
 \item{df}{a character, the name of the dataframe}
 
+\item{col.name}{a character, the name of the new column}
+
 \item{formula}{a character, the formula used to calculate the new column. It can reference columns from the dataframe, or other objects in the session}
 
 \item{datasources}{same as in datashield.assign}
 
 \item{async}{same as in datashield.assign}
-
-\item{new.col}{a character, the name of the new column}
 }
 \value{
 It doesn't return anything, the dataframe in the server session will now contain the new column.
