@@ -26,6 +26,6 @@ dssLmResid <- function(outcomes, indvars, data, newobj = 'residuals',  async = T
   }
   outcomes <- .encode.arg(outcomes)
   indvars <- .encode.arg(indvars)
-  exp <- list('residLmDSS', outcomes = outcomes, indvars = indvars, data = as.symbol(data))
+  exp <- list(as.symbol('residLmDSS'), outcomes = outcomes, indvars = indvars, data = as.symbol(data))
   datashield.assign(datasources, newobj, as.call(exp), async = async)
 }
