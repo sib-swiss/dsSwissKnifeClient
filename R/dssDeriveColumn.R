@@ -1,6 +1,6 @@
 #' @title Add a calculated column to a dataframe
 #' @description The new column is calculated from a formula that can contain arithmetic operators and a (very) limited number of R functions.
-#' At the moment the permitted functions are: abs, round, ceiling, floor, trunc, signif, length, as.Date, as.character, as.numeric, as.factor.
+#' At the moment the permitted functions are: abs, round, ceiling, floor, trunc, signif, paste0, length, as.Date, as.character, as.numeric, as.factor.
 #' The administrators of remote nodes can make more functions available with a procedure described
 #' in the help of the function .init in the package dsSwissKnife (?dsSwissKnife:::.init)
 #' There are  two  more function available: 1) one.versus.others(col, positive.level) - this function reduces any factor to 2 levels
