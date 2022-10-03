@@ -29,3 +29,7 @@ dssLmResid <- function(outcomes, indvars, data, newobj = 'residuals',  async = T
   exp <- list(as.symbol('residLmDSS'), outcomes = outcomes, indvars = indvars, data = as.symbol(data))
   datashield.assign(datasources, newobj, as.call(exp), async = async)
 }
+
+
+
+
