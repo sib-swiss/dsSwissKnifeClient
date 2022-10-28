@@ -1,5 +1,5 @@
 #' @title Call selected functions from the package uwot
-#' @description Only the functions 'umap'  and 'umap_transform' are implemented
+#' @description Only the functions 'umap'  and 'umap_transform' are implemented. The function 'umap' will only return the fgraph if specified in 'return_extra'.
 #' @param func a character, the name of the function to call
 #' @param X, a character, the name of the dataframe containing the input data. The non-numeric columns are
 #' automatically stripped of before running the function.
@@ -66,12 +66,12 @@ dssUwot <- function(func, X, model = NULL, async = TRUE, datasources = NULL, ...
     tmp[[node]] <- response
     response <- tmp
   }
-  if(func == 'umap'){ # the model is tricky, it comes as a blob
-    response <- sapply(names(response), function(x){
-      rfname <- tempfile(pattern='uwotDSS', tmpdir = tempdir(check=TRUE))
-      writeBin(response[[x]], rfname,  useBytes = TRUE)
-      uwot::load_uwot(rfname)
-    }, simplify = FALSE)
-  }
+#  if(func == 'umap'){ # the model is tricky, it comes as a blob
+#    response <- sapply(names(response), function(x){
+#      rfname <- tempfile(pattern='uwotDSS', tmpdir = tempdir(check=TRUE))
+#      writeBin(response[[x]], rfname,  useBytes = TRUE)
+#      uwot::load_uwot(rfname)
+#    }, simplify = FALSE)
+#  }
   return(response)
 }

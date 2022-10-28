@@ -26,5 +26,5 @@ The parameters ret_nn and ret_extra are not taken into consideration as they are
 a umap model (see the documentation for the respective functions)
 }
 \description{
-Only the functions 'umap'  and 'umap_transform' are implemented
+Only the functions 'umap'  and 'umap_transform' are implemented. The function 'umap' will only return the fgraph if specified in 'return_extra'.
 }
