@@ -4,7 +4,17 @@
 \alias{dssCov}
 \title{The covariance matrix of a data frame or matrix}
 \usage{
-dssCov(x, collist = NULL, type = "combine", async = TRUE, datasources = NULL)
+dssCov(
+  x,
+  collist = NULL,
+  type = "combine",
+  wt = NULL,
+  cor = FALSE,
+  center = TRUE,
+  method = "unbiased",
+  async = TRUE,
+  datasources = NULL
+)
 }
 \arguments{
 \item{x}{a character name of the data frame}
@@ -15,6 +25,12 @@ If null, all the *numeric* columns from x will be used.}
 \item{type}{a character which represents the type of analysis to carry out.
 If type is set to 'combine',  global column means are calculated if type is set to 'split', the column means are
 calculated separately for each node.}
+
+\item{wt}{if set, either a vector of weights or the name of such a vector. If the former, the same vector will be sent to
+all the nodes. If the latter, different vectors can be first uploaded (with dssUpload) to the respective nodes. In both cases, the function will
+execute cov.wt on the nodes and it will return a matrix per node irrespectve of the  the parameter "type" above}
+
+\item{cor, }{center, method - parameters for the cov.wt function, ignored if wt is NULL (the default)}
 
 \item{async}{a logical, see datashield.aggregate}
 

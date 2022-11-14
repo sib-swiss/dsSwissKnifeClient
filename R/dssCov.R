@@ -5,6 +5,10 @@
 #' @param type a character which represents the type of analysis to carry out.
 #' If type is set to 'combine',  global column means are calculated if type is set to 'split', the column means are
 #' calculated separately for each node.
+#' @param wt if set, either a vector of weights or the name of such a vector. If the former, the same vector will be sent to
+#' all the nodes. If the latter, different vectors can be first uploaded (with dssUpload) to the respective nodes. In both cases, the function will
+#' execute cov.wt on the nodes and it will return a matrix per node irrespectve of the  the parameter "type" above
+#' @param cor, center, method - parameters for the cov.wt function, ignored if wt is NULL (the default)
 #' @param async a logical, see datashield.aggregate
 
 #' @param  datasources a list of opal objects obtained after logging into the opal servers (see datashield.login)
@@ -14,9 +18,13 @@
 #'
 
 
-dssCov <- function(x,  collist = NULL, type = 'combine',  async = TRUE, datasources = NULL){
+dssCov <- function(x,  collist = NULL, type = 'combine', wt = NULL,  cor = FALSE, center = TRUE, method = 'unbiased', async = TRUE, datasources = NULL){
   if(is.null(datasources)){
     datasources <- datashield.connections_find()
+  }
+  if(!is.null(wt)){
+     expr <- list(as.symbol('partCov'), x = as.symbol(x), means = NULL, collist = collist, wt = wt, cor = cor, center = center, method = method )
+     return(datashield.aggregate(datasources,as.call(expr), async=async))
   }
   mlist <- dssColMeans(x,  FALSE, collist, type, async = async, datasources)
 

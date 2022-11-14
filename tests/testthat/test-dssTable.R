@@ -1,6 +1,6 @@
 test_that("dssTable split works", {
  tb <- dssTable('iris$Species', type = 'split',async = TRUE, datasources = opals)
- expect_equal(unname(tb$server1['versicolor']), 25)
+ expect_equal(unname(tb$server1['setosa']), 40)
 })
 
 test_that("dssTable combine works", {
