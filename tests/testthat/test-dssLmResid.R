@@ -4,7 +4,7 @@ test_that("dssLmResid works with global coefficients", {
   resid <- list()
   outc <- sapply(deps, function(x){
     formula <- paste0(x, ' ~ ', paste(setdiff(indvars, x), collapse = ' + '))
-    print(formula)
+   # print(formula)
     md <- lm(formula, data = iris[, unique(c(x, indvars))])
     resid[[x]] <<- scale(unname(md$residuals))
     md$coefficients
