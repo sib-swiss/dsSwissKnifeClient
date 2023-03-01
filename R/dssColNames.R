@@ -36,6 +36,8 @@ dssColNames<- function(df, value =  NULL, to.replace = NULL, async = TRUE, datas
       stop('Number of items to replace is not a multiple of replacement length')
     }
   }
-  expr <- paste0('colnamesDSS(', df,',"', .encode.arg(to.replace), '", "', .encode.arg(value),'")')
-  datashield.aggregate(datasources, as.symbol(expr), async = async)
+  #expr <- paste0('colnamesDSS(', df,',"', .encode.arg(to.replace), '", "', .encode.arg(value),'")')
+ # datashield.aggregate(datasources, as.symbol(expr), async = async)
+  expr <- list(as.symbol('colnamesDSS'),  as.symbol(df), .encode.arg(to.replace), .encode.arg(value))
+  datashield.aggregate(datasources, as.call(expr), async = async)
 }

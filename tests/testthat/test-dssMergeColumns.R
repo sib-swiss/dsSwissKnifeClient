@@ -11,7 +11,7 @@ test_that("dssMergeColumns works on 2 nodes", {
   session2$iris_der[c(1,11,21,19), 'Sepal.Width'] <- NA
   session1$iris_der[c(33,64,72,19), 'A'] <- NA
   session2$iris_der[c(34,52,28,41), 'D'] <- NA
-   my_dict1 <- list('Sepal.Length' = c('Sepal.Width', 'Petal.Length'),
+  my_dict1 <- list('Sepal.Length' = c('Sepal.Width', 'Petal.Length'),
                    'A' = c('D', 'C'),
                    'G' = c('B'))
 
