@@ -45,13 +45,9 @@ dssMergeColumns <- function(df, dictionary, datasources = NULL, async = TRUE){
   if(is.null(datasources)){
     datasources <- datashield.connections_find()
   }
-
   dssUpload(dictionary, datasources = datasources, async = async)
   dictObject <- get(dictionary, envir = parent.frame())
-  colList <- dssColNames(df, async = async, datasources = datasources)
-  allCols <- Reduce(union, colList)
-  swapDict <- dssSwapKeys(dictObject)
-  endCols <- Reduce(union, swapDict[allCols])
+  endCols <- names(dictObject)
   invisible(lapply(endCols, function(x){
     dssDeriveColumn(df, paste0(x, '_derived'), paste0('mergeConceptIds("', x , '", "',dictionary,'")'), async = async, datasources = datasources)
   }))
