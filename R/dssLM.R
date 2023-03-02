@@ -62,14 +62,18 @@ dssLM <- function(what, dep_var, expl_vars = NULL, async = TRUE,  datasources = 
     b = XXinv %*% Xy
     # Compute T statistic and p-value
     SSres = as.numeric(yy - t(b) %*% Xy)
-    SSres = as.numeric(yy - t(b) %*% Xy)
+
     k = length(b) - 1  # one is the intercept
     df = n - k - 1  # degrees of freedom
     varBeta = (SSres / df) * XXinv
+    se = sqrt(diag(varBeta))
     tstat = b / sqrt(diag(varBeta))  # Student T statistic
     pval = 2 * pt(abs(tstat), df, lower=FALSE)  # Student test
     result = list(
         beta = b,
+        SE = se,
+        CILow = b - qnorm(p=.05/2, lower.tail=FALSE) * se,
+        CIHigh = b + qnorm(p=.05/2, lower.tail=FALSE) * se,
         t.statistic = tstat,
         p.val = pval,
         degrees.free = df,
