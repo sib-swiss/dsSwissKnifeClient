@@ -2,8 +2,9 @@
 #pkgload::load_all('/home/iulian/datashield/DSOpal')
 pkgload::load_all('/home/iulian/datashield/DSLite')
 pkgload::load_all('/home/iulian/datashield/dsSwissKnife')
-dslite.server1 <<- newDSLiteServer(config = defaultDSConfiguration(include=c('dsSwissKnife')))
-dslite.server2 <<- newDSLiteServer(config = defaultDSConfiguration(include=c('dsSwissKnife')))
+library(dsBase)
+dslite.server1 <<- newDSLiteServer(config = defaultDSConfiguration(include=c('dsSwissKnife', 'dsBase')))
+dslite.server2 <<- newDSLiteServer(config = defaultDSConfiguration(include=c('dsSwissKnife', 'dsBase')))
 
 #library(DSI)
 #library(dsBaseClient)
