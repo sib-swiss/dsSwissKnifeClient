@@ -1,17 +1,16 @@
 #' @title Call selected functions from the package ranger
-#' @description At the moment only the functions 'ranger' (which returns a result that can be visualised) and 'kNN' (which doesn't) are implemented
+#' @description At the moment only the functions 'ranger' and 'predict'  are implemented.
 #' @param func a character, the name of the function to call
-#' @param newobj a character name of the new object to be created on the nodes if this is an assign function(i.e 'kNN'), ignored otherwise.
-#' If an assign function is called without this, the original object will be modified in place.
+#' @param newobj a character name of the new object to be created on the nodes.
 #' @param async a logical, see datashield.aggregate
 
 #' @param  datasources a list of opal objects obtained after logging into the opal servers (see datashield.login)
-#' @param ... further arguments to be passed to the function (see the documentation of the VIM package). The first argument (typically a dataframe)
-#' should be provided as a character.
+#' @param ... further arguments to be passed to the function (see the documentation of the VIM package). The names of objects (dataframes, vectors)
+#' should be provided as a characters.
 
 #' @export
 #'
-dssRanger <- function(func, newobj = NULL, async = TRUE, datasources = NULL, ...){
+dssRanger <- function(func, newobj , async , datasources, ...){
   if(is.null(datasources)){
     datasources <- datashield.connections_find()
   }
