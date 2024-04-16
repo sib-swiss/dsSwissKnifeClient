@@ -24,6 +24,7 @@ session2 <- dslite.server2$getSession(dslite.server2$getSessionIds())
 datashield.aggregate(opals['server1'], as.symbol('partialData("iris", 1, 75)'))
 datashield.aggregate(opals['server2'], as.symbol('partialData("iris", 76, 150)'))
 datashield.aggregate(opals['server1'], as.symbol('fullData("dataFarkas", "GRridge")') )
+datashield.aggregate(opals['server1'], as.symbol('fullData("demo_3_Omics", "ConsensusOPLS")') )
 data("iris")
 idx1 <<- sample(150, 100) # for randomforests
 idx2 <<- sample(150, 100)
