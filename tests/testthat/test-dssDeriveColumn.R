@@ -55,7 +55,7 @@ test_that("dssDeriveColumn merge columns where nothing exists", {
   session1$iris_der[c(3,6,7,9), 'Sepal.Width'] <- NA
   assign('my_dict', list('Sepal.Length1' = c('Sepal.Width1', 'Petal.Length1')), envir = .GlobalEnv)
   dssDeriveColumn('iris_der', 'Sepal.Length1', 'mergeConceptIds("Sepal.Length1", "my_dict")', datasources = opals[1])
-  expect_true(is.na(session1$iris_der[3, 'Sepal.Length1']))
+  expect_true(is.null(session1$iris_der[3, 'Sepal.Length1']))
 
 })
 
@@ -77,6 +77,6 @@ test_that("dssDeriveColumn merge columns on 2 nodes works", {
   assign('my_dict', my_dict, envir = .GlobalEnv)
   dssDeriveColumn('iris_der', 'newSepal.Length', 'mergeConceptIds("Sepal.Length", "my_dict")', datasources = opals)
   dssDeriveColumn('iris_der', 'newA', 'mergeConceptIds("A", "my_dict")', datasources = opals)
-  expect_equal(session1$iris_der[3, 'Sepal.Length1'], 1.3)
+  expect_equal(session1$iris_der[3, 'newSepal.Length'], 1.3)
 
 })

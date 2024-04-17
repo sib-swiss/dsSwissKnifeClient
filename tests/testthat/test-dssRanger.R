@@ -1,5 +1,5 @@
 test_that("dssRanger ranger works with formula", {
-  ranger_model <- dssRanger('ranger', async = TRUE, datasources = opals, formula = 'Sepal.Length ~ .' ,data ='iris', importance = 'permutation')
+  ranger_model <- dssRanger('ranger', newobj = 'remote_ranger', async = TRUE, datasources = opals, formula = 'Sepal.Length ~ .' ,data ='iris', importance = 'permutation')
   expect_equal(ranger_model$server1$importance.mode, 'permutation')
 })
 
