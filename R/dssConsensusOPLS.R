@@ -10,7 +10,7 @@ dssConsensusOPLS <- function(async , datasources, ...){
   if(is.null(datasources)){
     datasources <- datashield.connections_find()
   }
-  arglist <- .encode.arg(list(...)) # pass the args list almost as is to the original function on the local nodes
+  arglist <- .encode.arg(list(...), serialize.it = TRUE) # pass the args list almost as is to the original function on the local nodes
   cally <- paste0('consensusOPLSDSS("',arglist, '")')
   datashield.aggregate(datasources, as.symbol(cally), async = async)
 }
