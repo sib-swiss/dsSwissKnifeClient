@@ -121,6 +121,27 @@ dssSwapKeys <- function(l){
 
 
 .splitInEqualChunks <- function(string, size){
-  pat <- paste0('(?<=.{',as.character(size),'})')
-  strsplit(string, pat, perl=TRUE)[[1]]
+ ################################################### old version #################
+ # pat <- paste0('(?<=.{',as.character(size),'})')
+ #  strsplit(string, pat, perl=TRUE)[[1]]
+ #################################################################################
+  if(nchar(string) <= size){
+    return(string)
+  }
+  vect <- strsplit(string, '')[[1]]
+
+  times <- floor(length(vect)/size)
+  out <-c()
+  for(i in 0:(times-1)){
+    out <- c(out, paste(vect[(i*size+1):(i*size + size)], collapse=''))
+  }
+  if(times*size >= length(vect)){
+    return(out)
+  }
+  rem <- vect[(times*size+1):(length(vect))]
+  rem <- rem[!is.na(rem)]
+  if(length(rem) > 0){
+    out <- c(out, paste(rem, collapse = ''))
+  }
+  out
 }
