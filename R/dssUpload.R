@@ -19,7 +19,7 @@ dssUpload <- function(objname, maxsize = NULL, special.object.type = NULL, async
   x <- get(objname, envir = parent.frame())
   if(special.object.type == 'uwot_model'){
     fname <- tempfile()
-    uwot::save_uwot(model, fname) # save it
+    uwot::save_uwot(x, fname) # save it
     # replace the object its raw image:
     x <- readBin(fname, 'raw', n = file.size(fname))
     file.remove(fname)
