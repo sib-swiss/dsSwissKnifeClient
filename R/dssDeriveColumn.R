@@ -4,8 +4,9 @@
 #' as.factor, gsub, grep,grepl, sqrt.
 #' The administrators of remote nodes can make more functions available with a procedure described
 #' in the help of the function .init in the package dsSwissKnife (?dsSwissKnife:::.init)
-#' There are  two  more function available: 1) one.versus.others(col, positive.level) - this function reduces any factor to 2 levels
+#' There are  two  more functions available: 1) one.versus.others(col, positive.level) - this function reduces any factor to 2 levels
 #' in preparation for a logistic regression (see example below). 2) rnorm.0.1() creates a standard normal distribution in a new column.
+#' 3) nuke.outliers(col, maxval, minval) replaces all values in col that ar greater than maxval or smaller than minval with NAs
 #' @param df  a character, the name of the dataframe
 #' @param col.name a character, the name of the new column
 #' @param formula a character, the formula used to calculate the new column. It can reference columns from the dataframe, or other objects in the session

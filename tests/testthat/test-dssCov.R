@@ -4,6 +4,12 @@ test_that("dssCov split works", {
   expect_equal(rem$server2$vcov, cov(session2$iris[,1:4]))
 })
 
+test_that("dssCov split works with NAs", {
+  dssDeriveColumn('iris', 'Sepal.Length', 'nuke.outliers(Sepal.Length, maxval = 5)' ,datasources = opals[1])
+  rem <- dssCov('iris', type = 'split', na.rm = TRUE, datasources = opals[1])
+  expect_equal(nrow(rem$server1$vcov), 4)
+})
+
 test_that("dssCov combined works", {
   rem <- dssCov('iris', type = 'combine', datasources = opals)
   expect_equal(rem$global$vcov, cov(iris[,1:4]))

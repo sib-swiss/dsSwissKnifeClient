@@ -4,7 +4,11 @@ test_that("dssVar split works", {
   expect_equal(rem$server2$var, var(session2$iris$Sepal.Length))
 })
 
+
+
 test_that("dssCov combined works", {
   rem <- dssVar('iris$Sepal.Length', type = 'combine', datasources = opals)
   expect_equal(rem$global$var, var(iris$Sepal.Length))
 })
+
+

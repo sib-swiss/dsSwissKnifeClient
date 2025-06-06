@@ -29,7 +29,7 @@ dssVar <- function(what, type = 'combine', async = TRUE, datasources = NULL){
   lens <- dssSwapKeys(res)[['len']]
   ret <- list()
   if (type == 'split'){
-   vars <- sapply(res, function(x){
+   ret <- sapply(res, function(x){
       x$ssd/(x$len - 1)
     }, simplify = FALSE)
 
