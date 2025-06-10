@@ -19,6 +19,6 @@ dssRemoveOutliers <- function(x, collist = NULL, sigmas = NULL, minval = -Inf, m
   }
 
   expr <- list(as.symbol('removeOutliersDSS'), symbol = as.symbol(x),  collist = collist, sigmas = sigmas, minval = minval, maxval = maxval)
- datashield.assign(datasources,symbol, as.call(expr), async=async)
+ datashield.assign(datasources,x, as.call(expr), async=async)
 
 }
