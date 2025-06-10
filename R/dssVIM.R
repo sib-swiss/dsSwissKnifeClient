@@ -8,9 +8,7 @@
 #' @param  datasources a list of opal objects obtained after logging into the opal servers (see datashield.login)
 #' @param ... further arguments to be passed to the function (see the documentation of the VIM package). The first argument (typically a dataframe)
 #' should be provided as a character.
-
 #' @export
-#'
 dssVIM <- function(func, newobj = NULL, async = TRUE, datasources = NULL, ...){
   if(is.null(datasources)){
     datasources <- datashield.connections_find()
@@ -22,10 +20,12 @@ dssVIM <- function(func, newobj = NULL, async = TRUE, datasources = NULL, ...){
   datashield.aggregate(datasources, as.symbol(cally), async = async)
 }
 
-
+#' @export
 plot.dssaggr <- function(x){
   plot.new()
   lim <- par()$usr
   rasterImage(x$x, lim[1], lim[3], lim[2], lim[4])
 }
-summary.dss.aggr <- VIM:::summary.aggr
+
+#' @export
+summary.dssaggr <- VIM:::summary.aggr

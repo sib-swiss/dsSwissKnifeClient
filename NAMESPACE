@@ -1,3 +1,4 @@
 exportPattern("^[[:alpha:]]+")
 S3method('plot', 'dssaggr')
+S3method('summary', 'dssaggr')
 S3method('biplot', 'dssPrincomp')

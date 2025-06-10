@@ -8,6 +8,7 @@ dssCov(
   x,
   collist = NULL,
   type = "combine",
+  na.rm = FALSE,
   wt = NULL,
   cor = FALSE,
   center = TRUE,
@@ -25,6 +26,8 @@ If null, all the *numeric* columns from x will be used.}
 \item{type}{a character which represents the type of analysis to carry out.
 If type is set to 'combine',  global column means are calculated if type is set to 'split', the column means are
 calculated separately for each node.}
+
+\item{na.rm}{a logical default FALSE, should NAs be removed before calculation? The TRUE value is processed only if type = 'split' and it calls the cov() function on each node with use = "pairwise.complete.obs"}
 
 \item{wt}{if set, either a vector of weights or the name of such a vector. If the former, the same vector will be sent to
 all the nodes. If the latter, different vectors can be first uploaded (with dssUpload) to the respective nodes. In both cases, the function will
