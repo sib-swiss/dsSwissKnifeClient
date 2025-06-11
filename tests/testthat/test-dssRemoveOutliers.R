@@ -7,7 +7,7 @@ test_that("dssRemoveOutliers  works with sigmas", {
 
 test_that("dssRemoveOutliers  works with atomic minval/maxval", {
   session1$iris_with_nas <- session1$iris
-  dssRemoveOutliers('iris_with_nas', minval = 1, maxval=4 , datasources = opals[1])
+  dssRemoveOutliers('iris_with_nas', collist = c('Sepal.Width', 'Sepal.Length'), minval = 1, maxval=4 , datasources = opals[1])
   expect_equal(max(session1$iris_with_nas$Sepal.Width, na.rm = TRUE), 4)
 
 })

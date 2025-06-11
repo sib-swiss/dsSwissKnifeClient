@@ -13,7 +13,7 @@
 #' @export
 
 
-dssRemoveOutliers <- function(x, collist = NULL, sigmas = NULL, minval = -Inf, maxval = Inf , async = TRUE, datasources = NULL){
+dssRemoveOutliers <- function(x, collist = NULL, sigmas = NULL, minval = NULL, maxval = NULL , async = TRUE, datasources = NULL){
   if(is.null(datasources)){
     datasources <- datashield.connections_find()
   }
