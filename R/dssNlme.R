@@ -12,9 +12,18 @@ dssNlme_groupedData <- function(newobj, ..., async = TRUE, datasources = NULL){
     datasources <- datashield.connections_find()
   }
   arglist <- list(...) # pass the args list almost as is to  the local nodes
-  if(typeof(arglist$formula) ==  'language'){
-    arglist$formula <- Reduce(paste, deparse(arglist$formula)) # Reduce for formulas longer than 60 chars - deparse splits them into a vector
-  }
+  arglist <- sapply(arglist, function(x){
+    if(typeof(x)=='language'){
+     # return(Reduce(paste0, deparse(x))) # Reduce for formulas longer than 60 chars - deparse splits them into a vector
+     return(deparse(x))
+    } else {
+      return(x)
+    }
+  }, simplify = FALSE)
+  arglist <- sapply(arglist, function(x) paste(x, collapse = ''), simplify = FALSE)
+ # if(typeof(arglist$formula) ==  'language'){
+#    arglist$formula <- Reduce(paste, deparse(arglist$formula)) # Reduce for formulas longer than 60 chars - deparse splits them into a vector
+#  }
   arglist <- .encode.arg(arglist)
   cally <- paste0('groupedDataDSS("', arglist, '")')
   datashield.assign(datasources, symbol = newobj, value = as.symbol(cally), async = async)
