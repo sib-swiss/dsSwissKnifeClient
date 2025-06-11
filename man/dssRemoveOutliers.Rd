@@ -8,8 +8,8 @@ dssRemoveOutliers(
   x,
   collist = NULL,
   sigmas = NULL,
-  minval = -Inf,
-  maxval = Inf,
+  minval = NULL,
+  maxval = NULL,
   async = TRUE,
   datasources = NULL
 )
