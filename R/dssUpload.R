@@ -17,7 +17,7 @@ dssUpload <- function(objname, maxsize = NULL, special.object.type = NULL, async
     datasources <- datashield.connections_find()
   }
   x <- get(objname, envir = parent.frame())
-  if(special.object.type == 'uwot_model'){
+  if(!is.null(special.object.type) && special.object.type == 'uwot_model'){
     fname <- tempfile()
     uwot::save_uwot(x, fname) # save it
     # replace the object its raw image:

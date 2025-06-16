@@ -4,13 +4,15 @@
 \alias{dssMvtnorm}
 \title{Call selected functions from the package mvtnorm}
 \usage{
-dssMvtnorm(func, ..., async = TRUE, datasources = NULL)
+dssMvtnorm(func, ..., newobj = NULL, async = TRUE, datasources = NULL)
 }
 \arguments{
 \item{func}{a character, the name of the function to call}
 
 \item{...}{further arguments to be passed to the function (see the documentation of the mvtnorm package).
 The object names present in the remote sessions must be sent as characters ('x' instead of x).}
+
+\item{newobj, }{the name of the object in the remote session that will contain the result of the function. If NULL (the default), the result will not be saved in the remote session.}
 
 \item{async}{a logical, see datashield.aggregate}
 
